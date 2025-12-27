@@ -66,12 +66,17 @@ const Contact = () => {
       return;
     }
 
-    // Save to database
-    const { error } = await supabase.from("contact_submissions").insert({
-      name: validation.data.name,
-      email: validation.data.email,
-      company: validation.data.company || null,
-      message: validation.data.message,
+    // Submit via rate-limited edge function
+    const { data, error } = await supabase.functions.invoke("submit-form", {
+      body: {
+        formType: "contact",
+        data: {
+          name: validation.data.name,
+          email: validation.data.email,
+          company: validation.data.company || null,
+          message: validation.data.message,
+        },
+      },
     });
 
     if (error) {
@@ -80,6 +85,24 @@ const Contact = () => {
         description: "There was an error submitting your request. Please try again.",
         variant: "destructive",
       });
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (data?.error) {
+      if (data.retryAfter) {
+        toast({
+          title: "Too many requests",
+          description: `Please wait ${data.retryAfter} minutes before submitting again.`,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Submission failed",
+          description: data.message || "There was an error submitting your request.",
+          variant: "destructive",
+        });
+      }
       setIsSubmitting(false);
       return;
     }
