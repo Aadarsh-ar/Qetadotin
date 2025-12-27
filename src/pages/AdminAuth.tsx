@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Mail, Lock, LogIn, UserPlus, ArrowLeft } from 'lucide-react';
+import { Mail, Lock, LogIn, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
@@ -18,11 +18,10 @@ const authSchema = z.object({
 });
 
 const AdminAuth = () => {
-  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { user, isAdmin, signIn, signUp } = useAuth();
+  const { user, isAdmin, signIn } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -49,44 +48,20 @@ const AdminAuth = () => {
     }
 
     try {
-      if (isLogin) {
-        const { error } = await signIn(email, password);
-        if (error) {
-          toast({
-            title: 'Login Failed',
-            description: error.message === 'Invalid login credentials' 
-              ? 'Invalid email or password. Please try again.'
-              : error.message,
-            variant: 'destructive',
-          });
-        } else {
-          toast({
-            title: 'Welcome back!',
-            description: 'You have successfully logged in.',
-          });
-        }
+      const { error } = await signIn(email, password);
+      if (error) {
+        toast({
+          title: 'Login Failed',
+          description: error.message === 'Invalid login credentials' 
+            ? 'Invalid email or password. Please try again.'
+            : error.message,
+          variant: 'destructive',
+        });
       } else {
-        const { error } = await signUp(email, password);
-        if (error) {
-          if (error.message.includes('already registered')) {
-            toast({
-              title: 'Account Exists',
-              description: 'This email is already registered. Please log in instead.',
-              variant: 'destructive',
-            });
-          } else {
-            toast({
-              title: 'Registration Failed',
-              description: error.message,
-              variant: 'destructive',
-            });
-          }
-        } else {
-          toast({
-            title: 'Account Created',
-            description: 'Your account has been created. Contact an admin to get admin access.',
-          });
-        }
+        toast({
+          title: 'Welcome back!',
+          description: 'You have successfully logged in.',
+        });
       }
     } catch (error) {
       toast({
@@ -117,12 +92,10 @@ const AdminAuth = () => {
               Admin Access
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-6 text-primary-foreground">
-              {isLogin ? 'Sign In' : 'Create Account'}
+              Sign In
             </h1>
             <p className="text-lg md:text-xl text-primary-foreground/70 leading-relaxed">
-              {isLogin 
-                ? 'Access the blog admin panel to manage your content.'
-                : 'Create an account to get started.'}
+              Access the blog admin panel to manage your content.
             </p>
           </motion.div>
         </div>
@@ -139,13 +112,9 @@ const AdminAuth = () => {
           >
             <Card className="border-2 border-border/50">
               <CardHeader className="text-center">
-                <CardTitle className="text-2xl">
-                  {isLogin ? 'Welcome Back' : 'Get Started'}
-                </CardTitle>
+                <CardTitle className="text-2xl">Welcome Back</CardTitle>
                 <CardDescription>
-                  {isLogin 
-                    ? 'Enter your credentials to access the admin panel'
-                    : 'Create your account to get admin access'}
+                  Enter your credentials to access the admin panel
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -194,27 +163,21 @@ const AdminAuth = () => {
                           transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                           className="h-4 w-4 border-2 border-current border-t-transparent rounded-full"
                         />
-                        {isLogin ? 'Signing in...' : 'Creating account...'}
+                        Signing in...
                       </span>
                     ) : (
                       <span className="flex items-center gap-2">
-                        {isLogin ? <LogIn className="h-4 w-4" /> : <UserPlus className="h-4 w-4" />}
-                        {isLogin ? 'Sign In' : 'Create Account'}
+                        <LogIn className="h-4 w-4" />
+                        Sign In
                       </span>
                     )}
                   </Button>
                 </form>
 
                 <div className="mt-6 text-center">
-                  <button
-                    type="button"
-                    onClick={() => setIsLogin(!isLogin)}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {isLogin 
-                      ? "Don't have an account? Sign up"
-                      : 'Already have an account? Sign in'}
-                  </button>
+                  <p className="text-sm text-muted-foreground">
+                    Admin access is invite-only. Contact an existing admin to get access.
+                  </p>
                 </div>
 
                 <div className="mt-6 pt-6 border-t border-border">
