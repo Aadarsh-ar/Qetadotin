@@ -29,20 +29,42 @@ export const NewsletterForm = () => {
       return;
     }
 
-    const { error } = await supabase.from("newsletter_subscriptions").insert({
-      email: validation.data,
+    // Submit via rate-limited edge function
+    const { data, error } = await supabase.functions.invoke("submit-form", {
+      body: {
+        formType: "newsletter",
+        data: {
+          email: validation.data,
+        },
+      },
     });
 
     if (error) {
-      if (error.code === "23505") {
+      toast({
+        title: "Subscription failed",
+        description: "There was an error. Please try again.",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (data?.error) {
+      if (data.error === "already_subscribed") {
         toast({
           title: "Already subscribed",
           description: "This email is already on our newsletter list.",
         });
+      } else if (data.retryAfter) {
+        toast({
+          title: "Too many requests",
+          description: `Please wait ${data.retryAfter} minutes before trying again.`,
+          variant: "destructive",
+        });
       } else {
         toast({
           title: "Subscription failed",
-          description: "There was an error. Please try again.",
+          description: data.message || "There was an error. Please try again.",
           variant: "destructive",
         });
       }
