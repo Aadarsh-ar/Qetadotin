@@ -19,56 +19,7 @@ const staggerContainer = {
   }
 };
 
-const processSteps = [
-  {
-    phase: "Phase 1",
-    title: "Systems Audit",
-    duration: "1-2 weeks",
-    description: "We analyze your current workflows, data flows, and operational bottlenecks. This isn't a surface-level review—we map every manual process, every handoff, every potential automation point.",
-    deliverables: [
-      "Complete workflow documentation",
-      "Bottleneck identification report",
-      "Data flow analysis",
-      "Automation opportunity matrix"
-    ]
-  },
-  {
-    phase: "Phase 2",
-    title: "Architecture Design",
-    duration: "1-2 weeks",
-    description: "Based on the audit, we design a comprehensive automation blueprint. Every system is architected for reliability, scalability, and your team's ability to maintain it long-term.",
-    deliverables: [
-      "Technical architecture document",
-      "Integration specifications",
-      "Data model design",
-      "Implementation roadmap"
-    ]
-  },
-  {
-    phase: "Phase 3",
-    title: "Build & Deploy",
-    duration: "4-8 weeks",
-    description: "We build your systems in production-ready quality from day one. No prototypes that need rebuilding. Each component is tested, documented, and deployed to your infrastructure.",
-    deliverables: [
-      "Production-ready systems",
-      "Complete documentation",
-      "Team training sessions",
-      "Deployment to your environment"
-    ]
-  },
-  {
-    phase: "Phase 4",
-    title: "Optimize & Scale",
-    duration: "Ongoing",
-    description: "Post-launch, we monitor performance, iterate on edge cases, and optimize for scale. Your systems improve over time, not degrade.",
-    deliverables: [
-      "Performance monitoring dashboards",
-      "Regular optimization reports",
-      "Scaling recommendations",
-      "Continuous improvement iterations"
-    ]
-  }
-];
+// Process steps removed as per user request
 
 const workWithUs = [
   "Teams serious about operational automation",
@@ -88,9 +39,9 @@ const HowWeWork = () => {
   return (
     <PageLayout>
       {/* Hero */}
-      <section className="bg-background pt-32 pb-20 md:pt-40 md:pb-24 relative overflow-hidden">
+      <section className="bg-primary text-primary-foreground pt-32 pb-20 md:pt-40 md:pb-24 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="floating-orb w-[500px] h-[500px] bg-primary/10 -top-40 -left-40" />
+          <div className="floating-orb w-[500px] h-[500px] bg-primary-foreground/10 -top-40 -left-40" />
         </div>
         <div className="container-wide px-6 md:px-12 lg:px-20 relative z-10">
           <motion.div
@@ -99,13 +50,13 @@ const HowWeWork = () => {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-3xl mx-auto text-center"
           >
-            <span className="pill-accent mb-8 inline-flex">
+            <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-medium tracking-wide bg-primary-foreground/10 text-primary-foreground mb-8">
               Our Work
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-8">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-8 text-primary-foreground">
               A structured approach to reliable automation.
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+            <p className="text-lg md:text-xl text-primary-foreground/70 leading-relaxed">
               We don't sell hours. We deliver systems. Every engagement follows a proven methodology designed for production-grade outcomes.
             </p>
           </motion.div>
@@ -113,16 +64,16 @@ const HowWeWork = () => {
       </section>
 
       {/* Qualification */}
-      <Section className="bg-secondary/30">
+      <Section className="bg-primary text-primary-foreground">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
           <motion.div
             initial="initial"
             whileInView="animate"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="glass-card"
+            className="bg-primary-foreground/5 backdrop-blur-sm rounded-3xl p-8 md:p-10 border border-primary-foreground/10"
           >
-            <motion.h2 variants={fadeInUp} className="text-2xl md:text-3xl font-semibold tracking-tight mb-8">
+            <motion.h2 variants={fadeInUp} className="text-2xl md:text-3xl font-semibold tracking-tight mb-8 text-primary-foreground">
               Who we work with
             </motion.h2>
             <ul className="space-y-4">
@@ -132,10 +83,10 @@ const HowWeWork = () => {
                   variants={fadeInUp}
                   className="flex items-start gap-4"
                 >
-                  <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-                    <Check className="h-3.5 w-3.5 text-accent" />
+                  <div className="w-6 h-6 rounded-full bg-primary-foreground/10 flex items-center justify-center flex-shrink-0">
+                    <Check className="h-3.5 w-3.5 text-primary-foreground" />
                   </div>
-                  <span className="text-foreground/80">{item}</span>
+                  <span className="text-primary-foreground/80">{item}</span>
                 </motion.li>
               ))}
             </ul>
@@ -146,9 +97,9 @@ const HowWeWork = () => {
             whileInView="animate"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="glass-card"
+            className="bg-primary-foreground/5 backdrop-blur-sm rounded-3xl p-8 md:p-10 border border-primary-foreground/10"
           >
-            <motion.h2 variants={fadeInUp} className="text-2xl md:text-3xl font-semibold tracking-tight mb-8">
+            <motion.h2 variants={fadeInUp} className="text-2xl md:text-3xl font-semibold tracking-tight mb-8 text-primary-foreground">
               Who we don't work with
             </motion.h2>
             <ul className="space-y-4">
@@ -158,10 +109,10 @@ const HowWeWork = () => {
                   variants={fadeInUp}
                   className="flex items-start gap-4"
                 >
-                  <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
-                    <X className="h-3.5 w-3.5 text-muted-foreground" />
+                  <div className="w-6 h-6 rounded-full bg-primary-foreground/10 flex items-center justify-center flex-shrink-0">
+                    <X className="h-3.5 w-3.5 text-primary-foreground/60" />
                   </div>
-                  <span className="text-muted-foreground">{item}</span>
+                  <span className="text-primary-foreground/60">{item}</span>
                 </motion.li>
               ))}
             </ul>
@@ -169,71 +120,17 @@ const HowWeWork = () => {
         </div>
       </Section>
 
-      {/* Process */}
-      <Section>
-        <SectionHeader
-          label="The Process"
-          title="From audit to autonomous operation"
-          description="Every phase has clear deliverables. You know exactly what you're getting and when."
-          centered
-        />
-        <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="space-y-6"
-        >
-          {processSteps.map((step, index) => (
-            <motion.div
-              key={index}
-              variants={fadeInUp}
-              className="glass-card"
-            >
-              <div className="grid lg:grid-cols-12 gap-8">
-                <div className="lg:col-span-2">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs uppercase tracking-widest font-medium bg-accent/10 text-accent mb-2">
-                    {step.phase}
-                  </span>
-                  <p className="text-sm text-muted-foreground">
-                    {step.duration}
-                  </p>
-                </div>
-                <div className="lg:col-span-5">
-                  <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-                <div className="lg:col-span-5">
-                  <p className="text-sm uppercase tracking-widest font-medium text-muted-foreground mb-4">
-                    Deliverables
-                  </p>
-                  <ul className="space-y-3">
-                    {step.deliverables.map((item, i) => (
-                      <li key={i} className="flex items-start gap-3 text-sm">
-                        <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </Section>
-
       {/* Ownership */}
-      <Section className="bg-secondary/30">
+      <Section className="bg-primary text-primary-foreground">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           <div>
-            <SectionHeader
-              label="Ownership"
-              title="You own everything we build"
-              className="mb-8"
-            />
-            <div className="space-y-6 text-muted-foreground leading-relaxed">
+            <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-medium tracking-wide bg-primary-foreground/10 text-primary-foreground mb-4">
+              Ownership
+            </span>
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6 text-primary-foreground">
+              You own everything we build
+            </h2>
+            <div className="space-y-6 text-primary-foreground/70 leading-relaxed">
               <p>
                 Every system we build is deployed to your infrastructure. You own the code, the data, the integrations—everything. We don't create dependencies. We create assets.
               </p>
@@ -254,9 +151,9 @@ const HowWeWork = () => {
               { title: "Complete documentation", desc: "Technical docs your team can actually use." },
               { title: "Team training included", desc: "Your team understands and can maintain the systems." }
             ].map((item, i) => (
-              <motion.div key={i} variants={fadeInUp} className="glass-card !p-6">
-                <h3 className="font-semibold mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">
+              <motion.div key={i} variants={fadeInUp} className="bg-primary-foreground/5 backdrop-blur-sm rounded-2xl p-6 border border-primary-foreground/10">
+                <h3 className="font-semibold mb-2 text-primary-foreground">{item.title}</h3>
+                <p className="text-sm text-primary-foreground/60">
                   {item.desc}
                 </p>
               </motion.div>
@@ -266,7 +163,7 @@ const HowWeWork = () => {
       </Section>
 
       {/* CTA */}
-      <Section dark className="rounded-t-[3rem]">
+      <Section className="bg-primary text-primary-foreground pb-32">
         <div className="text-center max-w-3xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -274,7 +171,7 @@ const HowWeWork = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6">
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6 text-primary-foreground">
               Ready to start the conversation?
             </h2>
             <p className="text-primary-foreground/60 text-lg mb-12">
