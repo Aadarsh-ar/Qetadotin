@@ -159,7 +159,7 @@ const Index = () => {
   return (
     <PageLayout>
       {/* Hero Section - Soft Pastel Gradient - Full viewport coverage */}
-      <section ref={heroRef} className="min-h-screen flex items-center relative overflow-hidden gradient-hero-bg -mt-24 pt-24">
+      <section ref={heroRef} className="min-h-screen flex items-center justify-center relative overflow-hidden gradient-hero-bg -mt-24 pt-32 md:pt-24">
         {/* Extended gradient overlay to cover top */}
         <div className="absolute inset-0 bg-gradient-to-b from-sky-blue/30 via-transparent to-transparent pointer-events-none" style={{ top: "-100px", height: "calc(100% + 100px)" }} />
         
@@ -175,7 +175,7 @@ const Index = () => {
           className="container-wide px-6 md:px-12 lg:px-20 relative z-10"
           style={{ opacity: heroOpacity, scale: heroScale }}
         >
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center mt-8 md:mt-0">
             <motion.div 
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
