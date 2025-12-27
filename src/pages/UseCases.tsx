@@ -92,26 +92,37 @@ const UseCases = () => {
   return (
     <PageLayout>
       {/* Hero */}
-      <section className="bg-background pt-32 pb-20 md:pt-40 md:pb-24 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="floating-orb w-[500px] h-[500px] bg-copper/15 -top-40 right-0" />
-        </div>
+      <section className="relative pt-32 pb-20 md:pt-40 md:pb-24 overflow-hidden">
+        {/* Gradient background */}
+        <div className="absolute inset-0 gradient-hero-bg" />
+        
+        {/* Floating orbs */}
+        <div className="floating-orb w-[600px] h-[600px] bg-primary/20 -top-40 -left-40" />
+        <div className="floating-orb w-[400px] h-[400px] bg-accent/15 top-20 right-0" style={{ animationDelay: "-5s" }} />
+        <div className="floating-orb w-[300px] h-[300px] bg-periwinkle/20 bottom-0 left-1/3" style={{ animationDelay: "-10s" }} />
+        
         <div className="container-wide px-6 md:px-12 lg:px-20 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            initial="initial"
+            animate="animate"
+            variants={staggerContainer}
             className="max-w-3xl mx-auto text-center"
           >
-            <span className="pill-accent mb-8 inline-flex">
+            <motion.span variants={fadeInUp} className="pill-accent mb-8 inline-flex">
               Use Cases
-            </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-8">
+            </motion.span>
+            <motion.h1 
+              variants={fadeInUp}
+              className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-8"
+            >
               Operational impact, not hypotheticals.
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+            </motion.h1>
+            <motion.p 
+              variants={fadeInUp}
+              className="text-lg md:text-xl text-muted-foreground leading-relaxed"
+            >
               Real examples of how production-grade AI systems transform operational capacity. Focus on the outcome, not the technology.
-            </p>
+            </motion.p>
           </motion.div>
         </div>
       </section>
@@ -129,12 +140,12 @@ const UseCases = () => {
             <motion.div
               key={index}
               variants={fadeInUp}
-              className="interactive-card"
+              className="interactive-card group"
             >
               <span className="pill-accent mb-4 inline-flex text-xs">
                 {useCase.category}
               </span>
-              <h2 className="text-xl font-semibold tracking-tight mb-6">
+              <h2 className="text-xl font-semibold tracking-tight mb-6 group-hover:text-accent transition-colors">
                 {useCase.title}
               </h2>
               

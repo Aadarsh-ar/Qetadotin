@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Instagram, Mail, Facebook, Linkedin } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const footerLinks = {
   company: [
@@ -54,6 +55,7 @@ export const Footer = () => {
             {/* Brand */}
             <div className="lg:col-span-1">
               <Link to="/" className="inline-flex items-center gap-3 mb-6 group">
+                <img src={logo} alt="QETA" className="h-10 w-10 object-contain rounded-full" />
                 <span className="text-xl font-semibold tracking-tight text-foreground">QETA</span>
               </Link>
               <p className="text-foreground/60 text-sm leading-relaxed max-w-xs mb-8">

@@ -85,10 +85,14 @@ const Blog = () => {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="pt-32 pb-16 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none gradient-peach opacity-50" />
-        <div className="floating-orb w-[500px] h-[500px] bg-accent/20 -top-32 -right-32" />
-        <div className="floating-orb w-[300px] h-[300px] bg-primary/15 bottom-0 -left-20" style={{ animationDelay: "-7s" }} />
+      <section className="relative pt-32 pb-16 overflow-hidden">
+        {/* Gradient background */}
+        <div className="absolute inset-0 gradient-hero-bg" />
+        
+        {/* Floating orbs */}
+        <div className="floating-orb w-[600px] h-[600px] bg-primary/20 -top-40 -left-40" />
+        <div className="floating-orb w-[500px] h-[500px] bg-accent/20 -top-32 -right-32" style={{ animationDelay: "-7s" }} />
+        <div className="floating-orb w-[300px] h-[300px] bg-periwinkle/15 bottom-0 left-1/4" style={{ animationDelay: "-12s" }} />
         
         <div className="container-wide px-6 md:px-12 lg:px-20 relative z-10">
           <motion.div
@@ -125,7 +129,7 @@ const Blog = () => {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
           <Link to={`/blog/${featuredPost.id}`} className="block group">
-            <div className="blog-card grid md:grid-cols-2 gap-0">
+            <div className="blog-card grid md:grid-cols-2 gap-0 overflow-hidden">
               <div className="aspect-[16/10] md:aspect-auto overflow-hidden">
                 <img 
                   src={featuredPost.image} 
@@ -178,7 +182,7 @@ const Blog = () => {
           {blogPosts.map((post) => (
             <motion.div key={post.id} variants={fadeInUp}>
               <Link to={`/blog/${post.id}`} className="block group h-full">
-                <div className="blog-card h-full p-6 md:p-8 flex flex-col">
+                <div className="blog-card h-full p-6 md:p-8 flex flex-col hover:border-accent/30 transition-all duration-300">
                   <span className="category-tag w-fit mb-4">{post.category}</span>
                   <h3 className="text-lg font-semibold mb-3 group-hover:text-accent transition-colors line-clamp-2">
                     {post.title}
@@ -204,7 +208,7 @@ const Blog = () => {
       </Section>
 
       {/* Newsletter CTA */}
-      <Section className="bg-secondary/30">
+      <Section className="bg-gradient-to-br from-primary/10 via-periwinkle/10 to-accent/10 rounded-t-[3rem]">
         <div className="text-center max-w-2xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
