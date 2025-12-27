@@ -81,38 +81,78 @@ export const Navigation = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.95 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="md:hidden mt-3 bg-white/80 backdrop-blur-2xl border border-white/40 rounded-3xl shadow-pastel-lg overflow-hidden"
-          >
-            <div className="px-6 py-6 space-y-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  className={`block py-3 px-4 rounded-xl text-foreground/80 hover:text-foreground hover:bg-primary/10 transition-all ${
-                    location.pathname === link.href ? "bg-primary/15 text-foreground" : ""
-                  }`}
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-foreground/20 backdrop-blur-sm z-40 md:hidden"
+              onClick={() => setIsOpen(false)}
+            />
+            
+            {/* Slide-in Panel */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 h-full w-[80%] max-w-sm bg-white/95 backdrop-blur-2xl shadow-2xl z-50 md:hidden"
+            >
+              {/* Close Button */}
+              <div className="flex justify-end p-6">
+                <button
                   onClick={() => setIsOpen(false)}
+                  className="p-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors"
+                  aria-label="Close menu"
                 >
-                  {link.name}
-                </Link>
-              ))}
-              <div className="pt-4">
+                  <X size={24} className="text-foreground" />
+                </button>
+              </div>
+              
+              {/* Navigation Links */}
+              <div className="px-6 py-4 space-y-2">
+                {navLinks.map((link, index) => (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 + index * 0.05, duration: 0.3 }}
+                  >
+                    <Link
+                      to={link.href}
+                      className={`block py-4 px-5 rounded-2xl text-lg font-medium text-foreground/80 hover:text-foreground hover:bg-gradient-to-r hover:from-sky-blue/20 hover:to-periwinkle/20 transition-all ${
+                        location.pathname === link.href 
+                          ? "bg-gradient-to-r from-sky-blue/30 to-periwinkle/30 text-foreground" 
+                          : ""
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+              
+              {/* CTA Button */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.3 }}
+                className="absolute bottom-8 left-6 right-6"
+              >
                 <Link to="/contact" onClick={() => setIsOpen(false)}>
-                  <Button variant="hero" size="lg" className="w-full">
+                  <Button variant="hero" size="lg" className="w-full text-lg py-6">
                     Book a Call
                   </Button>
                 </Link>
-              </div>
-            </div>
-          </motion.div>
+              </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </nav>
