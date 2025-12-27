@@ -6,15 +6,15 @@ import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/button";
 
 const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 30 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 }
+  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
 };
 
 const staggerContainer = {
   animate: {
     transition: {
-      staggerChildren: 0.1
+      staggerChildren: 0.12
     }
   }
 };
@@ -33,7 +33,8 @@ const solutions = [
       "Support ticket classification and intelligent escalation",
       "Document processing and approval workflows"
     ],
-    outcome: "Operational capacity scales without headcount. Teams focus on judgment, not data entry."
+    outcome: "Operational capacity scales without headcount. Teams focus on judgment, not data entry.",
+    color: "bg-accent/10 text-accent"
   },
   {
     id: "revenue",
@@ -48,7 +49,8 @@ const solutions = [
       "Pipeline velocity tracking and intervention alerts",
       "Reply prediction and optimal timing systems"
     ],
-    outcome: "Revenue teams engage only high-intent prospects. Pipeline moves faster with less friction."
+    outcome: "Revenue teams engage only high-intent prospects. Pipeline moves faster with less friction.",
+    color: "bg-primary/10 text-primary"
   },
   {
     id: "agents",
@@ -63,7 +65,8 @@ const solutions = [
       "Customer insight agents synthesizing feedback patterns",
       "Compliance agents monitoring regulatory requirements"
     ],
-    outcome: "Specialized intelligence running 24/7. Human expertise amplified, not replaced."
+    outcome: "Specialized intelligence running 24/7. Human expertise amplified, not replaced.",
+    color: "bg-copper/10 text-copper"
   },
   {
     id: "integration",
@@ -78,7 +81,8 @@ const solutions = [
       "Unified customer data across support, sales, and product",
       "Custom API development for proprietary systems"
     ],
-    outcome: "Single source of truth across all systems. Data flows automatically where it's needed."
+    outcome: "Single source of truth across all systems. Data flows automatically where it's needed.",
+    color: "bg-stone/10 text-stone"
   }
 ];
 
@@ -86,17 +90,20 @@ const Solutions = () => {
   return (
     <PageLayout>
       {/* Hero */}
-      <section className="bg-background pt-20 pb-16 md:pt-28 md:pb-20">
-        <div className="container-wide px-6 md:px-12 lg:px-20">
+      <section className="bg-background pt-32 pb-20 md:pt-40 md:pb-24 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="floating-orb w-[500px] h-[500px] bg-accent/15 -top-40 -right-40" />
+        </div>
+        <div className="container-wide px-6 md:px-12 lg:px-20 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl"
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-3xl mx-auto text-center"
           >
-            <p className="text-sm uppercase tracking-widest font-medium text-muted-foreground mb-6">
+            <span className="pill-accent mb-8 inline-flex">
               Solutions
-            </p>
+            </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-8">
               AI systems built for operations, not demos.
             </h1>
@@ -112,21 +119,21 @@ const Solutions = () => {
         <Section 
           key={solution.id} 
           id={solution.id}
-          className={index % 2 === 0 ? "border-t border-border" : "bg-card border-t border-border"}
+          className={index % 2 === 0 ? "" : "bg-secondary/30"}
         >
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-20">
+          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
             <motion.div
               initial="initial"
               whileInView="animate"
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
               variants={staggerContainer}
             >
-              <motion.div variants={fadeInUp}>
-                <solution.icon className="h-8 w-8 text-accent mb-6" strokeWidth={1.5} />
+              <motion.div variants={fadeInUp} className={`w-14 h-14 rounded-2xl ${solution.color} flex items-center justify-center mb-8`}>
+                <solution.icon className="h-7 w-7" strokeWidth={1.5} />
               </motion.div>
-              <motion.p variants={fadeInUp} className="text-sm uppercase tracking-widest font-medium text-muted-foreground mb-4">
+              <motion.span variants={fadeInUp} className="pill-accent mb-4 inline-flex">
                 {solution.subtitle}
-              </motion.p>
+              </motion.span>
               <motion.h2 variants={fadeInUp} className="text-3xl md:text-4xl font-semibold tracking-tight mb-6">
                 {solution.title}
               </motion.h2>
@@ -141,7 +148,9 @@ const Solutions = () => {
                 <ul className="space-y-3 mb-8">
                   {solution.forWho.map((item, i) => (
                     <li key={i} className="flex items-start gap-3">
-                      <Check className="h-5 w-5 text-accent mt-0.5 flex-shrink-0" />
+                      <div className="w-5 h-5 rounded-full bg-accent/10 flex items-center justify-center mt-0.5 flex-shrink-0">
+                        <Check className="h-3 w-3 text-accent" />
+                      </div>
                       <span className="text-foreground/80">{item}</span>
                     </li>
                   ))}
@@ -161,24 +170,25 @@ const Solutions = () => {
             <motion.div
               initial="initial"
               whileInView="animate"
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
               variants={staggerContainer}
+              className="space-y-6"
             >
-              <motion.div variants={fadeInUp} className="mb-8">
+              <motion.div variants={fadeInUp}>
                 <h3 className="text-sm uppercase tracking-widest font-medium text-muted-foreground mb-4">
                   Example workflows
                 </h3>
-                <ul className="space-y-4">
+                <div className="space-y-3">
                   {solution.examples.map((example, i) => (
-                    <li key={i} className="p-4 bg-background border border-border text-sm">
+                    <div key={i} className="glass-card !p-5 text-sm">
                       {example}
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </motion.div>
 
-              <motion.div variants={fadeInUp} className="p-6 bg-primary/5 border border-primary/10">
-                <h3 className="text-sm uppercase tracking-widest font-medium text-muted-foreground mb-3">
+              <motion.div variants={fadeInUp} className="glass-card !bg-accent/5 !border-accent/20">
+                <h3 className="text-sm uppercase tracking-widest font-medium text-accent mb-3">
                   Business outcome
                 </h3>
                 <p className="text-foreground font-medium">
@@ -191,23 +201,30 @@ const Solutions = () => {
       ))}
 
       {/* CTA */}
-      <Section dark>
+      <Section dark className="rounded-t-[3rem]">
         <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6">
-            Ready to discuss your automation needs?
-          </h2>
-          <p className="text-primary-foreground/70 text-lg mb-10">
-            Every engagement starts with understanding your workflows. No sales pitch, just problem-solving.
-          </p>
-          <Link to="/contact">
-            <Button 
-              size="xl" 
-              className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-none font-medium"
-            >
-              Book a Strategy Call
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6">
+              Ready to discuss your automation needs?
+            </h2>
+            <p className="text-primary-foreground/60 text-lg mb-12">
+              Every engagement starts with understanding your workflows. No sales pitch, just problem-solving.
+            </p>
+            <Link to="/contact">
+              <Button 
+                size="xl" 
+                className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-full font-medium shadow-xl"
+              >
+                Book a Strategy Call
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </motion.div>
         </div>
       </Section>
     </PageLayout>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/button";
@@ -10,9 +10,17 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 
 const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 30 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 }
+  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+};
+
+const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.12
+    }
+  }
 };
 
 const Contact = () => {
@@ -51,17 +59,20 @@ const Contact = () => {
   return (
     <PageLayout>
       {/* Hero */}
-      <section className="bg-background pt-20 pb-16 md:pt-28 md:pb-20">
-        <div className="container-wide px-6 md:px-12 lg:px-20">
+      <section className="bg-background pt-32 pb-20 md:pt-40 md:pb-24 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="floating-orb w-[500px] h-[500px] bg-accent/15 -top-40 right-0" />
+        </div>
+        <div className="container-wide px-6 md:px-12 lg:px-20 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl"
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-3xl mx-auto text-center"
           >
-            <p className="text-sm uppercase tracking-widest font-medium text-muted-foreground mb-6">
+            <span className="pill-accent mb-8 inline-flex">
               Contact
-            </p>
+            </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-8">
               Let's discuss your operations.
             </h1>
@@ -73,13 +84,14 @@ const Contact = () => {
       </section>
 
       {/* Form Section */}
-      <Section className="border-t border-border">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20">
+      <Section className="bg-secondary/30">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="glass-card"
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid sm:grid-cols-2 gap-6">
@@ -94,7 +106,7 @@ const Contact = () => {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    className="bg-card border-border focus:border-primary rounded-none h-12"
+                    className="bg-background/50 border-border focus:border-accent rounded-xl h-12"
                     placeholder="Your name"
                   />
                 </div>
@@ -109,7 +121,7 @@ const Contact = () => {
                     required
                     value={formData.company}
                     onChange={handleChange}
-                    className="bg-card border-border focus:border-primary rounded-none h-12"
+                    className="bg-background/50 border-border focus:border-accent rounded-xl h-12"
                     placeholder="Company name"
                   />
                 </div>
@@ -126,7 +138,7 @@ const Contact = () => {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="bg-card border-border focus:border-primary rounded-none h-12"
+                  className="bg-background/50 border-border focus:border-accent rounded-xl h-12"
                   placeholder="your@email.com"
                 />
               </div>
@@ -141,7 +153,7 @@ const Contact = () => {
                   required
                   value={formData.workflow}
                   onChange={handleChange}
-                  className="bg-card border-border focus:border-primary rounded-none min-h-[150px] resize-none"
+                  className="bg-background/50 border-border focus:border-accent rounded-xl min-h-[150px] resize-none"
                   placeholder="What manual processes are consuming your team's time? What workflows would you like to automate?"
                 />
               </div>
@@ -150,7 +162,7 @@ const Contact = () => {
                 type="submit" 
                 variant="hero" 
                 size="xl" 
-                className="w-full sm:w-auto"
+                className="w-full"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
@@ -166,45 +178,39 @@ const Contact = () => {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
             className="space-y-8"
           >
-            <div>
-              <h2 className="text-xl font-semibold mb-4">What happens next</h2>
-              <div className="space-y-4">
-                <div className="flex items-start gap-4">
-                  <span className="w-6 h-6 rounded-full bg-primary/10 text-primary text-sm font-medium flex items-center justify-center flex-shrink-0">1</span>
-                  <div>
-                    <p className="font-medium mb-1">We review your workflow</p>
-                    <p className="text-sm text-muted-foreground">Within 24 hours, we'll analyze your submission and identify potential automation opportunities.</p>
+            <motion.div variants={fadeInUp}>
+              <h2 className="text-xl font-semibold mb-6">What happens next</h2>
+              <div className="space-y-6">
+                {[
+                  { step: 1, title: "We review your workflow", desc: "Within 24 hours, we'll analyze your submission and identify potential automation opportunities." },
+                  { step: 2, title: "Strategy call scheduled", desc: "If there's a potential fit, we'll schedule a 30-minute call to discuss your operations in detail." },
+                  { step: 3, title: "Clear next steps", desc: "You'll leave the call knowing exactly whether QETA can help and what that engagement would look like." }
+                ].map((item) => (
+                  <div key={item.step} className="flex items-start gap-4">
+                    <span className="w-8 h-8 rounded-full bg-accent/10 text-accent text-sm font-semibold flex items-center justify-center flex-shrink-0">
+                      {item.step}
+                    </span>
+                    <div>
+                      <p className="font-medium mb-1">{item.title}</p>
+                      <p className="text-sm text-muted-foreground">{item.desc}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <span className="w-6 h-6 rounded-full bg-primary/10 text-primary text-sm font-medium flex items-center justify-center flex-shrink-0">2</span>
-                  <div>
-                    <p className="font-medium mb-1">Strategy call scheduled</p>
-                    <p className="text-sm text-muted-foreground">If there's a potential fit, we'll schedule a 30-minute call to discuss your operations in detail.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <span className="w-6 h-6 rounded-full bg-primary/10 text-primary text-sm font-medium flex items-center justify-center flex-shrink-0">3</span>
-                  <div>
-                    <p className="font-medium mb-1">Clear next steps</p>
-                    <p className="text-sm text-muted-foreground">You'll leave the call knowing exactly whether QETA can help and what that engagement would look like.</p>
-                  </div>
-                </div>
+                ))}
               </div>
-            </div>
+            </motion.div>
 
-            <div className="p-6 bg-card border border-border">
+            <motion.div variants={fadeInUp} className="glass-card !bg-accent/5 !border-accent/20">
               <h3 className="font-semibold mb-3">Who this is for</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 We work with teams serious about automation at scale. If you're looking for a quick demo or a proof of concept, we're probably not the right fit. If you're ready to invest in operational infrastructure that delivers measurable results, we should talk.
               </p>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </Section>
