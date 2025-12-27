@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
+import { Instagram, Mail, Facebook, Linkedin } from "lucide-react";
 import logo from "@/assets/logo.jpg";
 
 const footerLinks = {
   company: [
     { name: "About", href: "/about" },
-    { name: "How We Work", href: "/how-we-work" },
+    { name: "Our Work", href: "/how-we-work" },
     { name: "Contact", href: "/contact" },
   ],
   solutions: [
@@ -17,6 +18,29 @@ const footerLinks = {
     { name: "Use Cases", href: "/use-cases" },
   ],
 };
+
+const socialLinks = [
+  { 
+    name: "Instagram", 
+    icon: Instagram, 
+    href: "https://www.instagram.com/qeta.in?igsh=MXF1MWdsbXB5aWZlMw==" 
+  },
+  { 
+    name: "Email", 
+    icon: Mail, 
+    href: "mailto:inqeta@gmail.com" 
+  },
+  { 
+    name: "Facebook", 
+    icon: Facebook, 
+    href: "#" 
+  },
+  { 
+    name: "LinkedIn", 
+    icon: Linkedin, 
+    href: "https://www.linkedin.com/in/qeta-dotin-8a48a03a1?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" 
+  },
+];
 
 export const Footer = () => {
   return (
@@ -33,9 +57,24 @@ export const Footer = () => {
               />
               <span className="text-xl font-semibold tracking-tight">QETA</span>
             </Link>
-            <p className="text-primary-foreground/70 text-sm leading-relaxed max-w-xs">
+            <p className="text-primary-foreground/70 text-sm leading-relaxed max-w-xs mb-6">
               Production-grade AI systems that eliminate manual work and scale operations.
             </p>
+            {/* Social Icons */}
+            <div className="flex items-center gap-4">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  target={social.href.startsWith("mailto") ? undefined : "_blank"}
+                  rel={social.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+                  className="text-primary-foreground/50 hover:text-primary-foreground transition-colors"
+                  aria-label={social.name}
+                >
+                  <social.icon className="h-5 w-5" />
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Company Links */}
