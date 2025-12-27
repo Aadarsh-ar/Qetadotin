@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
+import DOMPurify from "dompurify";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/button";
@@ -172,7 +173,7 @@ const BlogPost = () => {
         >
           <div 
             className="whitespace-pre-wrap text-foreground/90 leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
           />
         </motion.article>
       </Section>
