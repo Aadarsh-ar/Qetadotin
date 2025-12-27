@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface SectionProps {
@@ -13,12 +14,12 @@ export const Section = ({ children, className, dark = false, id }: SectionProps)
     <section
       id={id}
       className={cn(
-        "section-padding",
+        "section-padding relative overflow-hidden",
         dark ? "bg-primary text-primary-foreground" : "bg-background text-foreground",
         className
       )}
     >
-      <div className="container-wide">
+      <div className="container-wide relative z-10">
         {children}
       </div>
     </section>
@@ -31,33 +32,53 @@ interface SectionHeaderProps {
   description?: string;
   className?: string;
   dark?: boolean;
+  centered?: boolean;
 }
 
-export const SectionHeader = ({ label, title, description, className, dark = false }: SectionHeaderProps) => {
+export const SectionHeader = ({ 
+  label, 
+  title, 
+  description, 
+  className, 
+  dark = false,
+  centered = false 
+}: SectionHeaderProps) => {
   return (
-    <div className={cn("max-w-3xl mb-12 md:mb-16", className)}>
+    <motion.div 
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className={cn(
+        "max-w-2xl mb-16 md:mb-20",
+        centered && "mx-auto text-center",
+        className
+      )}
+    >
       {label && (
-        <p className={cn(
-          "text-sm uppercase tracking-widest font-medium mb-4",
-          dark ? "text-primary-foreground/60" : "text-muted-foreground"
+        <span className={cn(
+          "inline-flex items-center px-4 py-1.5 rounded-full text-xs uppercase tracking-widest font-medium mb-6",
+          dark 
+            ? "bg-primary-foreground/10 text-primary-foreground/70" 
+            : "bg-accent/10 text-accent border border-accent/20"
         )}>
           {label}
-        </p>
+        </span>
       )}
       <h2 className={cn(
-        "text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight leading-tight",
+        "text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.15]",
         dark ? "text-primary-foreground" : "text-foreground"
       )}>
         {title}
       </h2>
       {description && (
         <p className={cn(
-          "mt-6 text-lg leading-relaxed",
+          "mt-6 text-lg md:text-xl leading-relaxed",
           dark ? "text-primary-foreground/70" : "text-muted-foreground"
         )}>
           {description}
         </p>
       )}
-    </div>
+    </motion.div>
   );
 };

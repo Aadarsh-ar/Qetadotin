@@ -6,15 +6,15 @@ import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/button";
 
 const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 30 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 }
+  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
 };
 
 const staggerContainer = {
   animate: {
     transition: {
-      staggerChildren: 0.1
+      staggerChildren: 0.12
     }
   }
 };
@@ -92,17 +92,20 @@ const UseCases = () => {
   return (
     <PageLayout>
       {/* Hero */}
-      <section className="bg-background pt-20 pb-16 md:pt-28 md:pb-20">
-        <div className="container-wide px-6 md:px-12 lg:px-20">
+      <section className="bg-background pt-32 pb-20 md:pt-40 md:pb-24 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="floating-orb w-[500px] h-[500px] bg-copper/15 -top-40 right-0" />
+        </div>
+        <div className="container-wide px-6 md:px-12 lg:px-20 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl"
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-3xl mx-auto text-center"
           >
-            <p className="text-sm uppercase tracking-widest font-medium text-muted-foreground mb-6">
+            <span className="pill-accent mb-8 inline-flex">
               Use Cases
-            </p>
+            </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-8">
               Operational impact, not hypotheticals.
             </h1>
@@ -114,59 +117,55 @@ const UseCases = () => {
       </section>
 
       {/* Use Cases Grid */}
-      <Section className="border-t border-border">
+      <Section>
         <motion.div
           initial="initial"
           whileInView="animate"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="space-y-12"
+          className="grid md:grid-cols-2 gap-6"
         >
           {useCases.map((useCase, index) => (
             <motion.div
               key={index}
               variants={fadeInUp}
-              className={`grid lg:grid-cols-12 gap-8 p-8 md:p-10 border border-border ${
-                index % 2 === 0 ? "bg-background" : "bg-card"
-              }`}
+              className="interactive-card"
             >
-              <div className="lg:col-span-4">
-                <p className="text-sm uppercase tracking-widest font-medium text-accent mb-3">
-                  {useCase.category}
-                </p>
-                <h2 className="text-2xl font-semibold tracking-tight">
-                  {useCase.title}
-                </h2>
-              </div>
+              <span className="pill-accent mb-4 inline-flex text-xs">
+                {useCase.category}
+              </span>
+              <h2 className="text-xl font-semibold tracking-tight mb-6">
+                {useCase.title}
+              </h2>
               
-              <div className="lg:col-span-8 space-y-8">
+              <div className="space-y-6">
                 <div>
-                  <h3 className="text-sm uppercase tracking-widest font-medium text-muted-foreground mb-3">
+                  <h3 className="text-xs uppercase tracking-widest font-medium text-muted-foreground mb-2">
                     Challenge
                   </h3>
-                  <p className="text-foreground/80 leading-relaxed">
+                  <p className="text-foreground/80 text-sm leading-relaxed">
                     {useCase.challenge}
                   </p>
                 </div>
                 
                 <div>
-                  <h3 className="text-sm uppercase tracking-widest font-medium text-muted-foreground mb-3">
+                  <h3 className="text-xs uppercase tracking-widest font-medium text-muted-foreground mb-2">
                     Solution
                   </h3>
-                  <p className="text-foreground/80 leading-relaxed">
+                  <p className="text-foreground/80 text-sm leading-relaxed">
                     {useCase.solution}
                   </p>
                 </div>
                 
-                <div>
-                  <h3 className="text-sm uppercase tracking-widest font-medium text-muted-foreground mb-3">
+                <div className="pt-4 border-t border-border/50">
+                  <h3 className="text-xs uppercase tracking-widest font-medium text-accent mb-3">
                     Outcomes
                   </h3>
                   <ul className="space-y-2">
                     {useCase.outcomes.map((outcome, i) => (
                       <li key={i} className="flex items-start gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2.5 flex-shrink-0" />
-                        <span className="text-foreground font-medium">{outcome}</span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0" />
+                        <span className="text-foreground text-sm font-medium">{outcome}</span>
                       </li>
                     ))}
                   </ul>
@@ -178,23 +177,30 @@ const UseCases = () => {
       </Section>
 
       {/* CTA */}
-      <Section dark>
+      <Section dark className="rounded-t-[3rem]">
         <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6">
-            Similar operational challenges?
-          </h2>
-          <p className="text-primary-foreground/70 text-lg mb-10">
-            Every system starts with understanding your specific workflows. Let's discuss what automation could look like for your operations.
-          </p>
-          <Link to="/contact">
-            <Button 
-              size="xl" 
-              className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-none font-medium"
-            >
-              Discuss Your Workflow
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6">
+              Similar operational challenges?
+            </h2>
+            <p className="text-primary-foreground/60 text-lg mb-12">
+              Every system starts with understanding your specific workflows. Let's discuss what automation could look like for your operations.
+            </p>
+            <Link to="/contact">
+              <Button 
+                size="xl" 
+                className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-full font-medium shadow-xl"
+              >
+                Discuss Your Workflow
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </motion.div>
         </div>
       </Section>
     </PageLayout>

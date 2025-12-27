@@ -6,15 +6,15 @@ import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/button";
 
 const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 30 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 }
+  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
 };
 
 const staggerContainer = {
   animate: {
     transition: {
-      staggerChildren: 0.1
+      staggerChildren: 0.12
     }
   }
 };
@@ -88,17 +88,20 @@ const HowWeWork = () => {
   return (
     <PageLayout>
       {/* Hero */}
-      <section className="bg-background pt-20 pb-16 md:pt-28 md:pb-20">
-        <div className="container-wide px-6 md:px-12 lg:px-20">
+      <section className="bg-background pt-32 pb-20 md:pt-40 md:pb-24 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="floating-orb w-[500px] h-[500px] bg-primary/10 -top-40 -left-40" />
+        </div>
+        <div className="container-wide px-6 md:px-12 lg:px-20 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl"
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-3xl mx-auto text-center"
           >
-            <p className="text-sm uppercase tracking-widest font-medium text-muted-foreground mb-6">
-              How We Work
-            </p>
+            <span className="pill-accent mb-8 inline-flex">
+              Our Work
+            </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-8">
               A structured approach to reliable automation.
             </h1>
@@ -110,15 +113,16 @@ const HowWeWork = () => {
       </section>
 
       {/* Qualification */}
-      <Section className="border-t border-border">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20">
+      <Section className="bg-secondary/30">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
           <motion.div
             initial="initial"
             whileInView="animate"
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
+            className="glass-card"
           >
-            <motion.h2 variants={fadeInUp} className="text-2xl md:text-3xl font-semibold tracking-tight mb-6">
+            <motion.h2 variants={fadeInUp} className="text-2xl md:text-3xl font-semibold tracking-tight mb-8">
               Who we work with
             </motion.h2>
             <ul className="space-y-4">
@@ -126,9 +130,11 @@ const HowWeWork = () => {
                 <motion.li 
                   key={i} 
                   variants={fadeInUp}
-                  className="flex items-start gap-3"
+                  className="flex items-start gap-4"
                 >
-                  <Check className="h-5 w-5 text-accent mt-0.5 flex-shrink-0" />
+                  <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
+                    <Check className="h-3.5 w-3.5 text-accent" />
+                  </div>
                   <span className="text-foreground/80">{item}</span>
                 </motion.li>
               ))}
@@ -138,10 +144,11 @@ const HowWeWork = () => {
           <motion.div
             initial="initial"
             whileInView="animate"
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
+            className="glass-card"
           >
-            <motion.h2 variants={fadeInUp} className="text-2xl md:text-3xl font-semibold tracking-tight mb-6">
+            <motion.h2 variants={fadeInUp} className="text-2xl md:text-3xl font-semibold tracking-tight mb-8">
               Who we don't work with
             </motion.h2>
             <ul className="space-y-4">
@@ -149,9 +156,11 @@ const HowWeWork = () => {
                 <motion.li 
                   key={i} 
                   variants={fadeInUp}
-                  className="flex items-start gap-3"
+                  className="flex items-start gap-4"
                 >
-                  <X className="h-5 w-5 text-muted-foreground mt-0.5 flex-shrink-0" />
+                  <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
+                    <X className="h-3.5 w-3.5 text-muted-foreground" />
+                  </div>
                   <span className="text-muted-foreground">{item}</span>
                 </motion.li>
               ))}
@@ -161,51 +170,54 @@ const HowWeWork = () => {
       </Section>
 
       {/* Process */}
-      <Section className="border-t border-border bg-card">
+      <Section>
         <SectionHeader
           label="The Process"
           title="From audit to autonomous operation"
           description="Every phase has clear deliverables. You know exactly what you're getting and when."
+          centered
         />
         <motion.div
           initial="initial"
           whileInView="animate"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="space-y-8"
+          className="space-y-6"
         >
           {processSteps.map((step, index) => (
             <motion.div
               key={index}
               variants={fadeInUp}
-              className="grid lg:grid-cols-12 gap-8 p-8 bg-background border border-border"
+              className="glass-card"
             >
-              <div className="lg:col-span-2">
-                <p className="text-sm uppercase tracking-widest font-medium text-accent mb-2">
-                  {step.phase}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  {step.duration}
-                </p>
-              </div>
-              <div className="lg:col-span-5">
-                <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {step.description}
-                </p>
-              </div>
-              <div className="lg:col-span-5">
-                <p className="text-sm uppercase tracking-widest font-medium text-muted-foreground mb-4">
-                  Deliverables
-                </p>
-                <ul className="space-y-2">
-                  {step.deliverables.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm">
-                      <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+              <div className="grid lg:grid-cols-12 gap-8">
+                <div className="lg:col-span-2">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs uppercase tracking-widest font-medium bg-accent/10 text-accent mb-2">
+                    {step.phase}
+                  </span>
+                  <p className="text-sm text-muted-foreground">
+                    {step.duration}
+                  </p>
+                </div>
+                <div className="lg:col-span-5">
+                  <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {step.description}
+                  </p>
+                </div>
+                <div className="lg:col-span-5">
+                  <p className="text-sm uppercase tracking-widest font-medium text-muted-foreground mb-4">
+                    Deliverables
+                  </p>
+                  <ul className="space-y-3">
+                    {step.deliverables.map((item, i) => (
+                      <li key={i} className="flex items-start gap-3 text-sm">
+                        <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </motion.div>
           ))}
@@ -213,12 +225,13 @@ const HowWeWork = () => {
       </Section>
 
       {/* Ownership */}
-      <Section className="border-t border-border">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+      <Section className="bg-secondary/30">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           <div>
             <SectionHeader
               label="Ownership"
               title="You own everything we build"
+              className="mb-8"
             />
             <div className="space-y-6 text-muted-foreground leading-relaxed">
               <p>
@@ -229,47 +242,54 @@ const HowWeWork = () => {
               </p>
             </div>
           </div>
-          <div className="space-y-4">
-            <div className="p-6 bg-card border border-border">
-              <h3 className="font-semibold mb-2">Full source code ownership</h3>
-              <p className="text-sm text-muted-foreground">
-                Every line of code deployed to your repositories.
-              </p>
-            </div>
-            <div className="p-6 bg-card border border-border">
-              <h3 className="font-semibold mb-2">Complete documentation</h3>
-              <p className="text-sm text-muted-foreground">
-                Technical docs your team can actually use.
-              </p>
-            </div>
-            <div className="p-6 bg-card border border-border">
-              <h3 className="font-semibold mb-2">Team training included</h3>
-              <p className="text-sm text-muted-foreground">
-                Your team understands and can maintain the systems.
-              </p>
-            </div>
-          </div>
+          <motion.div 
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="space-y-4"
+          >
+            {[
+              { title: "Full source code ownership", desc: "Every line of code deployed to your repositories." },
+              { title: "Complete documentation", desc: "Technical docs your team can actually use." },
+              { title: "Team training included", desc: "Your team understands and can maintain the systems." }
+            ].map((item, i) => (
+              <motion.div key={i} variants={fadeInUp} className="glass-card !p-6">
+                <h3 className="font-semibold mb-2">{item.title}</h3>
+                <p className="text-sm text-muted-foreground">
+                  {item.desc}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </Section>
 
       {/* CTA */}
-      <Section dark>
+      <Section dark className="rounded-t-[3rem]">
         <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6">
-            Ready to start the conversation?
-          </h2>
-          <p className="text-primary-foreground/70 text-lg mb-10">
-            A strategy call is the first step. We'll discuss your workflows, identify opportunities, and determine if we're the right fit.
-          </p>
-          <Link to="/contact">
-            <Button 
-              size="xl" 
-              className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-none font-medium"
-            >
-              Book a Strategy Call
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6">
+              Ready to start the conversation?
+            </h2>
+            <p className="text-primary-foreground/60 text-lg mb-12">
+              A strategy call is the first step. We'll discuss your workflows, identify opportunities, and determine if we're the right fit.
+            </p>
+            <Link to="/contact">
+              <Button 
+                size="xl" 
+                className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-full font-medium shadow-xl"
+              >
+                Book a Strategy Call
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </motion.div>
         </div>
       </Section>
     </PageLayout>

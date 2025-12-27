@@ -7,15 +7,15 @@ import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.jpg";
 
 const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 30 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 }
+  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
 };
 
 const staggerContainer = {
   animate: {
     transition: {
-      staggerChildren: 0.15
+      staggerChildren: 0.12
     }
   }
 };
@@ -43,17 +43,20 @@ const About = () => {
   return (
     <PageLayout>
       {/* Hero */}
-      <section className="bg-background pt-20 pb-16 md:pt-28 md:pb-20">
-        <div className="container-wide px-6 md:px-12 lg:px-20">
+      <section className="bg-background pt-32 pb-20 md:pt-40 md:pb-24 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="floating-orb w-[600px] h-[600px] bg-stone/15 -top-40 -left-40" />
+        </div>
+        <div className="container-wide px-6 md:px-12 lg:px-20 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl"
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-3xl mx-auto text-center"
           >
-            <p className="text-sm uppercase tracking-widest font-medium text-muted-foreground mb-6">
+            <span className="pill-accent mb-8 inline-flex">
               About QETA
-            </p>
+            </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-8">
               Built to solve operational problems, not chase trends.
             </h1>
@@ -62,17 +65,18 @@ const About = () => {
       </section>
 
       {/* Philosophy */}
-      <Section className="border-t border-border">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20">
+      <Section className="bg-secondary/30">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
             <SectionHeader
               label="Philosophy"
               title="Why QETA exists"
+              className="mb-8"
             />
             <div className="space-y-6 text-muted-foreground leading-relaxed">
               <p>
@@ -90,15 +94,15 @@ const About = () => {
           <motion.div
             initial="initial"
             whileInView="animate"
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="space-y-6"
+            className="space-y-4"
           >
             {principles.map((principle, index) => (
               <motion.div
                 key={index}
                 variants={fadeInUp}
-                className="p-6 bg-card border border-border"
+                className="glass-card !p-6"
               >
                 <h3 className="font-semibold mb-2">{principle.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
@@ -111,18 +115,19 @@ const About = () => {
       </Section>
 
       {/* Approach */}
-      <Section className="border-t border-border bg-card">
-        <div className="max-w-3xl">
+      <Section>
+        <div className="max-w-3xl mx-auto text-center">
           <SectionHeader
             label="Our Approach"
             title="Automation is only meaningful when it's reliable"
+            centered
           />
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6 text-muted-foreground leading-relaxed"
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-6 text-muted-foreground leading-relaxed text-lg"
           >
             <p>
               Every system we build follows the same standard: it must work in production without constant intervention. This isn't a high bar—it's the minimum requirement for operational infrastructure.
@@ -133,20 +138,18 @@ const About = () => {
             <p>
               Our engagements are structured for clarity. Fixed phases, clear deliverables, transparent timelines. You know exactly what you're getting and when you're getting it.
             </p>
-            <p>
-              Most importantly, we build for ownership. Every system is deployed to your infrastructure, documented for your team, and designed to run independently. We succeed when you no longer need us.
-            </p>
           </motion.div>
         </div>
       </Section>
 
       {/* The Name */}
-      <Section className="border-t border-border">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+      <Section className="bg-secondary/30">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           <div>
             <SectionHeader
               label="The Name"
               title="QETA"
+              className="mb-8"
             />
             <div className="space-y-6 text-muted-foreground leading-relaxed">
               <p>
@@ -162,13 +165,13 @@ const About = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="w-48 h-48 md:w-64 md:h-64 bg-card border border-border flex items-center justify-center"
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="w-56 h-56 md:w-72 md:h-72 glass-card flex items-center justify-center"
             >
               <img 
                 src={logo} 
                 alt="QETA Logo" 
-                className="w-32 h-32 md:w-40 md:h-40 object-contain"
+                className="w-36 h-36 md:w-48 md:h-48 object-contain"
               />
             </motion.div>
           </div>
@@ -176,23 +179,30 @@ const About = () => {
       </Section>
 
       {/* CTA */}
-      <Section dark>
+      <Section dark className="rounded-t-[3rem]">
         <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6">
-            Ready to discuss your operations?
-          </h2>
-          <p className="text-primary-foreground/70 text-lg mb-10">
-            No sales pitch. Just a conversation about your workflows and whether automation infrastructure makes sense.
-          </p>
-          <Link to="/contact">
-            <Button 
-              size="xl" 
-              className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-none font-medium"
-            >
-              Book a Strategy Call
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6">
+              Ready to discuss your operations?
+            </h2>
+            <p className="text-primary-foreground/60 text-lg mb-12">
+              No sales pitch. Just a conversation about your workflows and whether automation infrastructure makes sense.
+            </p>
+            <Link to="/contact">
+              <Button 
+                size="xl" 
+                className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-full font-medium shadow-xl"
+              >
+                Book a Strategy Call
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </motion.div>
         </div>
       </Section>
     </PageLayout>

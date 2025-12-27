@@ -44,34 +44,36 @@ const socialLinks = [
 
 export const Footer = () => {
   return (
-    <footer className="bg-primary text-primary-foreground">
-      <div className="container-wide px-6 md:px-12 lg:px-20 py-16 md:py-20">
+    <footer className="bg-primary text-primary-foreground rounded-t-[3rem] mt-[-2rem] relative z-10">
+      <div className="container-wide px-6 md:px-12 lg:px-20 py-20 md:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <Link to="/" className="flex items-center gap-3 mb-6">
-              <img 
-                src={logo} 
-                alt="QETA" 
-                className="h-10 w-10 object-contain brightness-0 invert opacity-90" 
-              />
+            <Link to="/" className="inline-flex items-center gap-3 mb-6 group">
+              <div className="bg-primary-foreground/10 rounded-full p-2">
+                <img 
+                  src={logo} 
+                  alt="QETA" 
+                  className="h-8 w-8 object-contain brightness-0 invert opacity-90" 
+                />
+              </div>
               <span className="text-xl font-semibold tracking-tight">QETA</span>
             </Link>
-            <p className="text-primary-foreground/70 text-sm leading-relaxed max-w-xs mb-6">
+            <p className="text-primary-foreground/60 text-sm leading-relaxed max-w-xs mb-8">
               Production-grade AI systems that eliminate manual work and scale operations.
             </p>
             {/* Social Icons */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
                   href={social.href}
                   target={social.href.startsWith("mailto") ? undefined : "_blank"}
                   rel={social.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                  className="text-primary-foreground/50 hover:text-primary-foreground transition-colors"
+                  className="w-10 h-10 rounded-full bg-primary-foreground/5 hover:bg-primary-foreground/10 flex items-center justify-center text-primary-foreground/50 hover:text-primary-foreground transition-all duration-300"
                   aria-label={social.name}
                 >
-                  <social.icon className="h-5 w-5" />
+                  <social.icon className="h-4 w-4" />
                 </a>
               ))}
             </div>
@@ -79,15 +81,15 @@ export const Footer = () => {
 
           {/* Company Links */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider mb-4 text-primary-foreground/50">
+            <h4 className="text-xs font-semibold uppercase tracking-wider mb-6 text-primary-foreground/40">
               Company
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-primary-foreground/70 hover:text-primary-foreground transition-colors text-sm"
+                    className="text-primary-foreground/60 hover:text-primary-foreground transition-colors text-sm"
                   >
                     {link.name}
                   </Link>
@@ -98,15 +100,15 @@ export const Footer = () => {
 
           {/* Solutions Links */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider mb-4 text-primary-foreground/50">
+            <h4 className="text-xs font-semibold uppercase tracking-wider mb-6 text-primary-foreground/40">
               Solutions
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {footerLinks.solutions.map((link) => (
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-primary-foreground/70 hover:text-primary-foreground transition-colors text-sm"
+                    className="text-primary-foreground/60 hover:text-primary-foreground transition-colors text-sm"
                   >
                     {link.name}
                   </Link>
@@ -117,15 +119,15 @@ export const Footer = () => {
 
           {/* Resources Links */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider mb-4 text-primary-foreground/50">
+            <h4 className="text-xs font-semibold uppercase tracking-wider mb-6 text-primary-foreground/40">
               Resources
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-primary-foreground/70 hover:text-primary-foreground transition-colors text-sm"
+                    className="text-primary-foreground/60 hover:text-primary-foreground transition-colors text-sm"
                   >
                     {link.name}
                   </Link>
@@ -136,12 +138,12 @@ export const Footer = () => {
         </div>
 
         {/* Bottom */}
-        <div className="mt-16 pt-8 border-t border-primary-foreground/10">
+        <div className="mt-20 pt-8 border-t border-primary-foreground/10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-primary-foreground/50 text-sm">
+            <p className="text-primary-foreground/40 text-sm">
               © {new Date().getFullYear()} QETA. All rights reserved.
             </p>
-            <p className="text-primary-foreground/50 text-sm">
+            <p className="text-primary-foreground/40 text-sm">
               Systems that run your business.
             </p>
           </div>
