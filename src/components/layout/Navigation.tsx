@@ -39,7 +39,7 @@ export const Navigation = () => {
               <img 
                 src={logo} 
                 alt="QETA" 
-                className="h-9 w-9 object-contain rounded-full transition-transform duration-300 group-hover:scale-110" 
+                className="h-9 w-9 object-contain rounded-full transition-all duration-300 group-hover:scale-110 shadow-[0_0_15px_rgba(59,130,246,0.4)] group-hover:shadow-[0_0_25px_rgba(59,130,246,0.6)]" 
               />
             </div>
             <span className="text-lg font-semibold tracking-tight text-foreground">QETA</span>
