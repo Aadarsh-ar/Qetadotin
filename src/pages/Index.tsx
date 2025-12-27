@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Workflow, Users, Bot, Layers } from "lucide-react";
+import { ArrowRight, Workflow, Users, Bot, Layers, Phone } from "lucide-react";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/button";
-import { SystemDiagram } from "@/components/ui/SystemDiagram";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -83,63 +82,68 @@ const problems = [
   "Automations that break after launch"
 ];
 
+const teamMembers = [
+  {
+    name: "Aadarsh",
+    role: "Automation & Workflow Architect",
+    phone: "+916305367443",
+    whatsappLink: "https://wa.me/916305367443"
+  },
+  {
+    name: "Eswar",
+    role: "Lead Engineer, AI Integrations",
+    phone: "+919391536082",
+    whatsappLink: "https://wa.me/919391536082"
+  }
+];
+
 const Index = () => {
   return (
     <PageLayout>
       {/* Hero Section */}
       <section className="min-h-[90vh] flex items-center bg-background">
         <div className="container-wide px-6 md:px-12 lg:px-20 py-20 md:py-28">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
-            <motion.div
-              initial="initial"
-              animate="animate"
-              variants={staggerContainer}
+          <motion.div
+            initial="initial"
+            animate="animate"
+            variants={staggerContainer}
+            className="max-w-4xl"
+          >
+            <motion.p 
+              variants={fadeInUp}
+              className="text-sm uppercase tracking-widest font-medium text-muted-foreground mb-6"
             >
-              <motion.p 
-                variants={fadeInUp}
-                className="text-sm uppercase tracking-widest font-medium text-muted-foreground mb-6"
-              >
-                AI Systems Partner
-              </motion.p>
-              <motion.h1 
-                variants={fadeInUp}
-                className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-8"
-              >
-                We build AI systems that run your business, not demos.
-              </motion.h1>
-              <motion.p 
-                variants={fadeInUp}
-                className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl mb-10"
-              >
-                QETA designs and deploys custom AI automation infrastructure to eliminate manual work, reduce costs, and scale operations.
-              </motion.p>
-              <motion.div 
-                variants={fadeInUp}
-                className="flex flex-col sm:flex-row gap-4"
-              >
-                <Link to="/contact">
-                  <Button variant="hero" size="xl">
-                    Book a Strategy Call
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-                <Link to="/solutions">
-                  <Button variant="heroOutline" size="xl">
-                    See What We Build
-                  </Button>
-                </Link>
-              </motion.div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.3 }}
-              className="hidden lg:block"
+              AI Systems Partner
+            </motion.p>
+            <motion.h1 
+              variants={fadeInUp}
+              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold tracking-tight leading-[1.1] mb-8"
             >
-              <SystemDiagram />
+              We build AI systems that run your business, not demos.
+            </motion.h1>
+            <motion.p 
+              variants={fadeInUp}
+              className="text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-3xl mb-10"
+            >
+              QETA designs and deploys custom AI automation infrastructure to eliminate manual work, reduce costs, and scale operations. No fragmented tools. No broken automations. Just systems that work.
+            </motion.p>
+            <motion.div 
+              variants={fadeInUp}
+              className="flex flex-col sm:flex-row gap-4"
+            >
+              <Link to="/contact">
+                <Button variant="hero" size="xl">
+                  Book a Call
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+              <Link to="/solutions">
+                <Button variant="heroOutline" size="xl">
+                  See What We Build
+                </Button>
+              </Link>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -272,6 +276,46 @@ const Index = () => {
               <p className="text-muted-foreground">
                 {metric.label}
               </p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </Section>
+
+      {/* Team Section */}
+      <Section className="border-t border-border">
+        <SectionHeader
+          label="Our Team"
+          title="The people behind QETA"
+          description="Connect directly with our team to discuss your automation needs."
+        />
+        <motion.div
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          variants={staggerContainer}
+          className="grid md:grid-cols-2 gap-8 max-w-3xl"
+        >
+          {teamMembers.map((member, index) => (
+            <motion.div
+              key={index}
+              variants={fadeInUp}
+              className="system-card"
+            >
+              <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
+              <p className="text-muted-foreground text-sm mb-4">{member.role}</p>
+              <p className="text-sm text-foreground/70 mb-4 flex items-center gap-2">
+                <Phone className="h-4 w-4" />
+                {member.phone}
+              </p>
+              <a
+                href={member.whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="hero" size="default" className="w-full">
+                  Chat on WhatsApp
+                </Button>
+              </a>
             </motion.div>
           ))}
         </motion.div>

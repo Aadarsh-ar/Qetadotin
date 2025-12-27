@@ -7,7 +7,7 @@ import logo from "@/assets/logo.jpg";
 
 const navLinks = [
   { name: "Solutions", href: "/solutions" },
-  { name: "How We Work", href: "/how-we-work" },
+  { name: "Our Work", href: "/how-we-work" },
   { name: "Use Cases", href: "/use-cases" },
   { name: "About", href: "/about" },
 ];
@@ -49,7 +49,7 @@ export const Navigation = () => {
           <div className="hidden md:flex items-center gap-4">
             <Link to="/contact">
               <Button variant="hero" size="default">
-                Book a Strategy Call
+                Book a Call
               </Button>
             </Link>
           </div>
@@ -88,7 +88,7 @@ export const Navigation = () => {
               ))}
               <Link to="/contact" onClick={() => setIsOpen(false)}>
                 <Button variant="hero" size="lg" className="w-full mt-4">
-                  Book a Strategy Call
+                  Book a Call
                 </Button>
               </Link>
             </div>
