@@ -175,13 +175,13 @@ const Index = () => {
           className="container-wide px-6 md:px-12 lg:px-20 relative z-10"
           style={{ opacity: heroOpacity, scale: heroScale }}
         >
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center pt-16 md:pt-24">
             
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1] mb-8 text-foreground text-shadow-soft"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold tracking-tight leading-[1.15] mb-6 md:mb-8 text-foreground text-shadow-soft px-2"
             >
               We build AI systems that run your business, not demos.
             </motion.h1>
