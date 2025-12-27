@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Plus, Trash2, Edit, Save, X, Upload, LogOut, Eye, EyeOff, ImagePlus, Loader2 } from "lucide-react";
+import { Plus, Trash2, Edit, Save, X, Upload, LogOut, Eye, EyeOff, ImagePlus, Loader2, UserPlus, Mail, Lock } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/button";
@@ -44,6 +45,10 @@ const BlogAdmin = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [serverVerified, setServerVerified] = useState(false);
   const [verifying, setVerifying] = useState(true);
+  const [isInviteOpen, setIsInviteOpen] = useState(false);
+  const [inviteEmail, setInviteEmail] = useState("");
+  const [invitePassword, setInvitePassword] = useState("");
+  const [isInviting, setIsInviting] = useState(false);
   const [formData, setFormData] = useState<Partial<BlogPost>>({
     title: "",
     summary: "",
@@ -330,6 +335,76 @@ const BlogAdmin = () => {
     navigate('/');
   };
 
+  const handleInviteAdmin = async () => {
+    if (!inviteEmail || !invitePassword) {
+      toast({
+        title: "Missing Fields",
+        description: "Please enter both email and password.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (invitePassword.length < 6) {
+      toast({
+        title: "Invalid Password",
+        description: "Password must be at least 6 characters.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsInviting(true);
+
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.access_token) {
+        toast({
+          title: "Session Expired",
+          description: "Please sign in again.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const { data, error } = await supabase.functions.invoke('invite-admin', {
+        headers: {
+          Authorization: `Bearer ${session.access_token}`
+        },
+        body: {
+          email: inviteEmail.trim().toLowerCase(),
+          password: invitePassword
+        }
+      });
+
+      if (error || data?.error) {
+        toast({
+          title: "Invite Failed",
+          description: data?.error || error?.message || "Failed to invite admin.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "Admin Invited",
+        description: `Successfully created admin account for ${inviteEmail}`,
+      });
+
+      setInviteEmail("");
+      setInvitePassword("");
+      setIsInviteOpen(false);
+    } catch (err) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsInviting(false);
+    }
+  };
+
   if (loading || verifying) {
     return (
       <PageLayout>
@@ -381,11 +456,75 @@ const BlogAdmin = () => {
           {/* Action Bar */}
           <div className="flex flex-wrap justify-between items-center gap-4 mb-8">
             <h2 className="text-2xl font-semibold">All Posts ({posts.length})</h2>
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-3">
               <Button onClick={handleCreate} className="rounded-full">
                 <Plus className="h-4 w-4 mr-2" />
                 New Post
               </Button>
+              <Dialog open={isInviteOpen} onOpenChange={setIsInviteOpen}>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="rounded-full">
+                    <UserPlus className="h-4 w-4 mr-2" />
+                    Invite Admin
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Invite New Admin</DialogTitle>
+                    <DialogDescription>
+                      Create a new admin account. The user will be able to sign in immediately.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4 pt-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="invite-email">Email</Label>
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                          id="invite-email"
+                          type="email"
+                          placeholder="newadmin@example.com"
+                          value={inviteEmail}
+                          onChange={(e) => setInviteEmail(e.target.value)}
+                          className="pl-10"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="invite-password">Password</Label>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                          id="invite-password"
+                          type="password"
+                          placeholder="••••••••"
+                          value={invitePassword}
+                          onChange={(e) => setInvitePassword(e.target.value)}
+                          className="pl-10"
+                        />
+                      </div>
+                      <p className="text-xs text-muted-foreground">Must be at least 6 characters</p>
+                    </div>
+                    <Button 
+                      onClick={handleInviteAdmin} 
+                      className="w-full rounded-full"
+                      disabled={isInviting}
+                    >
+                      {isInviting ? (
+                        <span className="flex items-center gap-2">
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                          Creating...
+                        </span>
+                      ) : (
+                        <span className="flex items-center gap-2">
+                          <UserPlus className="h-4 w-4" />
+                          Create Admin Account
+                        </span>
+                      )}
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
               <Button variant="outline" onClick={handleSignOut} className="rounded-full">
                 <LogOut className="h-4 w-4 mr-2" />
                 Sign Out
