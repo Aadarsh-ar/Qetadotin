@@ -175,13 +175,23 @@ const Index = () => {
           className="container-wide px-6 md:px-12 lg:px-20 relative z-10"
           style={{ opacity: heroOpacity, scale: heroScale }}
         >
-          <div className="max-w-4xl mx-auto text-center pt-16 md:pt-24">
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div 
+              initial={{ opacity: 0, y: 20, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <span className="inline-flex items-center px-4 py-2 md:px-5 md:py-2 rounded-full text-xs md:text-sm font-medium bg-white/60 backdrop-blur-xl text-foreground border border-white/40 shadow-pastel mb-6 md:mb-8 hover:shadow-pastel-lg hover:bg-white/70 transition-all duration-300 cursor-default whitespace-nowrap">
+                <Sparkles className="w-3 h-3 md:w-4 md:h-4 mr-1.5 md:mr-2 text-accent-foreground animate-pulse flex-shrink-0" />
+                AI Systems Partner
+              </span>
+            </motion.div>
             
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold tracking-tight leading-[1.15] mb-6 md:mb-8 text-foreground text-shadow-soft px-2"
+              className="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1] mb-8 text-foreground text-shadow-soft"
             >
               We build AI systems that run your business, not demos.
             </motion.h1>
