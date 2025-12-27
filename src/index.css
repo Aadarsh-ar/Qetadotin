@@ -271,7 +271,14 @@
 
   /* Hero gradient background */
   .gradient-hero-bg {
-    background: var(--gradient-hero);
+    background: linear-gradient(
+      135deg, 
+      hsl(217 100% 96%) 0%, 
+      hsl(243 100% 96%) 25%, 
+      hsl(270 100% 96%) 50%,
+      hsl(342 100% 96%) 75%, 
+      hsl(25 100% 96%) 100%
+    );
     position: relative;
   }
 
@@ -280,9 +287,10 @@
     position: absolute;
     inset: 0;
     background: 
-      radial-gradient(ellipse 80% 50% at 20% 40%, hsl(217 100% 81% / 0.2) 0%, transparent 50%),
-      radial-gradient(ellipse 60% 40% at 80% 60%, hsl(342 100% 85% / 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse 50% 30% at 50% 80%, hsl(270 100% 86% / 0.12) 0%, transparent 50%);
+      radial-gradient(ellipse 100% 80% at 10% 20%, hsl(217 100% 81% / 0.35) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 60% at 90% 30%, hsl(270 100% 86% / 0.3) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 50% at 50% 90%, hsl(342 100% 85% / 0.25) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 40% at 30% 70%, hsl(25 100% 83% / 0.2) 0%, transparent 50%);
     pointer-events: none;
   }
 }

@@ -94,12 +94,12 @@ const UseCases = () => {
       {/* Hero */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-24 overflow-hidden">
         {/* Gradient background */}
-        <div className="absolute inset-0 gradient-hero-bg" />
+        <div className="absolute inset-0 gradient-hero-bg opacity-100" />
         
         {/* Floating orbs */}
-        <div className="floating-orb w-[600px] h-[600px] bg-primary/20 -top-40 -left-40" />
-        <div className="floating-orb w-[400px] h-[400px] bg-accent/15 top-20 right-0" style={{ animationDelay: "-5s" }} />
-        <div className="floating-orb w-[300px] h-[300px] bg-periwinkle/20 bottom-0 left-1/3" style={{ animationDelay: "-10s" }} />
+        <div className="floating-orb w-[600px] h-[600px] bg-primary/30 -top-40 -left-40" />
+        <div className="floating-orb w-[400px] h-[400px] bg-accent/25 top-20 right-0" style={{ animationDelay: "-5s" }} />
+        <div className="floating-orb w-[300px] h-[300px] bg-secondary/30 bottom-0 left-1/3" style={{ animationDelay: "-10s" }} />
         
         <div className="container-wide px-6 md:px-12 lg:px-20 relative z-10">
           <motion.div
