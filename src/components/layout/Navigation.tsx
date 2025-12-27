@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
 
@@ -15,6 +15,7 @@ const navLinks = [
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isDark, setIsDark] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -24,6 +25,28 @@ export const Navigation = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    // Check for saved theme preference or system preference
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    
+    if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+      setIsDark(true);
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    setIsDark(!isDark);
+    if (isDark) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    }
+  };
 
   return (
     <nav className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl transition-all duration-500 ${
@@ -61,8 +84,26 @@ export const Navigation = () => {
             ))}
           </div>
 
-          {/* CTA */}
-          <div className="hidden md:flex items-center">
+          {/* CTA & Theme Toggle */}
+          <div className="hidden md:flex items-center gap-2">
+            <motion.button
+              onClick={toggleTheme}
+              className="p-2.5 rounded-full hover:bg-primary/10 transition-colors text-foreground"
+              aria-label="Toggle theme"
+              whileTap={{ scale: 0.95 }}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={isDark ? "dark" : "light"}
+                  initial={{ y: -20, opacity: 0, rotate: -90 }}
+                  animate={{ y: 0, opacity: 1, rotate: 0 }}
+                  exit={{ y: 20, opacity: 0, rotate: 90 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {isDark ? <Sun size={18} /> : <Moon size={18} />}
+                </motion.div>
+              </AnimatePresence>
+            </motion.button>
             <Link to="/contact">
               <Button variant="hero" size="sm">
                 Book a Call
