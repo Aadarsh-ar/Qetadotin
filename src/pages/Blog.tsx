@@ -1,14 +1,16 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const }
 };
 
 const staggerContainer = {
@@ -19,69 +21,55 @@ const staggerContainer = {
   }
 };
 
-// Sample blog posts data
-const featuredPost = {
-  id: "1",
-  title: "How AI Automation is Transforming Business Operations in 2025",
-  summary: "Discover the key trends shaping how businesses leverage AI to streamline workflows, reduce costs, and scale operations without adding headcount.",
-  category: "Insights",
-  date: "Dec 20, 2024",
-  readTime: "8 min read",
-  image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&auto=format&fit=crop&q=60"
-};
-
-const blogPosts = [
-  {
-    id: "2",
-    title: "Building Production-Ready AI Agents: A Technical Deep Dive",
-    summary: "Learn the architecture patterns and best practices for deploying AI agents that actually work in production environments.",
-    category: "Engineering",
-    date: "Dec 15, 2024",
-    readTime: "12 min read"
-  },
-  {
-    id: "3",
-    title: "The Real Cost of Manual Workflows: A Data-Driven Analysis",
-    summary: "We analyzed 50+ businesses to quantify the hidden costs of manual processes and the ROI of automation.",
-    category: "Research",
-    date: "Dec 10, 2024",
-    readTime: "6 min read"
-  },
-  {
-    id: "4",
-    title: "From Fragmented Tools to Unified Systems: A Migration Guide",
-    summary: "Step-by-step guide to consolidating your tech stack into a cohesive automation infrastructure.",
-    category: "Guides",
-    date: "Dec 5, 2024",
-    readTime: "10 min read"
-  },
-  {
-    id: "5",
-    title: "AI Lead Qualification: Beyond the Basics",
-    summary: "Advanced strategies for implementing intelligent lead scoring and qualification at scale.",
-    category: "Insights",
-    date: "Nov 28, 2024",
-    readTime: "7 min read"
-  },
-  {
-    id: "6",
-    title: "Case Study: 68% Reduction in Processing Time",
-    summary: "How we helped a logistics company transform their operations with custom AI workflows.",
-    category: "Case Study",
-    date: "Nov 20, 2024",
-    readTime: "5 min read"
-  },
-  {
-    id: "7",
-    title: "The Future of CRM: AI-Native Relationship Management",
-    summary: "Exploring how AI is redefining customer relationship management beyond traditional CRM tools.",
-    category: "Insights",
-    date: "Nov 15, 2024",
-    readTime: "9 min read"
-  }
-];
+interface BlogPost {
+  id: string;
+  title: string;
+  summary: string | null;
+  content: string;
+  category: string | null;
+  image_url: string | null;
+  created_at: string;
+}
 
 const Blog = () => {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const fetchPosts = async () => {
+    const { data, error } = await supabase
+      .from('blog_posts')
+      .select('id, title, summary, content, category, image_url, created_at')
+      .eq('published', true)
+      .order('created_at', { ascending: false });
+
+    if (!error && data) {
+      setPosts(data);
+    }
+    setIsLoading(false);
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
+  const estimateReadTime = (content: string) => {
+    const wordsPerMinute = 200;
+    const words = content.split(/\s+/).length;
+    const minutes = Math.ceil(words / wordsPerMinute);
+    return `${minutes} min read`;
+  };
+
+  const featuredPost = posts[0];
+  const otherPosts = posts.slice(1);
+
   return (
     <PageLayout>
       {/* Hero Section */}
@@ -120,92 +108,128 @@ const Blog = () => {
         </div>
       </section>
 
-      {/* Featured Post */}
-      <Section className="pt-8">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <Link to={`/blog/${featuredPost.id}`} className="block group">
-            <div className="blog-card grid md:grid-cols-2 gap-0 overflow-hidden">
-              <div className="aspect-[16/10] md:aspect-auto overflow-hidden">
-                <img 
-                  src={featuredPost.image} 
-                  alt={featuredPost.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-              <div className="p-8 md:p-10 lg:p-12 flex flex-col justify-center">
-                <span className="category-tag w-fit mb-4">{featuredPost.category}</span>
-                <h2 className="text-2xl md:text-3xl font-semibold mb-4 group-hover:text-accent transition-colors">
-                  {featuredPost.title}
-                </h2>
-                <p className="text-muted-foreground leading-relaxed mb-6">
-                  {featuredPost.summary}
-                </p>
-                <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
-                  <span className="flex items-center gap-1.5">
-                    <Calendar className="w-4 h-4" />
-                    {featuredPost.date}
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <Clock className="w-4 h-4" />
-                    {featuredPost.readTime}
-                  </span>
-                </div>
-                <span className="inline-flex items-center text-sm font-medium text-foreground group-hover:text-accent transition-colors">
-                  Read article
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </span>
-              </div>
-            </div>
-          </Link>
-        </motion.div>
-      </Section>
+      {/* Loading State */}
+      {isLoading && (
+        <Section className="pt-8">
+          <div className="flex justify-center py-16">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+              className="h-8 w-8 border-2 border-primary border-t-transparent rounded-full"
+            />
+          </div>
+        </Section>
+      )}
 
-      {/* All Posts Grid */}
-      <Section>
-        <SectionHeader
-          label="All Articles"
-          title="Latest from our blog"
-          centered
-        />
-        <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {blogPosts.map((post) => (
-            <motion.div key={post.id} variants={fadeInUp}>
-              <Link to={`/blog/${post.id}`} className="block group h-full">
-                <div className="blog-card h-full p-6 md:p-8 flex flex-col hover:border-accent/30 transition-all duration-300">
-                  <span className="category-tag w-fit mb-4">{post.category}</span>
-                  <h3 className="text-lg font-semibold mb-3 group-hover:text-accent transition-colors line-clamp-2">
-                    {post.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
-                    {post.summary}
+      {/* No Posts State */}
+      {!isLoading && posts.length === 0 && (
+        <Section className="pt-8">
+          <div className="text-center py-16">
+            <p className="text-muted-foreground text-lg">No blog posts published yet. Check back soon!</p>
+          </div>
+        </Section>
+      )}
+
+      {/* Featured Post */}
+      {!isLoading && featuredPost && (
+        <Section className="pt-8">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <Link to={`/blog/${featuredPost.id}`} className="block group">
+              <div className="blog-card grid md:grid-cols-2 gap-0 overflow-hidden">
+                {featuredPost.image_url ? (
+                  <div className="aspect-[16/10] md:aspect-auto overflow-hidden">
+                    <img 
+                      src={featuredPost.image_url} 
+                      alt={featuredPost.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                ) : (
+                  <div className="aspect-[16/10] md:aspect-auto bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                    <span className="text-6xl opacity-20">📝</span>
+                  </div>
+                )}
+                <div className="p-8 md:p-10 lg:p-12 flex flex-col justify-center">
+                  {featuredPost.category && (
+                    <span className="category-tag w-fit mb-4">{featuredPost.category}</span>
+                  )}
+                  <h2 className="text-2xl md:text-3xl font-semibold mb-4 group-hover:text-accent transition-colors">
+                    {featuredPost.title}
+                  </h2>
+                  <p className="text-muted-foreground leading-relaxed mb-6">
+                    {featuredPost.summary || featuredPost.content.substring(0, 150) + '...'}
                   </p>
-                  <div className="flex items-center justify-between text-xs text-muted-foreground pt-4 border-t border-border/50">
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-3.5 h-3.5" />
-                      {post.date}
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="w-4 h-4" />
+                      {formatDate(featuredPost.created_at)}
                     </span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5" />
-                      {post.readTime}
+                    <span className="flex items-center gap-1.5">
+                      <Clock className="w-4 h-4" />
+                      {estimateReadTime(featuredPost.content)}
                     </span>
                   </div>
+                  <span className="inline-flex items-center text-sm font-medium text-foreground group-hover:text-accent transition-colors">
+                    Read article
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </span>
                 </div>
-              </Link>
-            </motion.div>
-          ))}
-        </motion.div>
-      </Section>
+              </div>
+            </Link>
+          </motion.div>
+        </Section>
+      )}
+
+      {/* All Posts Grid */}
+      {!isLoading && otherPosts.length > 0 && (
+        <Section>
+          <SectionHeader
+            label="All Articles"
+            title="Latest from our blog"
+            centered
+          />
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            {otherPosts.map((post) => (
+              <motion.div key={post.id} variants={fadeInUp}>
+                <Link to={`/blog/${post.id}`} className="block group h-full">
+                  <div className="blog-card h-full p-6 md:p-8 flex flex-col hover:border-accent/30 transition-all duration-300">
+                    {post.category && (
+                      <span className="category-tag w-fit mb-4">{post.category}</span>
+                    )}
+                    <h3 className="text-lg font-semibold mb-3 group-hover:text-accent transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
+                      {post.summary || post.content.substring(0, 100) + '...'}
+                    </p>
+                    <div className="flex items-center justify-between text-xs text-muted-foreground pt-4 border-t border-border/50">
+                      <span className="flex items-center gap-1">
+                        <Calendar className="w-3.5 h-3.5" />
+                        {formatDate(post.created_at)}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-3.5 h-3.5" />
+                        {estimateReadTime(post.content)}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
+        </Section>
+      )}
 
       {/* Newsletter CTA */}
       <Section className="bg-gradient-to-br from-primary/10 via-periwinkle/10 to-accent/10 rounded-t-[3rem]">
