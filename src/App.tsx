@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 import { AnimatedRoutes } from "./components/layout/AnimatedRoutes";
 import { BackToTop } from "./components/ui/BackToTop";
+import { AIChatbot } from "./components/ui/AIChatbot";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ const App = () => (
       <BrowserRouter>
         <AnimatedRoutes />
         <BackToTop />
+        <AIChatbot />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

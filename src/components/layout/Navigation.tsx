@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HamburgerIcon } from "@/components/ui/HamburgerIcon";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/qeta-logo.jpg";
 
 const navLinks = [
   { name: "Solutions", href: "/solutions" },
