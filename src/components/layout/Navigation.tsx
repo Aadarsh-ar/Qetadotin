@@ -7,7 +7,6 @@ import logo from "@/assets/logo.jpg";
 
 const navLinks = [
   { name: "Solutions", href: "/solutions" },
-  { name: "Our Work", href: "/how-we-work" },
   { name: "Use Cases", href: "/use-cases" },
   { name: "Blog", href: "/blog" },
   { name: "About", href: "/about" },
@@ -30,8 +29,8 @@ export const Navigation = () => {
     <nav className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl transition-all duration-500 ${
       scrolled ? "top-3" : "top-6"
     }`}>
-      <div className={`bg-card/90 backdrop-blur-xl border border-border/50 rounded-full px-4 md:px-6 transition-all duration-500 ${
-        scrolled ? "shadow-lg" : "shadow-md"
+      <div className={`bg-white/70 backdrop-blur-2xl border border-white/40 rounded-full px-4 md:px-6 transition-all duration-500 ${
+        scrolled ? "shadow-pastel-lg" : "shadow-pastel"
       }`}>
         <div className="flex items-center justify-between h-14 md:h-16">
           {/* Logo */}
@@ -53,7 +52,7 @@ export const Navigation = () => {
                 <Button 
                   variant="nav" 
                   size="sm"
-                  className={`${location.pathname === link.href ? "bg-secondary text-foreground" : ""}`}
+                  className={`${location.pathname === link.href ? "bg-primary/20 text-foreground" : ""}`}
                 >
                   {link.name}
                 </Button>
@@ -72,7 +71,7 @@ export const Navigation = () => {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden p-2 text-foreground hover:bg-secondary rounded-full transition-colors"
+            className="md:hidden p-2 text-foreground hover:bg-primary/10 rounded-full transition-colors"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
@@ -89,15 +88,15 @@ export const Navigation = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="md:hidden mt-3 bg-card/95 backdrop-blur-xl border border-border/50 rounded-3xl shadow-xl overflow-hidden"
+            className="md:hidden mt-3 bg-white/80 backdrop-blur-2xl border border-white/40 rounded-3xl shadow-pastel-lg overflow-hidden"
           >
             <div className="px-6 py-6 space-y-2">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   to={link.href}
-                  className={`block py-3 px-4 rounded-xl text-foreground/80 hover:text-foreground hover:bg-secondary/50 transition-all ${
-                    location.pathname === link.href ? "bg-secondary text-foreground" : ""
+                  className={`block py-3 px-4 rounded-xl text-foreground/80 hover:text-foreground hover:bg-primary/10 transition-all ${
+                    location.pathname === link.href ? "bg-primary/15 text-foreground" : ""
                   }`}
                   onClick={() => setIsOpen(false)}
                 >

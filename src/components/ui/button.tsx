@@ -9,17 +9,18 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90 rounded-full shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]",
+        default: "bg-primary text-foreground hover:bg-primary/90 rounded-full shadow-pastel hover:shadow-pastel-lg hover:scale-[1.02] active:scale-[0.98]",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-full",
-        outline: "border-2 border-primary/20 bg-transparent text-foreground hover:bg-primary hover:text-primary-foreground rounded-full",
+        outline: "border-2 border-primary/30 bg-transparent text-foreground hover:bg-primary/10 hover:border-primary/50 rounded-full",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-full",
-        ghost: "hover:bg-primary/5 hover:text-foreground rounded-full",
+        ghost: "hover:bg-primary/10 hover:text-foreground rounded-full",
         link: "text-primary underline-offset-4 hover:underline",
-        hero: "bg-primary text-primary-foreground hover:bg-primary/90 font-medium tracking-wide rounded-full shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]",
-        heroOutline: "border-2 border-primary/30 bg-transparent text-foreground hover:border-primary hover:bg-primary/5 font-medium tracking-wide rounded-full",
-        nav: "bg-transparent text-foreground/70 hover:text-foreground hover:bg-secondary/50 font-normal rounded-full",
-        soft: "bg-accent/10 text-accent hover:bg-accent/20 rounded-full font-medium",
-        glass: "bg-card/80 backdrop-blur-sm text-foreground border border-border/50 hover:bg-card hover:border-border rounded-full shadow-sm hover:shadow-md",
+        hero: "bg-gradient-to-r from-primary via-periwinkle to-accent text-foreground font-semibold tracking-wide rounded-full shadow-pastel-lg hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] border border-white/20",
+        heroOutline: "border-2 border-primary/40 bg-white/50 backdrop-blur-sm text-foreground hover:border-primary hover:bg-white/70 font-medium tracking-wide rounded-full",
+        nav: "bg-transparent text-foreground/70 hover:text-foreground hover:bg-primary/10 font-normal rounded-full",
+        soft: "bg-accent/20 text-accent-foreground hover:bg-accent/30 rounded-full font-medium",
+        glass: "bg-white/60 backdrop-blur-xl text-foreground border border-white/40 hover:bg-white/80 hover:border-white/60 rounded-full shadow-glass hover:shadow-pastel",
+        pastel: "bg-gradient-to-r from-sky-blue/80 to-periwinkle/80 text-foreground font-medium rounded-full shadow-pastel hover:shadow-pastel-lg hover:scale-[1.02]",
       },
       size: {
         default: "h-11 px-6 py-2.5",

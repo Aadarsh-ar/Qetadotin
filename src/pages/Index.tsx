@@ -25,28 +25,28 @@ const solutions = [
     title: "AI Workflow Automation",
     description: "Internal ops, CRM, support, and admin processes automated end-to-end.",
     href: "/solutions#workflow",
-    color: "bg-accent/15 text-accent"
+    gradient: "from-sky-blue/30 to-periwinkle/30"
   },
   {
     icon: Users,
     title: "AI Revenue & Lead Systems",
     description: "Qualification, outreach intelligence, and pipeline automation at scale.",
     href: "/solutions#revenue",
-    color: "bg-primary/20 text-foreground"
+    gradient: "from-periwinkle/30 to-pastel-pink/30"
   },
   {
     icon: Bot,
     title: "Custom AI Agents",
     description: "Research, extraction, and decision support agents built for your workflows.",
     href: "/solutions#agents",
-    color: "bg-peach-deep/15 text-peach-deep"
+    gradient: "from-pastel-pink/30 to-peach-coral/30"
   },
   {
     icon: Layers,
     title: "System Integration",
     description: "APIs, databases, and existing stack unified into cohesive infrastructure.",
     href: "/solutions#integration",
-    color: "bg-secondary text-foreground"
+    gradient: "from-peach-coral/30 to-warm-lavender/30"
   }
 ];
 
@@ -131,12 +131,14 @@ const blogPreview = [
 const Index = () => {
   return (
     <PageLayout>
-      {/* Hero Section */}
-      <section className="min-h-screen flex items-center relative overflow-hidden pt-32 pb-20">
-        {/* Background decoration */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="floating-orb w-[600px] h-[600px] bg-accent/20 -top-40 -right-40" />
-          <div className="floating-orb w-[400px] h-[400px] bg-primary/10 bottom-20 -left-20" style={{ animationDelay: "-10s" }} />
+      {/* Hero Section - Soft Pastel Gradient */}
+      <section className="min-h-screen flex items-center relative overflow-hidden pt-32 pb-20 gradient-hero-bg">
+        {/* Floating pastel orbs */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="floating-orb w-[600px] h-[600px] bg-sky-blue/40 -top-40 -right-40 opacity-60" />
+          <div className="floating-orb w-[500px] h-[500px] bg-pastel-pink/30 bottom-20 -left-40 opacity-50" style={{ animationDelay: "-8s" }} />
+          <div className="floating-orb w-[400px] h-[400px] bg-warm-lavender/35 top-1/3 left-1/4 opacity-40" style={{ animationDelay: "-15s" }} />
+          <div className="floating-orb w-[300px] h-[300px] bg-peach-coral/30 bottom-40 right-1/4 opacity-45" style={{ animationDelay: "-12s" }} />
         </div>
         
         <div className="container-wide px-6 md:px-12 lg:px-20 relative z-10">
@@ -147,15 +149,15 @@ const Index = () => {
             className="max-w-4xl mx-auto text-center"
           >
             <motion.div variants={fadeInUp}>
-              <span className="pill-accent mb-8 inline-flex">
-                <Sparkles className="w-3.5 h-3.5 mr-2" />
+              <span className="inline-flex items-center px-5 py-2 rounded-full text-sm font-medium bg-white/60 backdrop-blur-xl text-foreground border border-white/40 shadow-pastel mb-8">
+                <Sparkles className="w-4 h-4 mr-2 text-accent-foreground" />
                 AI Systems Partner
               </span>
             </motion.div>
             
             <motion.h1 
               variants={fadeInUp}
-              className="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1] mb-8"
+              className="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1] mb-8 text-foreground text-shadow-soft"
             >
               We build AI systems that run your business, not demos.
             </motion.h1>
@@ -188,7 +190,7 @@ const Index = () => {
       </section>
 
       {/* Problem Section */}
-      <Section className="bg-secondary/30">
+      <Section className="bg-white/30 backdrop-blur-sm">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           <SectionHeader
             label="The Problem"
@@ -208,7 +210,7 @@ const Index = () => {
                 variants={fadeInUp}
                 className="glass-card !p-6 flex items-center gap-4"
               >
-                <span className="w-2 h-2 rounded-full bg-accent flex-shrink-0" />
+                <span className="w-3 h-3 rounded-full bg-gradient-to-r from-pastel-pink to-peach-coral flex-shrink-0" />
                 <p className="text-foreground/80">{problem}</p>
               </motion.div>
             ))}
@@ -240,16 +242,16 @@ const Index = () => {
                 to={solution.href}
                 className="group interactive-card block h-full"
               >
-                <div className={`w-12 h-12 rounded-2xl ${solution.color} flex items-center justify-center mb-6`}>
-                  <solution.icon className="h-6 w-6" strokeWidth={1.5} />
+                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${solution.gradient} flex items-center justify-center mb-6 shadow-pastel`}>
+                  <solution.icon className="h-6 w-6 text-foreground/70" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 group-hover:text-accent transition-colors">
+                <h3 className="text-xl font-semibold mb-3 group-hover:text-accent-foreground transition-colors">
                   {solution.title}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed mb-6">
                   {solution.description}
                 </p>
-                <span className="inline-flex items-center text-sm font-medium text-foreground/60 group-hover:text-accent transition-colors">
+                <span className="inline-flex items-center text-sm font-medium text-foreground/60 group-hover:text-accent-foreground transition-colors">
                   Learn more
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
@@ -260,7 +262,7 @@ const Index = () => {
       </Section>
 
       {/* Process Section */}
-      <Section className="bg-secondary/30">
+      <Section className="bg-gradient-to-br from-periwinkle/20 via-transparent to-pastel-pink/20">
         <SectionHeader
           label="How We Work"
           title="From audit to autonomous operation"
@@ -280,7 +282,7 @@ const Index = () => {
               variants={fadeInUp}
               className="glass-card text-center"
             >
-              <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent/10 text-accent font-semibold text-lg mb-6">
+              <span className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-sky-blue/40 to-periwinkle/40 text-foreground font-semibold text-lg mb-6 shadow-pastel">
                 {step.number}
               </span>
               <h3 className="text-lg font-semibold mb-3">{step.title}</h3>
@@ -312,7 +314,7 @@ const Index = () => {
               variants={fadeInUp}
               className="glass-card text-center"
             >
-              <p className="text-5xl md:text-6xl font-semibold text-foreground mb-3">
+              <p className="text-5xl md:text-6xl font-semibold text-foreground mb-3 gradient-text-pastel">
                 {metric.value}
               </p>
               <p className="text-muted-foreground">
@@ -324,7 +326,7 @@ const Index = () => {
       </Section>
 
       {/* Team Section */}
-      <Section className="bg-secondary/30">
+      <Section className="bg-gradient-to-br from-warm-lavender/20 via-transparent to-sky-blue/20">
         <SectionHeader
           label="Our Team"
           title="The people behind QETA"
@@ -344,8 +346,8 @@ const Index = () => {
               variants={fadeInUp}
               className="glass-card text-center"
             >
-              <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-semibold text-accent">{member.name[0]}</span>
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-sky-blue/50 to-periwinkle/50 flex items-center justify-center mx-auto mb-6 shadow-pastel">
+                <span className="text-2xl font-semibold text-foreground">{member.name[0]}</span>
               </div>
               <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
               <p className="text-muted-foreground text-sm mb-4">{member.role}</p>
@@ -386,14 +388,16 @@ const Index = () => {
             <motion.div key={post.id} variants={fadeInUp}>
               <Link to={`/blog`} className="block group h-full">
                 <div className="blog-card h-full p-6 md:p-8 flex flex-col">
-                  <span className="category-tag w-fit mb-4">{post.category}</span>
-                  <h3 className="text-lg font-semibold mb-3 group-hover:text-accent transition-colors line-clamp-2">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wide bg-gradient-to-r from-sky-blue/30 to-periwinkle/30 text-foreground/70 w-fit mb-4">
+                    {post.category}
+                  </span>
+                  <h3 className="text-lg font-semibold mb-3 group-hover:text-accent-foreground transition-colors line-clamp-2">
                     {post.title}
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
                     {post.summary}
                   </p>
-                  <div className="flex items-center justify-between text-xs text-muted-foreground pt-4 border-t border-border/50">
+                  <div className="flex items-center justify-between text-xs text-muted-foreground pt-4 border-t border-border/30">
                     <span className="flex items-center gap-1">
                       <Calendar className="w-3.5 h-3.5" />
                       {post.date}
@@ -425,7 +429,7 @@ const Index = () => {
       </Section>
 
       {/* CTA Section */}
-      <Section dark className="rounded-t-[3rem]">
+      <Section className="bg-gradient-to-br from-primary/40 via-periwinkle/40 to-accent/30 rounded-t-[3rem] backdrop-blur-sm">
         <div className="text-center max-w-3xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -433,7 +437,7 @@ const Index = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs uppercase tracking-widest font-medium mb-8 bg-primary-foreground/10 text-primary-foreground/70">
+            <span className="inline-flex items-center px-5 py-2 rounded-full text-xs uppercase tracking-widest font-medium mb-8 bg-white/50 backdrop-blur-sm text-foreground/70 border border-white/30">
               Get Started
             </span>
           </motion.div>
@@ -442,7 +446,7 @@ const Index = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-6"
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-6 text-foreground"
           >
             If manual work is slowing your growth, it's a systems problem.
           </motion.h2>
@@ -451,7 +455,7 @@ const Index = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-primary-foreground/60 text-lg mb-12"
+            className="text-foreground/60 text-lg mb-12"
           >
             Let's discuss how QETA can architect the automation infrastructure your operations need.
           </motion.p>
@@ -462,10 +466,7 @@ const Index = () => {
             transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           >
             <Link to="/contact">
-              <Button 
-                size="xl" 
-                className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-full font-medium shadow-xl"
-              >
+              <Button variant="hero" size="xl">
                 Schedule a Strategy Call
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
