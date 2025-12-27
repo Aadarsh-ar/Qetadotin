@@ -9,6 +9,7 @@ import About from "@/pages/About";
 import Contact from "@/pages/Contact";
 import Blog from "@/pages/Blog";
 import BlogAdmin from "@/pages/BlogAdmin";
+import AdminAuth from "@/pages/AdminAuth";
 import NotFound from "@/pages/NotFound";
 
 export const AnimatedRoutes = () => {
@@ -25,7 +26,8 @@ export const AnimatedRoutes = () => {
           <Route path="/about" element={<PageTransition><About /></PageTransition>} />
           <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
           <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
-          <Route path="/blog/admin" element={<PageTransition><BlogAdmin /></PageTransition>} />
+          <Route path="/blog-admin" element={<PageTransition><BlogAdmin /></PageTransition>} />
+          <Route path="/admin-auth" element={<PageTransition><AdminAuth /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </AnimatePresence>
