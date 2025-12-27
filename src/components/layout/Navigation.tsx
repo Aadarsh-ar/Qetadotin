@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
 
@@ -15,6 +15,7 @@ const navLinks = [
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isDark, setIsDark] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -25,21 +26,44 @@ export const Navigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    // Check for saved theme preference or system preference
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    
+    if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+      setIsDark(true);
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    setIsDark(!isDark);
+    if (isDark) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    }
+  };
+
   return (
     <nav className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl transition-all duration-500 ${
       scrolled ? "top-3" : "top-6"
     }`}>
-      <div className={`bg-white/70 backdrop-blur-2xl border border-white/40 rounded-full px-4 md:px-6 transition-all duration-500 ${
+      <div className={`bg-card/70 backdrop-blur-2xl border border-border/40 rounded-full px-4 md:px-6 transition-all duration-500 ${
         scrolled ? "shadow-pastel-lg" : "shadow-pastel"
       }`}>
         <div className="flex items-center justify-between h-14 md:h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
             <div className="relative">
+              <div className="absolute inset-0 rounded-full bg-primary/30 blur-lg group-hover:blur-xl transition-all duration-300 opacity-70 group-hover:opacity-100" />
               <img 
                 src={logo} 
                 alt="QETA" 
-                className="h-9 w-9 object-contain rounded-full transition-transform duration-300 group-hover:scale-110" 
+                className="relative h-9 w-9 object-contain rounded-full transition-transform duration-300 group-hover:scale-110 logo-glow" 
               />
             </div>
             <span className="text-lg font-semibold tracking-tight text-foreground">QETA</span>
@@ -60,8 +84,26 @@ export const Navigation = () => {
             ))}
           </div>
 
-          {/* CTA */}
-          <div className="hidden md:flex items-center">
+          {/* CTA & Theme Toggle */}
+          <div className="hidden md:flex items-center gap-2">
+            <motion.button
+              onClick={toggleTheme}
+              className="p-2.5 rounded-full hover:bg-primary/10 transition-colors text-foreground"
+              aria-label="Toggle theme"
+              whileTap={{ scale: 0.95 }}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={isDark ? "dark" : "light"}
+                  initial={{ y: -20, opacity: 0, rotate: -90 }}
+                  animate={{ y: 0, opacity: 1, rotate: 0 }}
+                  exit={{ y: 20, opacity: 0, rotate: 90 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {isDark ? <Sun size={18} /> : <Moon size={18} />}
+                </motion.div>
+              </AnimatePresence>
+            </motion.button>
             <Link to="/contact">
               <Button variant="hero" size="sm">
                 Book a Call
@@ -88,7 +130,7 @@ export const Navigation = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="md:hidden mt-3 bg-white/80 backdrop-blur-2xl border border-white/40 rounded-3xl shadow-pastel-lg overflow-hidden"
+            className="md:hidden mt-3 bg-card/80 backdrop-blur-2xl border border-border/40 rounded-3xl shadow-pastel-lg overflow-hidden"
           >
             <div className="px-6 py-6 space-y-2">
               {navLinks.map((link) => (
