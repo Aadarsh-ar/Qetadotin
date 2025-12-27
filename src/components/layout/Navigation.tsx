@@ -81,7 +81,7 @@ export const Navigation = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay - Portal-like positioning */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -91,7 +91,8 @@ export const Navigation = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-foreground/20 backdrop-blur-sm z-40 md:hidden"
+              className="fixed inset-0 bg-foreground/20 backdrop-blur-sm md:hidden"
+              style={{ zIndex: 9998 }}
               onClick={() => setIsOpen(false)}
             />
             
@@ -101,7 +102,8 @@ export const Navigation = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 h-full w-[80%] max-w-sm bg-white/95 backdrop-blur-2xl shadow-2xl z-50 md:hidden"
+              className="fixed top-0 right-0 h-screen w-[80%] max-w-sm bg-white backdrop-blur-2xl shadow-2xl md:hidden"
+              style={{ zIndex: 9999 }}
             >
               {/* Close Button */}
               <div className="flex justify-end p-6">
