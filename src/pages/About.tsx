@@ -191,7 +191,7 @@ const About = () => {
               <img 
                 src={logo} 
                 alt="QETA Logo" 
-                className="w-36 h-36 md:w-48 md:h-48 object-contain drop-shadow-[0_0_20px_rgba(59,130,246,0.5)]"
+                className="w-40 h-40 md:w-52 md:h-52 object-cover rounded-lg drop-shadow-[0_0_20px_rgba(59,130,246,0.5)]"
               />
             </motion.div>
           </div>
