@@ -4,7 +4,7 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/button";
-import logo from "@/assets/logo.jpg";
+import logo from "@/assets/logo.png";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 40 },
@@ -172,10 +172,10 @@ const About = () => {
             />
             <div className="space-y-6 text-muted-foreground leading-relaxed">
               <p>
-                The wolf represents intelligence, autonomy, and precision. The mountain represents scale, stability, and long-term infrastructure.
+                The interconnected globe represents global connectivity, intelligent networks, and seamless integration across systems.
               </p>
               <p>
-                Together, they embody what we build: intelligent systems with the stability to run at scale. Not flashy tools, but foundational infrastructure.
+                It embodies what we build: intelligent infrastructure that connects and scales globally. Not isolated tools, but foundational systems that power operations.
               </p>
             </div>
           </motion.div>
