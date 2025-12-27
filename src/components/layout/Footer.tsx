@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Instagram, Mail, Facebook, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
 import logo from "@/assets/qeta-logo.jpg";
+import { NewsletterForm } from "@/components/ui/NewsletterForm";
 
 const footerLinks = {
   company: [
@@ -52,7 +53,7 @@ export const Footer = () => {
       {/* Main footer content */}
       <div className="bg-gradient-to-br from-primary/30 via-periwinkle/30 to-accent/20 backdrop-blur-sm">
         <div className="container-wide px-6 md:px-12 lg:px-20 py-20 md:py-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
             {/* Brand */}
             <motion.div 
               className="lg:col-span-1"
@@ -185,6 +186,9 @@ export const Footer = () => {
                 ))}
               </ul>
             </motion.div>
+
+            {/* Newsletter */}
+            <NewsletterForm />
           </div>
 
           {/* Bottom */}
