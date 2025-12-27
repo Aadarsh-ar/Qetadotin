@@ -39,7 +39,8 @@ export const Navigation = () => {
               <img 
                 src={logo} 
                 alt="QETA" 
-                className="h-9 w-9 object-contain rounded-full transition-all duration-300 group-hover:scale-110 shadow-[0_0_15px_rgba(59,130,246,0.4)] group-hover:shadow-[0_0_25px_rgba(59,130,246,0.6)]" 
+                className="h-10 w-10 object-cover rounded-full transition-all duration-300 group-hover:scale-110 shadow-[0_0_15px_rgba(59,130,246,0.4)] group-hover:shadow-[0_0_25px_rgba(59,130,246,0.6)]"
+                style={{ imageRendering: 'auto' }}
               />
             </div>
             <span className="text-lg font-semibold tracking-tight text-foreground">QETA</span>
