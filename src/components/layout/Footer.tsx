@@ -50,11 +50,11 @@ export const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link to="/" className="inline-flex items-center gap-3 mb-6 group">
-              <div className="bg-primary-foreground/10 rounded-full p-2">
+              <div className="bg-foreground/10 rounded-full p-2 overflow-hidden">
                 <img 
                   src={logo} 
                   alt="QETA" 
-                  className="h-8 w-8 object-contain brightness-0 invert opacity-90" 
+                  className="h-8 w-8 object-contain" 
                 />
               </div>
               <span className="text-xl font-semibold tracking-tight">QETA</span>
