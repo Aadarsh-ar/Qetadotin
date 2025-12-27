@@ -42,6 +42,8 @@ const BlogAdmin = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
+  const [serverVerified, setServerVerified] = useState(false);
+  const [verifying, setVerifying] = useState(true);
   const [formData, setFormData] = useState<Partial<BlogPost>>({
     title: "",
     summary: "",
@@ -51,17 +53,64 @@ const BlogAdmin = () => {
     published: false,
   });
 
+  // Server-side admin verification
   useEffect(() => {
-    if (!loading && (!user || !isAdmin)) {
+    const verifyAdminServer = async () => {
+      if (!user) {
+        setVerifying(false);
+        return;
+      }
+
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session?.access_token) {
+          setVerifying(false);
+          navigate('/admin-auth');
+          return;
+        }
+
+        const { data, error } = await supabase.functions.invoke('verify-admin', {
+          headers: {
+            Authorization: `Bearer ${session.access_token}`
+          }
+        });
+
+        if (error || !data?.isAdmin) {
+          toast({
+            title: "Access Denied",
+            description: "You don't have admin privileges.",
+            variant: "destructive",
+          });
+          navigate('/admin-auth');
+          return;
+        }
+
+        setServerVerified(true);
+      } catch (err) {
+        toast({
+          title: "Verification Failed",
+          description: "Could not verify admin status.",
+          variant: "destructive",
+        });
+        navigate('/admin-auth');
+      } finally {
+        setVerifying(false);
+      }
+    };
+
+    if (!loading && user && isAdmin) {
+      verifyAdminServer();
+    } else if (!loading && (!user || !isAdmin)) {
+      setVerifying(false);
       navigate('/admin-auth');
     }
-  }, [user, isAdmin, loading, navigate]);
+  }, [user, isAdmin, loading, navigate, toast]);
 
   useEffect(() => {
-    if (user && isAdmin) {
+    if (serverVerified) {
       fetchPosts();
     }
-  }, [user, isAdmin]);
+  }, [serverVerified]);
 
   const fetchPosts = async () => {
     setIsLoading(true);
@@ -281,7 +330,7 @@ const BlogAdmin = () => {
     navigate('/');
   };
 
-  if (loading) {
+  if (loading || verifying) {
     return (
       <PageLayout>
         <div className="min-h-screen flex items-center justify-center">
@@ -295,7 +344,7 @@ const BlogAdmin = () => {
     );
   }
 
-  if (!user || !isAdmin) {
+  if (!user || !isAdmin || !serverVerified) {
     return null;
   }
 
