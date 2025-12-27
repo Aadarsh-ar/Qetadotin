@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Plus, Trash2, Edit, Save, X, Upload, LogOut, Eye, EyeOff } from "lucide-react";
+import { Plus, Trash2, Edit, Save, X, Upload, LogOut, Eye, EyeOff, ImagePlus, Loader2 } from "lucide-react";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/button";
@@ -36,10 +36,12 @@ const BlogAdmin = () => {
   const { toast } = useToast();
   const { user, isAdmin, loading, signOut } = useAuth();
   const navigate = useNavigate();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [isEditing, setIsEditing] = useState<string | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isUploading, setIsUploading] = useState(false);
   const [formData, setFormData] = useState<Partial<BlogPost>>({
     title: "",
     summary: "",
@@ -213,6 +215,67 @@ const BlogAdmin = () => {
     setFormData({});
   };
 
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: "Invalid file type",
+        description: "Please upload an image file.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast({
+        title: "File too large",
+        description: "Please upload an image smaller than 5MB.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsUploading(true);
+
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('blog-images')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('blog-images')
+        .getPublicUrl(filePath);
+
+      setFormData({ ...formData, image_url: publicUrl });
+      
+      toast({
+        title: "Image uploaded",
+        description: "Your image has been uploaded successfully.",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Upload failed",
+        description: error.message || "Failed to upload image.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUploading(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
@@ -319,28 +382,76 @@ const BlogAdmin = () => {
                     </div>
                   </div>
 
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="image">Image URL (optional)</Label>
-                      <Input
-                        id="image"
-                        value={formData.image_url || ""}
-                        onChange={(e) =>
-                          setFormData({ ...formData, image_url: e.target.value })
-                        }
-                        placeholder="https://..."
-                      />
+                  <div className="space-y-4">
+                    <Label>Featured Image</Label>
+                    <div className="flex flex-col gap-4">
+                      {formData.image_url && (
+                        <div className="relative w-full max-w-md rounded-lg overflow-hidden border border-border">
+                          <img 
+                            src={formData.image_url} 
+                            alt="Preview" 
+                            className="w-full h-48 object-cover"
+                          />
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="icon"
+                            className="absolute top-2 right-2 h-8 w-8 rounded-full"
+                            onClick={() => setFormData({ ...formData, image_url: "" })}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      )}
+                      <div className="flex gap-3 items-center">
+                        <input
+                          type="file"
+                          ref={fileInputRef}
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handleImageUpload}
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => fileInputRef.current?.click()}
+                          disabled={isUploading}
+                          className="rounded-full"
+                        >
+                          {isUploading ? (
+                            <>
+                              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                              Uploading...
+                            </>
+                          ) : (
+                            <>
+                              <ImagePlus className="h-4 w-4 mr-2" />
+                              Upload Image
+                            </>
+                          )}
+                        </Button>
+                        <span className="text-sm text-muted-foreground">or</span>
+                        <Input
+                          placeholder="Paste image URL"
+                          value={formData.image_url || ""}
+                          onChange={(e) =>
+                            setFormData({ ...formData, image_url: e.target.value })
+                          }
+                          className="flex-1"
+                        />
+                      </div>
                     </div>
-                    <div className="flex items-center space-x-2 pt-8">
-                      <Switch
-                        id="published"
-                        checked={formData.published || false}
-                        onCheckedChange={(checked) =>
-                          setFormData({ ...formData, published: checked })
-                        }
-                      />
-                      <Label htmlFor="published">Publish immediately</Label>
-                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Switch
+                      id="published"
+                      checked={formData.published || false}
+                      onCheckedChange={(checked) =>
+                        setFormData({ ...formData, published: checked })
+                      }
+                    />
+                    <Label htmlFor="published">Publish immediately</Label>
                   </div>
 
                   <div className="space-y-2">
