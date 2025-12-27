@@ -59,32 +59,43 @@ const Contact = () => {
   return (
     <PageLayout>
       {/* Hero */}
-      <section className="bg-background pt-32 pb-20 md:pt-40 md:pb-24 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="floating-orb w-[500px] h-[500px] bg-accent/15 -top-40 right-0" />
-        </div>
+      <section className="relative pt-32 pb-20 md:pt-40 md:pb-24 overflow-hidden">
+        {/* Gradient background */}
+        <div className="absolute inset-0 gradient-hero-bg" />
+        
+        {/* Floating orbs */}
+        <div className="floating-orb w-[600px] h-[600px] bg-primary/20 -top-40 -left-40" />
+        <div className="floating-orb w-[500px] h-[500px] bg-accent/15 -top-20 right-0" style={{ animationDelay: "-5s" }} />
+        <div className="floating-orb w-[350px] h-[350px] bg-periwinkle/20 bottom-10 left-1/2" style={{ animationDelay: "-10s" }} />
+        
         <div className="container-wide px-6 md:px-12 lg:px-20 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            initial="initial"
+            animate="animate"
+            variants={staggerContainer}
             className="max-w-3xl mx-auto text-center"
           >
-            <span className="pill-accent mb-8 inline-flex">
+            <motion.span variants={fadeInUp} className="pill-accent mb-8 inline-flex">
               Contact
-            </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-8">
+            </motion.span>
+            <motion.h1 
+              variants={fadeInUp}
+              className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-8"
+            >
               Let's discuss your operations.
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+            </motion.h1>
+            <motion.p 
+              variants={fadeInUp}
+              className="text-lg md:text-xl text-muted-foreground leading-relaxed"
+            >
               Every engagement starts with understanding your workflows. Tell us about your operational challenges and we'll determine if we're the right fit.
-            </p>
+            </motion.p>
           </motion.div>
         </div>
       </section>
 
       {/* Form Section */}
-      <Section className="bg-secondary/30">
+      <Section className="bg-gradient-to-br from-primary/5 via-periwinkle/5 to-accent/5">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -192,8 +203,8 @@ const Contact = () => {
                   { step: 2, title: "Strategy call scheduled", desc: "If there's a potential fit, we'll schedule a 30-minute call to discuss your operations in detail." },
                   { step: 3, title: "Clear next steps", desc: "You'll leave the call knowing exactly whether QETA can help and what that engagement would look like." }
                 ].map((item) => (
-                  <div key={item.step} className="flex items-start gap-4">
-                    <span className="w-8 h-8 rounded-full bg-accent/10 text-accent text-sm font-semibold flex items-center justify-center flex-shrink-0">
+                  <div key={item.step} className="flex items-start gap-4 group">
+                    <span className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 text-accent text-sm font-semibold flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                       {item.step}
                     </span>
                     <div>
@@ -205,7 +216,7 @@ const Contact = () => {
               </div>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="glass-card !bg-accent/5 !border-accent/20">
+            <motion.div variants={fadeInUp} className="glass-card !bg-gradient-to-br !from-accent/10 !to-primary/5 !border-accent/20">
               <h3 className="font-semibold mb-3">Who this is for</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 We work with teams serious about automation at scale. If you're looking for a quick demo or a proof of concept, we're probably not the right fit. If you're ready to invest in operational infrastructure that delivers measurable results, we should talk.
