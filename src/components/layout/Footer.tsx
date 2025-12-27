@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Instagram, Mail, Facebook, Linkedin } from "lucide-react";
-import logo from "@/assets/logo.jpg";
 
 const footerLinks = {
   company: [
@@ -44,15 +43,22 @@ const socialLinks = [
 
 export const Footer = () => {
   return (
-    <footer className="bg-primary text-primary-foreground rounded-t-[3rem] mt-[-2rem] relative z-10">
-      <div className="container-wide px-6 md:px-12 lg:px-20 py-20 md:py-24">
+    <footer className="relative overflow-hidden rounded-t-[3rem] mt-[-2rem] z-10">
+      {/* Gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-accent opacity-95" />
+      
+      {/* Decorative orbs */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-white/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-coral/20 rounded-full blur-3xl" />
+      
+      <div className="container-wide px-6 md:px-12 lg:px-20 py-20 md:py-24 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link to="/" className="inline-flex items-center gap-3 mb-6 group">
-              <span className="text-xl font-semibold tracking-tight">QETA</span>
+              <span className="text-xl font-bold tracking-tight text-white">QETA</span>
             </Link>
-            <p className="text-primary-foreground/60 text-sm leading-relaxed max-w-xs mb-8">
+            <p className="text-white/70 text-sm leading-relaxed max-w-xs mb-8">
               Production-grade AI systems that eliminate manual work and scale operations.
             </p>
             {/* Social Icons */}
@@ -63,7 +69,7 @@ export const Footer = () => {
                   href={social.href}
                   target={social.href.startsWith("mailto") ? undefined : "_blank"}
                   rel={social.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                  className="w-10 h-10 rounded-full bg-primary-foreground/5 hover:bg-primary-foreground/10 flex items-center justify-center text-primary-foreground/50 hover:text-primary-foreground transition-all duration-300"
+                  className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/70 hover:text-white transition-all duration-300 hover:scale-110"
                   aria-label={social.name}
                 >
                   <social.icon className="h-4 w-4" />
@@ -74,7 +80,7 @@ export const Footer = () => {
 
           {/* Company Links */}
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider mb-6 text-primary-foreground/40">
+            <h4 className="text-xs font-semibold uppercase tracking-wider mb-6 text-white/50">
               Company
             </h4>
             <ul className="space-y-4">
@@ -82,7 +88,7 @@ export const Footer = () => {
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-primary-foreground/60 hover:text-primary-foreground transition-colors text-sm"
+                    className="text-white/70 hover:text-white transition-colors text-sm"
                   >
                     {link.name}
                   </Link>
@@ -93,7 +99,7 @@ export const Footer = () => {
 
           {/* Solutions Links */}
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider mb-6 text-primary-foreground/40">
+            <h4 className="text-xs font-semibold uppercase tracking-wider mb-6 text-white/50">
               Solutions
             </h4>
             <ul className="space-y-4">
@@ -101,7 +107,7 @@ export const Footer = () => {
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-primary-foreground/60 hover:text-primary-foreground transition-colors text-sm"
+                    className="text-white/70 hover:text-white transition-colors text-sm"
                   >
                     {link.name}
                   </Link>
@@ -112,7 +118,7 @@ export const Footer = () => {
 
           {/* Resources Links */}
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider mb-6 text-primary-foreground/40">
+            <h4 className="text-xs font-semibold uppercase tracking-wider mb-6 text-white/50">
               Resources
             </h4>
             <ul className="space-y-4">
@@ -120,7 +126,7 @@ export const Footer = () => {
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-primary-foreground/60 hover:text-primary-foreground transition-colors text-sm"
+                    className="text-white/70 hover:text-white transition-colors text-sm"
                   >
                     {link.name}
                   </Link>
@@ -131,12 +137,12 @@ export const Footer = () => {
         </div>
 
         {/* Bottom */}
-        <div className="mt-20 pt-8 border-t border-primary-foreground/10">
+        <div className="mt-20 pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-primary-foreground/40 text-sm">
+            <p className="text-white/50 text-sm">
               © {new Date().getFullYear()} QETA. All rights reserved.
             </p>
-            <p className="text-primary-foreground/40 text-sm">
+            <p className="text-white/50 text-sm">
               Systems that run your business.
             </p>
           </div>

@@ -27,20 +27,23 @@ export const Navigation = () => {
   }, []);
 
   return (
-    <nav className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl transition-all duration-500 ${
+    <nav className={`fixed left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl transition-all duration-500 ${
       scrolled ? "top-3" : "top-6"
     }`}>
-      <div className={`bg-card/90 backdrop-blur-xl border border-border/50 rounded-full px-4 md:px-6 transition-all duration-500 ${
-        scrolled ? "shadow-lg" : "shadow-md"
+      <div className={`glass-panel px-4 md:px-6 transition-all duration-500 ${
+        scrolled 
+          ? "shadow-xl border-white/30" 
+          : "shadow-lg border-white/20"
       }`}>
         <div className="flex items-center justify-between h-14 md:h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
             <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent rounded-full blur-md opacity-50 group-hover:opacity-80 transition-opacity" />
               <img 
                 src={logo} 
                 alt="QETA" 
-                className="h-9 w-9 object-contain rounded-full transition-transform duration-300 group-hover:scale-110" 
+                className="h-9 w-9 object-contain rounded-full relative z-10 transition-transform duration-300 group-hover:scale-110" 
               />
             </div>
             <span className="text-lg font-semibold tracking-tight text-foreground">QETA</span>
@@ -53,7 +56,10 @@ export const Navigation = () => {
                 <Button 
                   variant="nav" 
                   size="sm"
-                  className={`${location.pathname === link.href ? "bg-secondary text-foreground" : ""}`}
+                  className={`${location.pathname === link.href 
+                    ? "bg-primary/10 text-primary" 
+                    : ""
+                  }`}
                 >
                   {link.name}
                 </Button>
@@ -72,7 +78,7 @@ export const Navigation = () => {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden p-2 text-foreground hover:bg-secondary rounded-full transition-colors"
+            className="md:hidden p-2 text-foreground hover:bg-muted rounded-full transition-colors"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
@@ -89,15 +95,15 @@ export const Navigation = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="md:hidden mt-3 bg-card/95 backdrop-blur-xl border border-border/50 rounded-3xl shadow-xl overflow-hidden"
+            className="md:hidden mt-3 glass-panel overflow-hidden"
           >
             <div className="px-6 py-6 space-y-2">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   to={link.href}
-                  className={`block py-3 px-4 rounded-xl text-foreground/80 hover:text-foreground hover:bg-secondary/50 transition-all ${
-                    location.pathname === link.href ? "bg-secondary text-foreground" : ""
+                  className={`block py-3 px-4 rounded-xl text-foreground/80 hover:text-foreground hover:bg-muted/50 transition-all ${
+                    location.pathname === link.href ? "bg-primary/10 text-primary" : ""
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
