@@ -4,7 +4,7 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/button";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/qeta-logo.jpg";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 40 },
