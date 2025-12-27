@@ -50,9 +50,12 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        stone: "hsl(var(--stone))",
-        copper: "hsl(var(--copper))",
-        cream: "hsl(var(--cream))",
+        peach: {
+          DEFAULT: "hsl(var(--peach))",
+          secondary: "hsl(var(--peach-secondary))",
+          deep: "hsl(var(--peach-deep))",
+        },
+        surface: "hsl(var(--surface))",
       },
       borderRadius: {
         "4xl": "2rem",

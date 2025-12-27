@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Workflow, Users, Bot, Layers, Phone, Sparkles } from "lucide-react";
+import { ArrowRight, Workflow, Users, Bot, Layers, Phone, Sparkles, Calendar, Clock } from "lucide-react";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/button";
@@ -25,28 +25,28 @@ const solutions = [
     title: "AI Workflow Automation",
     description: "Internal ops, CRM, support, and admin processes automated end-to-end.",
     href: "/solutions#workflow",
-    color: "bg-accent/10 text-accent"
+    color: "bg-accent/15 text-accent"
   },
   {
     icon: Users,
     title: "AI Revenue & Lead Systems",
     description: "Qualification, outreach intelligence, and pipeline automation at scale.",
     href: "/solutions#revenue",
-    color: "bg-primary/10 text-primary"
+    color: "bg-primary/20 text-foreground"
   },
   {
     icon: Bot,
     title: "Custom AI Agents",
     description: "Research, extraction, and decision support agents built for your workflows.",
     href: "/solutions#agents",
-    color: "bg-copper/10 text-copper"
+    color: "bg-peach-deep/15 text-peach-deep"
   },
   {
     icon: Layers,
     title: "System Integration",
     description: "APIs, databases, and existing stack unified into cohesive infrastructure.",
     href: "/solutions#integration",
-    color: "bg-stone/10 text-stone"
+    color: "bg-secondary text-foreground"
   }
 ];
 
@@ -98,6 +98,33 @@ const teamMembers = [
     role: "Lead Engineer, AI Integrations",
     phone: "+919391536082",
     whatsappLink: "https://wa.me/919391536082"
+  }
+];
+
+const blogPreview = [
+  {
+    id: "1",
+    title: "How AI Automation is Transforming Business Operations",
+    summary: "Key trends shaping how businesses leverage AI to streamline workflows.",
+    category: "Insights",
+    date: "Dec 20, 2024",
+    readTime: "8 min"
+  },
+  {
+    id: "2",
+    title: "Building Production-Ready AI Agents",
+    summary: "Architecture patterns and best practices for deploying AI agents.",
+    category: "Engineering",
+    date: "Dec 15, 2024",
+    readTime: "12 min"
+  },
+  {
+    id: "3",
+    title: "The Real Cost of Manual Workflows",
+    summary: "We analyzed 50+ businesses to quantify the hidden costs of manual processes.",
+    category: "Research",
+    date: "Dec 10, 2024",
+    readTime: "6 min"
   }
 ];
 
@@ -337,6 +364,63 @@ const Index = () => {
               </a>
             </motion.div>
           ))}
+        </motion.div>
+      </Section>
+
+      {/* Blog Section */}
+      <Section>
+        <SectionHeader
+          label="From Our Blog"
+          title="Insights, Updates & Learning"
+          description="Explore our thoughts on AI automation, system architecture, and operational efficiency."
+          centered
+        />
+        <motion.div
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="grid md:grid-cols-3 gap-6"
+        >
+          {blogPreview.map((post) => (
+            <motion.div key={post.id} variants={fadeInUp}>
+              <Link to={`/blog`} className="block group h-full">
+                <div className="blog-card h-full p-6 md:p-8 flex flex-col">
+                  <span className="category-tag w-fit mb-4">{post.category}</span>
+                  <h3 className="text-lg font-semibold mb-3 group-hover:text-accent transition-colors line-clamp-2">
+                    {post.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
+                    {post.summary}
+                  </p>
+                  <div className="flex items-center justify-between text-xs text-muted-foreground pt-4 border-t border-border/50">
+                    <span className="flex items-center gap-1">
+                      <Calendar className="w-3.5 h-3.5" />
+                      {post.date}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-3.5 h-3.5" />
+                      {post.readTime}
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="text-center mt-12"
+        >
+          <Link to="/blog">
+            <Button variant="heroOutline" size="lg">
+              View All Articles
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </Link>
         </motion.div>
       </Section>
 

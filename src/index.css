@@ -2,83 +2,85 @@
 @tailwind components;
 @tailwind utilities;
 
-/* QETA Design System — Google Labs Inspired: Minimal, Soft, Experimental */
+/* QETA Design System — Light Peach UI, Flow-Inspired */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    /* QETA Brand Colors */
-    --background: 35 41% 94%; /* Sand/Warm Beige #F5EFE8 */
-    --foreground: 0 0% 12%; /* Charcoal #1E1E1E */
+    /* Light Peach Color Palette */
+    --background: 20 100% 98%; /* #FFF9F6 - Background Light */
+    --foreground: 20 8% 16%; /* #2E2B28 - Dark Text */
 
-    --card: 35 35% 98%;
-    --card-foreground: 0 0% 12%;
+    --card: 30 20% 95%; /* #F3EFEA - Neutral Surface */
+    --card-foreground: 20 8% 16%;
 
-    --popover: 35 41% 94%;
-    --popover-foreground: 0 0% 12%;
+    --popover: 20 100% 98%;
+    --popover-foreground: 20 8% 16%;
 
-    --primary: 26 36% 26%; /* Deep Brown #5A3E2B */
-    --primary-foreground: 35 41% 94%;
+    --primary: 14 45% 73%; /* #F7D4C6 - Primary Peach Accent */
+    --primary-foreground: 20 8% 16%;
 
-    --secondary: 35 30% 92%;
-    --secondary-foreground: 26 36% 26%;
+    --secondary: 15 50% 80%; /* #F3B9A4 - Secondary Peach */
+    --secondary-foreground: 20 8% 16%;
 
-    --muted: 34 15% 88%;
-    --muted-foreground: 34 5% 42%; /* Muted Stone #8A857F */
+    --muted: 30 20% 95%;
+    --muted-foreground: 20 8% 45%;
 
-    --accent: 29 48% 60%; /* Copper #C89B6A */
-    --accent-foreground: 0 0% 12%;
+    --accent: 12 55% 73%; /* #E79F8D - Deep Peach (Contrast) */
+    --accent-foreground: 0 0% 100%; /* #FFFFFF - Light Text */
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 34 20% 88%;
-    --input: 34 20% 88%;
-    --ring: 26 36% 26%;
+    --border: 25 15% 85%; /* #E2D7CF - Soft Border Line */
+    --input: 25 15% 85%;
+    --ring: 14 45% 73%;
 
     --radius: 1.25rem;
 
     /* Custom tokens */
-    --stone: 34 5% 52%;
-    --copper: 29 48% 60%;
-    --cream: 35 50% 97%;
+    --peach: 14 45% 73%;
+    --peach-secondary: 15 50% 80%;
+    --peach-deep: 12 55% 73%;
+    --surface: 30 20% 95%;
     
-    /* Soft Gradients */
-    --gradient-soft: linear-gradient(180deg, hsl(35 50% 97%) 0%, hsl(35 41% 94%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(35 35% 99%) 0%, hsl(35 35% 96%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(29 48% 65%) 0%, hsl(29 48% 55%) 100%);
-    --gradient-dark: linear-gradient(180deg, hsl(26 36% 22%) 0%, hsl(26 36% 18%) 100%);
+    /* Soft Gradients - Peach Theme */
+    --gradient-soft: linear-gradient(180deg, hsl(20 100% 98%) 0%, hsl(14 45% 88%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(30 20% 97%) 0%, hsl(30 20% 94%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(14 45% 78%) 0%, hsl(12 55% 73%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(20 100% 98%) 0%, hsl(14 45% 88%) 100%);
+    --gradient-dark: linear-gradient(180deg, hsl(20 8% 20%) 0%, hsl(20 8% 14%) 100%);
   }
 
   .dark {
-    --background: 0 0% 6%;
-    --foreground: 35 30% 92%;
+    --background: 20 8% 8%;
+    --foreground: 20 100% 96%;
 
-    --card: 0 0% 8%;
-    --card-foreground: 35 30% 92%;
+    --card: 20 8% 12%;
+    --card-foreground: 20 100% 96%;
 
-    --popover: 0 0% 8%;
-    --popover-foreground: 35 30% 92%;
+    --popover: 20 8% 10%;
+    --popover-foreground: 20 100% 96%;
 
-    --primary: 35 41% 94%;
-    --primary-foreground: 26 36% 16%;
+    --primary: 14 45% 78%;
+    --primary-foreground: 20 8% 12%;
 
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 35 30% 92%;
+    --secondary: 20 8% 16%;
+    --secondary-foreground: 20 100% 96%;
 
-    --muted: 0 0% 14%;
-    --muted-foreground: 34 10% 60%;
+    --muted: 20 8% 18%;
+    --muted-foreground: 20 20% 60%;
 
-    --accent: 29 48% 60%;
-    --accent-foreground: 0 0% 8%;
+    --accent: 12 55% 68%;
+    --accent-foreground: 20 8% 10%;
 
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 35 30% 92%;
+    --destructive: 0 62% 35%;
+    --destructive-foreground: 20 100% 96%;
 
-    --border: 0 0% 16%;
-    --input: 0 0% 16%;
-    --ring: 35 41% 94%;
+    --border: 20 8% 20%;
+    --input: 20 8% 20%;
+    --ring: 14 45% 78%;
   }
 }
 
@@ -118,11 +120,11 @@
     text-wrap: balance;
   }
 
-  /* Google Labs inspired cards */
+  /* Flow-inspired glass cards */
   .glass-card {
     @apply bg-card/80 backdrop-blur-xl rounded-3xl border border-border/50 p-8 md:p-10
-           shadow-[0_8px_32px_-8px_rgba(0,0,0,0.08)]
-           hover:shadow-[0_16px_48px_-12px_rgba(0,0,0,0.12)]
+           shadow-[0_8px_32px_-8px_rgba(231,159,141,0.12)]
+           hover:shadow-[0_16px_48px_-12px_rgba(231,159,141,0.18)]
            hover:border-border
            transition-all duration-500 ease-out;
   }
@@ -133,9 +135,20 @@
            active:scale-[0.98];
   }
 
+  /* Blog card with hover elevation */
+  .blog-card {
+    @apply bg-card/90 backdrop-blur-lg rounded-3xl border border-border/40 
+           overflow-hidden
+           shadow-[0_4px_20px_-4px_rgba(231,159,141,0.1)]
+           hover:shadow-[0_20px_60px_-15px_rgba(231,159,141,0.25)]
+           hover:border-accent/30
+           hover:-translate-y-2
+           transition-all duration-500 ease-out;
+  }
+
   .soft-shadow {
-    box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.06),
-                0 12px 48px -12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 24px -4px rgba(231, 159, 141, 0.1),
+                0 12px 48px -12px rgba(231, 159, 141, 0.15);
   }
 
   .glow-accent {
@@ -149,17 +162,23 @@
   /* Pill badges */
   .pill {
     @apply inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium
-           bg-secondary text-secondary-foreground border border-border/50;
+           bg-secondary/50 text-secondary-foreground border border-border/50;
   }
 
   .pill-accent {
     @apply inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium
-           bg-accent/10 text-accent border border-accent/20;
+           bg-accent/15 text-accent border border-accent/25;
+  }
+
+  /* Category tag for blog */
+  .category-tag {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wide
+           bg-primary/20 text-foreground/80;
   }
 
   /* Floating orbs for background decoration */
   .floating-orb {
-    @apply absolute rounded-full blur-3xl opacity-30 pointer-events-none;
+    @apply absolute rounded-full blur-3xl opacity-25 pointer-events-none;
     animation: float 20s ease-in-out infinite;
   }
 
@@ -196,6 +215,11 @@
   .gradient-text {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, hsl(var(--foreground)) 0%, hsl(var(--muted-foreground)) 100%);
+  }
+
+  /* Peach gradient background */
+  .gradient-peach {
+    background: linear-gradient(135deg, hsl(20 100% 98%) 0%, hsl(14 45% 88%) 100%);
   }
 
   /* Smooth scroll reveal */
