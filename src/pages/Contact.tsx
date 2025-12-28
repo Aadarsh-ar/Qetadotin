@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 import { FAQ } from "@/components/ui/FAQ";
+import { useRecaptcha } from "@/hooks/useRecaptcha";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
@@ -35,6 +36,7 @@ const staggerContainer = {
 
 const Contact = () => {
   const { toast } = useToast();
+  const { executeRecaptcha } = useRecaptcha();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -66,10 +68,24 @@ const Contact = () => {
       return;
     }
 
-    // Submit via rate-limited edge function
+    // Execute reCAPTCHA
+    const recaptchaToken = await executeRecaptcha('contact_form');
+    
+    if (!recaptchaToken) {
+      toast({
+        title: "Verification failed",
+        description: "Unable to verify you're not a robot. Please refresh and try again.",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Submit via rate-limited edge function with reCAPTCHA token
     const { data, error } = await supabase.functions.invoke("submit-form", {
       body: {
         formType: "contact",
+        recaptchaToken,
         data: {
           name: validation.data.name,
           email: validation.data.email,
