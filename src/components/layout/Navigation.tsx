@@ -5,6 +5,7 @@ import { X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HamburgerIcon } from "@/components/ui/HamburgerIcon";
 import logoSmall from "@/assets/qeta-logo-small.webp";
+import logoJpg from "@/assets/qeta-logo.jpg";
 
 const navLinks = [
   { name: "Solutions", href: "/solutions" },
@@ -55,11 +56,19 @@ export const Navigation = () => {
           <div className="flex items-center justify-between h-14 md:h-16">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2.5 group">
-              <div className="relative">
-                <img 
-                  src={logoSmall} 
+              <picture>
+                <source 
                   srcSet={`${logoSmall} 40w, ${logoSmall} 80w, ${logoSmall} 120w`}
-                  sizes="(max-width: 640px) 40px, (max-width: 1024px) 40px, 40px"
+                  sizes="40px"
+                  type="image/webp"
+                />
+                <source 
+                  srcSet={`${logoJpg} 40w, ${logoJpg} 80w, ${logoJpg} 120w`}
+                  sizes="40px"
+                  type="image/jpeg"
+                />
+                <img 
+                  src={logoJpg} 
                   alt="QETA" 
                   width={40}
                   height={40}
@@ -68,7 +77,7 @@ export const Navigation = () => {
                   fetchPriority="high"
                   className="h-10 w-10 object-cover rounded-full transition-all duration-300 group-hover:scale-110 shadow-[0_0_15px_rgba(59,130,246,0.4)] group-hover:shadow-[0_0_25px_rgba(59,130,246,0.6)]"
                 />
-              </div>
+              </picture>
               <span className="text-lg font-semibold tracking-tight text-foreground">QETA</span>
             </Link>
 
