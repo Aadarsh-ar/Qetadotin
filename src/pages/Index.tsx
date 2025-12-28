@@ -175,7 +175,7 @@ const Index = () => {
           className="container-wide px-6 md:px-12 lg:px-20 relative z-10"
           style={{ opacity: heroOpacity, scale: heroScale }}
         >
-          <div className="max-w-4xl mx-auto text-center mt-8 md:mt-0">
+          <div className="max-w-4xl mx-auto text-center mt-12 md:mt-6">
             <motion.div 
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
