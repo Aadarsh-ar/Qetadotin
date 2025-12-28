@@ -30,6 +30,31 @@
     <!-- Preload critical fonts if any are used -->
     <link rel="preload" as="style" href="/src/index.css">
     
+    <!-- Critical CSS for above-the-fold content to reduce render-blocking -->
+    <style>
+      /* Critical layout and hero styles */
+      *,::before,::after{box-sizing:border-box;border:0 solid}
+      html{line-height:1.5;-webkit-text-size-adjust:100%;font-family:ui-sans-serif,system-ui,sans-serif}
+      body{margin:0;line-height:inherit}
+      #root{min-height:100vh}
+      
+      /* Navigation critical styles */
+      nav{position:fixed;top:0;left:0;right:0;z-index:50}
+      
+      /* Hero section critical styles */
+      .gradient-hero-bg{background:linear-gradient(135deg,hsl(210 100% 95%/0.6),hsl(280 60% 95%/0.4),hsl(20 100% 95%/0.3))}
+      .min-h-screen{min-height:100vh}
+      .flex{display:flex}
+      .items-center{align-items:center}
+      .justify-center{justify-content:center}
+      .relative{position:relative}
+      .text-center{text-align:center}
+      .container-wide{width:100%;max-width:1400px;margin:0 auto}
+      
+      /* Prevent FOUC */
+      .opacity-0{opacity:0}
+    </style>
+    
     <!-- Preload critical above-the-fold images for better LCP -->
     <link rel="preload" as="image" type="image/webp" href="/src/assets/logo-40.webp" imagesrcset="/src/assets/logo-40.webp 40w, /src/assets/logo-80.webp 80w, /src/assets/logo-120.webp 120w" imagesizes="40px">
     <link rel="preload" as="image" type="image/webp" href="/src/assets/qeta-logo-small.webp">
