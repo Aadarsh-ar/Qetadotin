@@ -73,9 +73,9 @@ const Blog = () => {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="relative pt-32 pb-16 overflow-hidden">
-        {/* Gradient background */}
-        <div className="absolute inset-0 gradient-hero-bg opacity-100" />
+      <section className="relative pt-32 pb-16 overflow-hidden -mt-24">
+        {/* Gradient background - extends above to cover nav area */}
+        <div className="absolute -top-24 left-0 right-0 bottom-0 gradient-hero-bg opacity-100" />
         
         {/* Floating orbs */}
         <div className="floating-orb w-[600px] h-[600px] bg-primary/30 -top-40 -left-40" />
