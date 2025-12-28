@@ -4,8 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HamburgerIcon } from "@/components/ui/HamburgerIcon";
-import logoSmall from "@/assets/qeta-logo-small.webp";
-import logoJpg from "@/assets/qeta-logo.jpg";
+import logo40webp from "@/assets/logo-40.webp";
+import logo80webp from "@/assets/logo-80.webp";
+import logo120webp from "@/assets/logo-120.webp";
+import logo40jpg from "@/assets/logo-40.jpg";
+import logo80jpg from "@/assets/logo-80.jpg";
+import logo120jpg from "@/assets/logo-120.jpg";
 
 const navLinks = [
   { name: "Solutions", href: "/solutions" },
@@ -58,17 +62,17 @@ export const Navigation = () => {
             <Link to="/" className="flex items-center gap-2.5 group">
               <picture>
                 <source 
-                  srcSet={`${logoSmall} 40w, ${logoSmall} 80w, ${logoSmall} 120w`}
+                  srcSet={`${logo40webp} 40w, ${logo80webp} 80w, ${logo120webp} 120w`}
                   sizes="40px"
                   type="image/webp"
                 />
                 <source 
-                  srcSet={`${logoJpg} 40w, ${logoJpg} 80w, ${logoJpg} 120w`}
+                  srcSet={`${logo40jpg} 40w, ${logo80jpg} 80w, ${logo120jpg} 120w`}
                   sizes="40px"
                   type="image/jpeg"
                 />
                 <img 
-                  src={logoJpg} 
+                  src={logo40jpg} 
                   alt="QETA" 
                   width={40}
                   height={40}
@@ -138,14 +142,17 @@ export const Navigation = () => {
               {/* Header with Logo and Close */}
               <div className="flex items-center justify-between p-5 border-b border-border/20">
                 <Link to="/" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
-                  <img 
-                    src={logoSmall} 
-                    alt="QETA" 
-                    width={32}
-                    height={32}
-                    loading="lazy"
-                    className="h-8 w-8 object-cover rounded-full shadow-[0_0_10px_rgba(59,130,246,0.3)]"
-                  />
+                  <picture>
+                    <source srcSet={logo40webp} type="image/webp" />
+                    <img 
+                      src={logo40jpg} 
+                      alt="QETA" 
+                      width={32}
+                      height={32}
+                      loading="lazy"
+                      className="h-8 w-8 object-cover rounded-full shadow-[0_0_10px_rgba(59,130,246,0.3)]"
+                    />
+                  </picture>
                   <span className="text-lg font-semibold text-foreground">QETA</span>
                 </Link>
                 <motion.button
