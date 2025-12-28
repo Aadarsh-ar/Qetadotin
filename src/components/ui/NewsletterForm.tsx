@@ -6,13 +6,11 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
-import { useRecaptcha } from "@/hooks/useRecaptcha";
 
 const emailSchema = z.string().trim().email("Please enter a valid email address").max(255);
 
 export const NewsletterForm = () => {
   const { toast } = useToast();
-  const { executeRecaptcha } = useRecaptcha();
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -31,14 +29,10 @@ export const NewsletterForm = () => {
       return;
     }
 
-    // Execute reCAPTCHA
-    const recaptchaToken = await executeRecaptcha('newsletter_subscribe');
-    
-    // Submit via rate-limited edge function with reCAPTCHA token
+    // Submit via rate-limited edge function
     const { data, error } = await supabase.functions.invoke("submit-form", {
       body: {
         formType: "newsletter",
-        recaptchaToken,
         data: {
           email: validation.data,
         },
