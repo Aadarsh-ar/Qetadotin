@@ -8,15 +8,15 @@ interface PageTransitionProps {
 const pageVariants = {
   initial: {
     opacity: 0,
-    y: 20,
+    transform: "translateY(20px)",
   },
   animate: {
     opacity: 1,
-    y: 0,
+    transform: "translateY(0px)",
   },
   exit: {
     opacity: 0,
-    y: -20,
+    transform: "translateY(-20px)",
   },
 };
 
@@ -34,6 +34,7 @@ export const PageTransition = ({ children }: PageTransitionProps) => {
       exit="exit"
       variants={pageVariants}
       transition={pageTransition}
+      style={{ willChange: "transform, opacity" }}
     >
       {children}
     </motion.div>
