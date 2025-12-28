@@ -58,11 +58,14 @@ export const Navigation = () => {
               <div className="relative">
                 <img 
                   src={logoSmall} 
+                  srcSet={`${logoSmall} 1x, ${logoSmall} 2x`}
+                  sizes="40px"
                   alt="QETA" 
                   width={40}
                   height={40}
                   loading="eager"
                   decoding="async"
+                  fetchPriority="high"
                   className="h-10 w-10 object-cover rounded-full transition-all duration-300 group-hover:scale-110 shadow-[0_0_15px_rgba(59,130,246,0.4)] group-hover:shadow-[0_0_25px_rgba(59,130,246,0.6)]"
                 />
               </div>
