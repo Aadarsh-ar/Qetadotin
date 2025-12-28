@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HamburgerIcon } from "@/components/ui/HamburgerIcon";
-import logo from "@/assets/qeta-logo.jpg";
+import logoSmall from "@/assets/qeta-logo-small.webp";
 
 const navLinks = [
   { name: "Solutions", href: "/solutions" },
@@ -57,10 +57,13 @@ export const Navigation = () => {
             <Link to="/" className="flex items-center gap-2.5 group">
               <div className="relative">
                 <img 
-                  src={logo} 
+                  src={logoSmall} 
                   alt="QETA" 
+                  width={40}
+                  height={40}
+                  loading="eager"
+                  decoding="async"
                   className="h-10 w-10 object-cover rounded-full transition-all duration-300 group-hover:scale-110 shadow-[0_0_15px_rgba(59,130,246,0.4)] group-hover:shadow-[0_0_25px_rgba(59,130,246,0.6)]"
-                  style={{ imageRendering: 'auto' }}
                 />
               </div>
               <span className="text-lg font-semibold tracking-tight text-foreground">QETA</span>
@@ -124,8 +127,11 @@ export const Navigation = () => {
               <div className="flex items-center justify-between p-5 border-b border-border/20">
                 <Link to="/" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
                   <img 
-                    src={logo} 
+                    src={logoSmall} 
                     alt="QETA" 
+                    width={32}
+                    height={32}
+                    loading="lazy"
                     className="h-8 w-8 object-cover rounded-full shadow-[0_0_10px_rgba(59,130,246,0.3)]"
                   />
                   <span className="text-lg font-semibold text-foreground">QETA</span>

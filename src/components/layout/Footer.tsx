@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Instagram, Mail, Facebook, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
-import logo from "@/assets/qeta-logo.jpg";
+import logoSmall from "@/assets/qeta-logo-small.webp";
 import { NewsletterForm } from "@/components/ui/NewsletterForm";
 
 const footerLinks = {
@@ -64,8 +64,11 @@ export const Footer = () => {
             >
               <Link to="/" className="inline-flex items-center gap-3 mb-6 group">
                 <motion.img 
-                  src={logo} 
+                  src={logoSmall} 
                   alt="QETA" 
+                  width={48}
+                  height={48}
+                  loading="lazy"
                   className="h-12 w-12 object-cover rounded-full shadow-[0_0_15px_rgba(59,130,246,0.4)] group-hover:shadow-[0_0_25px_rgba(59,130,246,0.6)] transition-all duration-300"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   transition={{ type: "spring", stiffness: 300 }}
