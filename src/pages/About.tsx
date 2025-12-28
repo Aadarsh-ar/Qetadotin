@@ -4,7 +4,8 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/button";
-import logo from "@/assets/qeta-logo.jpg";
+import logoWebp from "@/assets/logo-120.webp";
+import logoJpg from "@/assets/logo-120.jpg";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 40 },
@@ -188,11 +189,17 @@ const About = () => {
               whileHover={{ scale: 1.05, rotate: 2, transition: { duration: 0.3 } }}
               className="w-56 h-56 md:w-72 md:h-72 glass-card flex items-center justify-center shadow-pastel-lg"
             >
-              <img 
-                src={logo} 
-                alt="QETA Logo" 
-                className="w-40 h-40 md:w-52 md:h-52 object-cover rounded-lg drop-shadow-[0_0_20px_rgba(59,130,246,0.5)]"
-              />
+              <picture>
+                <source srcSet={logoWebp} type="image/webp" />
+                <img 
+                  src={logoJpg} 
+                  alt="QETA Logo" 
+                  width={208}
+                  height={208}
+                  loading="lazy"
+                  className="w-40 h-40 md:w-52 md:h-52 object-cover rounded-lg drop-shadow-[0_0_20px_rgba(59,130,246,0.5)]"
+                />
+              </picture>
             </motion.div>
           </div>
         </div>

@@ -8,6 +8,10 @@ interface OptimizedImageProps {
   height?: number;
   priority?: boolean;
   style?: React.CSSProperties;
+  webpSrc?: string;
+  srcSet?: string;
+  webpSrcSet?: string;
+  sizes?: string;
 }
 
 export const OptimizedImage = ({
@@ -18,10 +22,14 @@ export const OptimizedImage = ({
   height,
   priority = false,
   style,
+  webpSrc,
+  srcSet,
+  webpSrcSet,
+  sizes,
 }: OptimizedImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(priority);
-  const imgRef = useRef<HTMLImageElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (priority) {
@@ -42,18 +50,63 @@ export const OptimizedImage = ({
       }
     );
 
-    if (imgRef.current) {
-      observer.observe(imgRef.current);
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
     }
 
     return () => observer.disconnect();
   }, [priority]);
 
+  const hasWebpSupport = webpSrc || webpSrcSet;
+
+  // Use picture element for WebP with fallback
+  if (hasWebpSupport) {
+    return (
+      <picture ref={containerRef as React.RefObject<HTMLPictureElement>}>
+        {webpSrcSet && isInView && (
+          <source 
+            srcSet={webpSrcSet}
+            sizes={sizes}
+            type="image/webp"
+          />
+        )}
+        {webpSrc && !webpSrcSet && isInView && (
+          <source 
+            srcSet={webpSrc}
+            type="image/webp"
+          />
+        )}
+        {srcSet && isInView && (
+          <source 
+            srcSet={srcSet}
+            sizes={sizes}
+            type="image/jpeg"
+          />
+        )}
+        <img
+          src={isInView ? src : undefined}
+          data-src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding={priority ? 'sync' : 'async'}
+          className={`${className} ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
+          style={style}
+          onLoad={() => setIsLoaded(true)}
+        />
+      </picture>
+    );
+  }
+
+  // Standard img element
   return (
     <img
-      ref={imgRef}
+      ref={containerRef as React.RefObject<HTMLImageElement>}
       src={isInView ? src : undefined}
       data-src={src}
+      srcSet={isInView && srcSet ? srcSet : undefined}
+      sizes={sizes}
       alt={alt}
       width={width}
       height={height}
