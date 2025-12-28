@@ -58,8 +58,8 @@ export const Navigation = () => {
               <div className="relative">
                 <img 
                   src={logoSmall} 
-                  srcSet={`${logoSmall} 1x, ${logoSmall} 2x`}
-                  sizes="40px"
+                  srcSet={`${logoSmall} 40w, ${logoSmall} 80w, ${logoSmall} 120w`}
+                  sizes="(max-width: 640px) 40px, (max-width: 1024px) 40px, 40px"
                   alt="QETA" 
                   width={40}
                   height={40}
