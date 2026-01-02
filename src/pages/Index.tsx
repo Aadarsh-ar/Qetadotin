@@ -115,6 +115,12 @@ const teamMembers = [
     role: "Lead Engineer, AI Integrations",
     phone: "+919391536082",
     whatsappLink: "https://wa.me/919391536082"
+  },
+  {
+    name: "Dinesh",
+    role: "Content Creator",
+    phone: "+916300752882",
+    whatsappLink: "https://wa.me/916300752882"
   }
 ];
 
