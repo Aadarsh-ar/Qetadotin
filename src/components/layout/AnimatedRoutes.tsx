@@ -3,6 +3,7 @@ import { AnimatePresence } from "framer-motion";
 import { lazy, Suspense } from "react";
 import { PageTransition } from "./PageTransition";
 import { ScrollToTop } from "./ScrollToTop";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import Index from "@/pages/Index";
 
 // Lazy load non-critical pages to reduce initial bundle size
@@ -14,6 +15,7 @@ const Blog = lazy(() => import("@/pages/Blog"));
 const BlogPost = lazy(() => import("@/pages/BlogPost"));
 const BlogAdmin = lazy(() => import("@/pages/BlogAdmin"));
 const AdminAuth = lazy(() => import("@/pages/AdminAuth"));
+const CustomerData = lazy(() => import("@/pages/CustomerData"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
 // Simple loading fallback
@@ -64,7 +66,16 @@ export const AnimatedRoutes = () => {
           } />
           <Route path="/blog-admin" element={
             <Suspense fallback={<PageLoader />}>
-              <PageTransition><BlogAdmin /></PageTransition>
+              <ProtectedRoute requireAdmin>
+                <PageTransition><BlogAdmin /></PageTransition>
+              </ProtectedRoute>
+            </Suspense>
+          } />
+          <Route path="/customer-data" element={
+            <Suspense fallback={<PageLoader />}>
+              <ProtectedRoute requireAdmin>
+                <PageTransition><CustomerData /></PageTransition>
+              </ProtectedRoute>
             </Suspense>
           } />
           <Route path="/admin-auth" element={
