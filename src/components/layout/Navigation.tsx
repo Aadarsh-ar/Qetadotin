@@ -57,7 +57,7 @@ export const Navigation = () => {
             <Link to="/" className="flex items-center gap-2.5 group">
               <img 
                 src={newLogo} 
-                alt="QETA" 
+                alt="QETADOTIN" 
                 width={40}
                 height={40}
                 loading="eager"
@@ -65,7 +65,7 @@ export const Navigation = () => {
                 fetchPriority="high"
                 className="h-10 w-10 object-cover rounded-full transition-all duration-300 group-hover:scale-110 shadow-[0_0_15px_rgba(59,130,246,0.4)] group-hover:shadow-[0_0_25px_rgba(59,130,246,0.6)]"
               />
-              <span className="text-lg font-semibold tracking-tight text-foreground">QETA</span>
+              <span className="text-lg font-semibold tracking-tight text-foreground">QETADOTIN</span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -127,13 +127,13 @@ export const Navigation = () => {
                 <Link to="/" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
                   <img 
                     src={newLogo} 
-                    alt="QETA" 
+                    alt="QETADOTIN" 
                     width={32}
                     height={32}
                     loading="lazy"
                     className="h-8 w-8 object-cover rounded-full shadow-[0_0_10px_rgba(59,130,246,0.3)]"
                   />
-                  <span className="text-lg font-semibold text-foreground">QETA</span>
+                  <span className="text-lg font-semibold text-foreground">QETADOTIN</span>
                 </Link>
                 <motion.button
                   whileTap={{ scale: 0.9 }}
