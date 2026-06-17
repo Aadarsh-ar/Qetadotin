@@ -52,13 +52,21 @@ export default {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'
         },
-        // Pastel color tokens
-        'sky-blue': 'hsl(var(--sky-blue))',
-        'periwinkle': 'hsl(var(--periwinkle))',
-        'pastel-pink': 'hsl(var(--pastel-pink))',
-        'peach-coral': 'hsl(var(--peach-coral))',
-        'warm-lavender': 'hsl(var(--warm-lavender))',
-        surface: 'hsl(var(--surface))'
+        // Legacy pastel tokens (kept as gold aliases for older pages)
+        'sky-blue': 'hsl(var(--gold))',
+        'periwinkle': 'hsl(var(--gold-soft))',
+        'pastel-pink': 'hsl(var(--gold))',
+        'peach-coral': 'hsl(var(--gold-soft))',
+        'warm-lavender': 'hsl(var(--gold-deep))',
+        surface: 'hsl(var(--noir-elev))',
+        // Noir & Gold tokens
+        gold: 'hsl(var(--gold))',
+        'gold-soft': 'hsl(var(--gold-soft))',
+        'gold-deep': 'hsl(var(--gold-deep))',
+        noir: 'hsl(var(--noir))',
+        'noir-elev': 'hsl(var(--noir-elev))',
+        bone: 'hsl(var(--bone))',
+        hairline: 'hsl(var(--hairline))'
       },
       borderRadius: {
         '4xl': '2rem',
