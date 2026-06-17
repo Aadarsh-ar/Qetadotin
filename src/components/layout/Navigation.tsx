@@ -1,8 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 import { HamburgerIcon } from "@/components/ui/HamburgerIcon";
 import newLogo from "@/assets/qeta-logo-new.jpg";
 
@@ -18,172 +17,129 @@ export const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
-  // Handle scroll effect
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when menu is open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
 
-  // Close menu on route change
-  useEffect(() => {
-    setIsOpen(false);
-  }, [location.pathname]);
+  useEffect(() => { setIsOpen(false); }, [location.pathname]);
 
   return (
     <>
-      <nav className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl transition-all duration-500 ${
-        scrolled ? "top-3" : "top-6"
-      }`}>
-        <div className={`bg-white/70 backdrop-blur-2xl border border-white/40 rounded-full px-4 md:px-6 transition-all duration-500 ${
-          scrolled ? "shadow-pastel-lg" : "shadow-pastel"
-        }`}>
-          <div className="flex items-center justify-between h-14 md:h-16">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-2.5 group">
-              <img 
-                src={newLogo} 
-                alt="QETADOTIN" 
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled ? "bg-background/85 backdrop-blur-xl border-b border-border" : "bg-transparent border-b border-transparent"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-3 group">
+            <span className="relative w-10 h-10 rounded-full overflow-hidden border border-primary/50 bg-noir-elev flex items-center justify-center">
+              <img
+                src={newLogo}
+                alt="QETADOTIN"
                 width={40}
                 height={40}
                 loading="eager"
                 decoding="async"
                 fetchPriority="high"
-                className="h-10 w-10 object-cover rounded-full transition-all duration-300 group-hover:scale-110 shadow-[0_0_15px_rgba(59,130,246,0.4)] group-hover:shadow-[0_0_25px_rgba(59,130,246,0.6)]"
+                className="h-10 w-10 object-cover"
               />
-              <span className="text-lg font-semibold tracking-tight text-foreground">QETADOTIN</span>
-            </Link>
+            </span>
+            <span className="font-sans text-xs uppercase tracking-[0.28em] text-foreground">
+              QETADOTIN
+            </span>
+          </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <Link key={link.href} to={link.href}>
-                  <Button 
-                    variant="nav" 
-                    size="sm"
-                    className={`${location.pathname === link.href ? "bg-primary/20 text-foreground" : ""}`}
-                  >
-                    {link.name}
-                  </Button>
-                </Link>
-              ))}
-            </div>
-
-            {/* Desktop CTA */}
-            <div className="hidden md:flex items-center">
-              <Link to="/contact">
-                <Button variant="hero" size="sm">
-                  Book a Call
-                </Button>
+          {/* Desktop */}
+          <div className="hidden md:flex items-center gap-10">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className={`font-sans text-[11px] uppercase tracking-[0.25em] transition-colors duration-300 link-underline-gold ${
+                  location.pathname === link.href ? "text-primary" : "text-foreground/60 hover:text-foreground"
+                }`}
+              >
+                {link.name}
               </Link>
-            </div>
-
-            {/* Mobile Menu Toggle - Animated Hamburger */}
-            <HamburgerIcon isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
+            ))}
           </div>
+
+          <div className="hidden md:flex items-center">
+            <Link
+              to="/contact"
+              className="font-sans text-[11px] uppercase tracking-[0.25em] font-semibold bg-primary text-primary-foreground px-5 py-3 hover:bg-accent transition-colors"
+            >
+              Book a Call
+            </Link>
+          </div>
+
+          <HamburgerIcon isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay - Outside nav for proper z-index */}
+      {/* Mobile */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-foreground/30 backdrop-blur-md md:hidden"
+              className="fixed inset-0 bg-background/80 backdrop-blur-md md:hidden"
               style={{ zIndex: 9998 }}
               onClick={() => setIsOpen(false)}
             />
-            
-            {/* Slide-in Panel */}
             <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 26, stiffness: 180 }}
-              className="fixed top-0 right-0 h-screen w-[85%] max-w-xs bg-gradient-to-b from-white to-sky-blue/10 shadow-2xl md:hidden flex flex-col"
+              initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 28, stiffness: 200 }}
+              className="fixed top-0 right-0 h-screen w-[85%] max-w-xs bg-noir-elev border-l border-border md:hidden flex flex-col"
               style={{ zIndex: 9999 }}
             >
-              {/* Header with Logo and Close */}
-              <div className="flex items-center justify-between p-5 border-b border-border/20">
-                <Link to="/" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
-                  <img 
-                    src={newLogo} 
-                    alt="QETADOTIN" 
-                    width={32}
-                    height={32}
-                    loading="lazy"
-                    className="h-8 w-8 object-cover rounded-full shadow-[0_0_10px_rgba(59,130,246,0.3)]"
-                  />
-                  <span className="text-lg font-semibold text-foreground">QETADOTIN</span>
+              <div className="flex items-center justify-between p-6 border-b border-border">
+                <Link to="/" className="flex items-center gap-3" onClick={() => setIsOpen(false)}>
+                  <img src={newLogo} alt="QETADOTIN" width={32} height={32}
+                    className="h-8 w-8 object-cover rounded-full border border-primary/50" />
+                  <span className="font-sans text-xs uppercase tracking-[0.28em]">QETADOTIN</span>
                 </Link>
-                <motion.button
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => setIsOpen(false)}
-                  className="p-2 rounded-xl bg-primary/10 hover:bg-primary/20 transition-colors"
-                  aria-label="Close menu"
-                >
-                  <X size={22} className="text-foreground" />
-                </motion.button>
+                <button onClick={() => setIsOpen(false)} className="p-2 text-foreground/70 hover:text-primary" aria-label="Close menu">
+                  <X size={22} />
+                </button>
               </div>
-              
-              {/* Navigation Links */}
-              <div className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+              <div className="flex-1 px-6 py-10 space-y-6">
                 {navLinks.map((link, index) => (
                   <motion.div
                     key={link.href}
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.05 + index * 0.08, duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.05 + index * 0.06, duration: 0.4 }}
                   >
                     <Link
                       to={link.href}
-                      className={`flex items-center justify-between py-4 px-4 rounded-2xl text-base font-medium transition-all duration-200 ${
-                        location.pathname === link.href 
-                          ? "bg-gradient-to-r from-sky-blue/40 to-periwinkle/40 text-foreground shadow-sm" 
-                          : "text-foreground/70 hover:text-foreground hover:bg-white/60"
+                      className={`block font-serif text-3xl ${
+                        location.pathname === link.href ? "text-primary" : "text-foreground hover:text-primary"
                       }`}
                       onClick={() => setIsOpen(false)}
                     >
-                      <span>{link.name}</span>
-                      <ArrowRight className={`w-4 h-4 transition-transform ${location.pathname === link.href ? "translate-x-0 opacity-100" : "opacity-0 -translate-x-2"}`} />
+                      {link.name}
                     </Link>
                   </motion.div>
                 ))}
               </div>
-              
-              {/* CTA Button */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35, duration: 0.4 }}
-                className="p-5 border-t border-border/20"
-              >
-                <Link to="/contact" onClick={() => setIsOpen(false)}>
-                  <Button variant="hero" size="lg" className="w-full text-base py-5 group">
-                    Book a Call
-                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Button>
+              <div className="p-6 border-t border-border">
+                <Link
+                  to="/contact"
+                  onClick={() => setIsOpen(false)}
+                  className="block text-center font-sans text-[11px] uppercase tracking-[0.25em] font-semibold bg-primary text-primary-foreground py-4 hover:bg-accent transition-colors"
+                >
+                  Book a Call
                 </Link>
-              </motion.div>
+              </div>
             </motion.div>
           </>
         )}

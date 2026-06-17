@@ -1,571 +1,299 @@
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { ArrowRight, Workflow, Users, Bot, Layers, Phone, Sparkles, Calendar, Clock } from "lucide-react";
-import { PageLayout } from "@/components/layout/PageLayout";
-import { Section, SectionHeader } from "@/components/ui/Section";
-import { Button } from "@/components/ui/button";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowUpRight, ArrowRight } from "lucide-react";
 import { useRef } from "react";
+import { PageLayout } from "@/components/layout/PageLayout";
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 40 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" },
-  transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }
-};
+/* ─────────────────────────────────────────────
+   QETADOTIN — Cinematic Editorial Home
+   Locked tokens: Noir #0d0d0d / Gold #c9a84c
+   DM Serif Display + Fira Sans · Asymmetric 60/40
+   ───────────────────────────────────────────── */
 
-const fadeInScale = {
-  initial: { opacity: 0, scale: 0.9 },
-  whileInView: { opacity: 1, scale: 1 },
-  viewport: { once: true, margin: "-80px" },
-  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const }
-};
-
-const staggerContainer = {
-  initial: {},
-  whileInView: {
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.1
-    }
-  },
-  viewport: { once: true, margin: "-80px" }
-};
-
-const cardHover = {
-  rest: { scale: 1, y: 0 },
-  hover: { scale: 1.02, y: -5, transition: { duration: 0.3, ease: "easeOut" as const } }
-};
-
-const solutions = [
-  {
-    icon: Workflow,
-    title: "AI Workflow Automation",
-    description: "Internal ops, CRM, support, and admin processes automated end-to-end.",
-    href: "/solutions#workflow",
-    gradient: "from-sky-blue/30 to-periwinkle/30"
-  },
-  {
-    icon: Users,
-    title: "AI Revenue & Lead Systems",
-    description: "Qualification, outreach intelligence, and pipeline automation at scale.",
-    href: "/solutions#revenue",
-    gradient: "from-periwinkle/30 to-pastel-pink/30"
-  },
-  {
-    icon: Bot,
-    title: "Custom AI Agents",
-    description: "Research, extraction, and decision support agents built for your workflows.",
-    href: "/solutions#agents",
-    gradient: "from-pastel-pink/30 to-peach-coral/30"
-  },
-  {
-    icon: Layers,
-    title: "System Integration",
-    description: "APIs, databases, and existing stack unified into cohesive infrastructure.",
-    href: "/solutions#integration",
-    gradient: "from-peach-coral/30 to-warm-lavender/30"
-  }
+const services = [
+  { num: "01", name: "AI Avatars", line: "Photoreal digital humans that carry your brand voice frame-perfect." },
+  { num: "02", name: "Voice Cloning", line: "Indistinguishable vocal twins — multilingual, on-brand, on-demand." },
+  { num: "03", name: "AI Ads", line: "Performance creative at the speed of testing. Hooks, cuts, variants." },
+  { num: "04", name: "Video Editing", line: "Cinematic post — pace, color, motion crafted for the algorithm." },
+  { num: "05", name: "Social Branding", line: "An entire identity system tuned for feed, story and short-form." },
+  { num: "06", name: "Automation Systems", line: "Pipelines that publish, schedule, repurpose and report — alone." },
 ];
 
-const processSteps = [
-  {
-    number: "01",
-    title: "Systems Audit",
-    description: "Analyze workflows, data flows, and operational bottlenecks."
-  },
-  {
-    number: "02",
-    title: "Architecture Design",
-    description: "Blueprint automation infrastructure aligned to your operations."
-  },
-  {
-    number: "03",
-    title: "Build & Deploy",
-    description: "Custom production-ready systems deployed to your environment."
-  },
-  {
-    number: "04",
-    title: "Optimize & Scale",
-    description: "Continuous monitoring, iteration, and performance improvements."
-  }
-];
-
-const metrics = [
-  { value: "68%", label: "Reduced manual processing time" },
-  { value: "5", label: "Channels with zero-human lead qualification" },
-  { value: "24/7", label: "Autonomous operation capability" }
-];
-
-const problems = [
-  "Fragmented tools that don't communicate",
-  "Manual workflows eating operational capacity",
-  "No ownership of automation infrastructure",
-  "Automations that break after launch"
-];
-
-const teamMembers = [
-  {
-    name: "Aadarsh",
-    role: "Automation & Workflow Architect",
-    phone: "+916305367443",
-    whatsappLink: "https://wa.me/916305367443"
-  },
-  {
-    name: "Eswar",
-    role: "Lead Engineer, AI Integrations",
-    phone: "+919391536082",
-    whatsappLink: "https://wa.me/919391536082"
-  },
-  {
-    name: "Dinesh",
-    role: "Content Creator",
-    phone: "+916300752882",
-    whatsappLink: "https://wa.me/916300752882"
-  }
-];
-
-const blogPreview = [
-  {
-    id: "1",
-    title: "How AI Automation is Transforming Business Operations",
-    summary: "Key trends shaping how businesses leverage AI to streamline workflows.",
-    category: "Insights",
-    date: "Dec 20, 2024",
-    readTime: "8 min"
-  },
-  {
-    id: "2",
-    title: "Building Production-Ready AI Agents",
-    summary: "Architecture patterns and best practices for deploying AI agents.",
-    category: "Engineering",
-    date: "Dec 15, 2024",
-    readTime: "12 min"
-  },
-  {
-    id: "3",
-    title: "The Real Cost of Manual Workflows",
-    summary: "We analyzed 50+ businesses to quantify the hidden costs of manual processes.",
-    category: "Research",
-    date: "Dec 10, 2024",
-    readTime: "6 min"
-  }
+const principles = [
+  "One message per section",
+  "Visual-first storytelling",
+  "Premium motion, not noise",
+  "Engineered, not improvised",
 ];
 
 const Index = () => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"]
-  });
-  
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
-  const heroY = useSpring(useTransform(scrollYProgress, [0, 1], [0, 100]), { stiffness: 100, damping: 30 });
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   return (
     <PageLayout>
-      {/* Hero Section - Soft Pastel Gradient - Full viewport coverage */}
-      <section ref={heroRef} className="min-h-screen flex items-center justify-center relative overflow-hidden gradient-hero-bg -mt-24 pt-32 md:pt-24">
-        {/* Extended gradient overlay to cover top */}
-        <div className="absolute inset-0 bg-gradient-to-b from-sky-blue/30 via-transparent to-transparent pointer-events-none" style={{ top: "-100px", height: "calc(100% + 100px)" }} />
-        
-        {/* Floating pastel orbs with parallax */}
-        <motion.div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ y: heroY }}>
-          <div className="floating-orb w-[600px] h-[600px] bg-sky-blue/40 -top-40 -right-40 opacity-60" />
-          <div className="floating-orb w-[500px] h-[500px] bg-pastel-pink/30 bottom-20 -left-40 opacity-50" style={{ animationDelay: "-8s" }} />
-          <div className="floating-orb w-[400px] h-[400px] bg-warm-lavender/35 top-1/3 left-1/4 opacity-40" style={{ animationDelay: "-15s" }} />
-          <div className="floating-orb w-[300px] h-[300px] bg-peach-coral/30 bottom-40 right-1/4 opacity-45" style={{ animationDelay: "-12s" }} />
-        </motion.div>
-        
-        <motion.div 
-          className="container-wide px-6 md:px-12 lg:px-20 relative z-10"
-          style={{ opacity: heroOpacity, scale: heroScale }}
+      {/* ============ HERO — Asymmetric 60/40 ============ */}
+      <section ref={heroRef} className="relative min-h-screen bg-background overflow-hidden">
+        {/* Ambient gold glow */}
+        <div className="pointer-events-none absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full bg-primary/10 blur-[140px]" />
+        <div className="pointer-events-none absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-accent/5 blur-[120px]" />
+
+        <motion.div
+          style={{ y, opacity }}
+          className="relative max-w-7xl mx-auto px-6 md:px-10 pt-40 md:pt-48 pb-24 grid grid-cols-12 gap-8"
         >
-          <div className="max-w-4xl mx-auto text-center mt-12 md:mt-6">
-            <motion.div 
-              initial={{ opacity: 0, y: 20, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+          {/* Left 60% — Headline */}
+          <div className="col-span-12 lg:col-span-7 flex flex-col justify-center space-y-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-3 py-1.5 px-3 border border-primary/30 bg-primary/5 w-fit"
             >
-              <span className="inline-flex items-center px-4 py-2 md:px-5 md:py-2 rounded-full text-xs md:text-sm font-medium bg-white/60 backdrop-blur-xl text-foreground border border-white/40 shadow-pastel mb-6 md:mb-8 hover:shadow-pastel-lg hover:bg-white/70 transition-all duration-300 cursor-default whitespace-nowrap">
-                <Sparkles className="w-3 h-3 md:w-4 md:h-4 mr-1.5 md:mr-2 text-accent-foreground animate-pulse flex-shrink-0" />
-                AI Systems Partner
+              <span className="w-1.5 h-1.5 rounded-full bg-primary pulse-gold" />
+              <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-primary">
+                AI Content Systems · Est. 2024
               </span>
             </motion.div>
-            
-            <motion.h1 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1] mb-8 text-foreground text-shadow-soft"
+
+            <h1 className="font-serif text-[3.5rem] sm:text-7xl md:text-8xl lg:text-[8.5rem] leading-[0.9] tracking-display text-foreground">
+              <span className="block overflow-hidden"><span className="mask-up">Brands move</span></span>
+              <span className="block overflow-hidden"><span className="mask-up" style={{ animationDelay: "0.12s" }}>at the speed</span></span>
+              <span className="block overflow-hidden"><span className="mask-up gold-grad-text" style={{ animationDelay: "0.24s" }}>of their system.</span></span>
+            </h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.5 }}
+              className="font-sans text-lg md:text-xl text-foreground/55 max-w-xl font-light leading-relaxed"
             >
-              We build AI systems that run your business, not demos.
-            </motion.h1>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-12"
-            >
-              QETA designs and deploys custom AI automation infrastructure to eliminate manual work, reduce costs, and scale operations. No fragmented tools. No broken automations. Just systems that work.
+              QETADOTIN builds AI-powered content systems for modern brands — avatars, voice, ads, video and automation engineered into one cinematic pipeline.
             </motion.p>
-            
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.65 }}
+              className="flex flex-col sm:flex-row gap-5 pt-2"
             >
-              <Link to="/contact">
-                <Button variant="hero" size="xl" className="group">
-                  Book a Call
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Button>
+              <Link to="/contact" className="btn-gold group">
+                Book a Call
+                <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
-              <Link to="/solutions">
-                <Button variant="heroOutline" size="xl" className="group">
-                  See What We Build
-                  <ArrowRight className="ml-2 h-4 w-4 opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
-                </Button>
+              <Link to="/solutions" className="btn-ghost-bone group">
+                See the System
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </motion.div>
           </div>
+
+          {/* Right 40% — Cinematic mark */}
+          <div className="col-span-12 lg:col-span-5 relative hidden lg:flex items-center justify-center">
+            <div className="relative w-full aspect-square max-w-[480px]">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 border border-primary/15 rounded-full"
+              />
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-8 border border-primary/10 rounded-full"
+              />
+              <div className="absolute inset-0 border-[0.5px] border-primary/20 rotate-45 scale-75" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-56 h-56 rounded-full bg-primary/10 blur-[80px]" />
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="font-serif text-[14rem] leading-none gold-grad-text">Q</span>
+              </div>
+              {/* Floating labels */}
+              <div className="absolute top-6 right-0 font-sans text-[10px] uppercase tracking-[0.35em] text-foreground/40 rotate-90 origin-right">
+                System v2.0 / Online
+              </div>
+              <div className="absolute bottom-4 left-0 font-sans text-[10px] uppercase tracking-[0.35em] text-foreground/40">
+                Cinema-grade pipeline
+              </div>
+            </div>
+          </div>
         </motion.div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-foreground/30">
+          <span className="font-sans text-[10px] uppercase tracking-[0.3em]">Scroll</span>
+          <div className="w-px h-10 bg-foreground/20 overflow-hidden relative">
+            <motion.div
+              className="absolute inset-0 bg-primary"
+              animate={{ y: ["-100%", "100%"] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </div>
+        </div>
       </section>
 
-      {/* Problem Section */}
-      <Section className="bg-white/30 backdrop-blur-sm">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          <motion.div {...fadeInUp}>
-            <SectionHeader
-              label="The Problem"
-              title="Most 'AI agencies' sell tools. Businesses need systems."
-              className="mb-0"
-            />
-          </motion.div>
+      {/* ============ MARQUEE — Services Ticker ============ */}
+      <section className="border-y border-border bg-noir-elev/40 overflow-hidden">
+        <div className="flex animate-marquee whitespace-nowrap py-8">
+          {[...Array(2)].map((_, dup) => (
+            <div key={dup} className="flex items-center gap-16 px-8">
+              {services.map((s) => (
+                <div key={`${dup}-${s.num}`} className="flex items-center gap-6">
+                  <span className="font-sans text-[10px] uppercase tracking-[0.35em] text-primary">{s.num}</span>
+                  <span className="font-serif text-3xl md:text-4xl text-foreground/85">{s.name}</span>
+                  <span className="text-primary text-2xl">✦</span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ============ MANIFESTO — One message ============ */}
+      <section className="relative py-32 md:py-48 px-6 md:px-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-12 gap-8">
+          <div className="col-span-12 md:col-span-4">
+            <p className="eyebrow mb-6">— Manifesto</p>
+          </div>
           <motion.div
-            {...staggerContainer}
-            className="space-y-4"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="col-span-12 md:col-span-8"
           >
-            {problems.map((problem, index) => (
+            <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[1.05] tracking-display text-foreground/85">
+              We don't make <span className="text-foreground/40">content</span>. We engineer the
+              <span className="gold-grad-text"> machinery</span> that produces it — frame after frame, post after post, market after market.
+            </h2>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ============ SERVICES — Editorial 60/40 list ============ */}
+      <section className="border-t border-border">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 py-24 md:py-32 grid grid-cols-12 gap-8">
+          {/* Sticky index 40% */}
+          <div className="col-span-12 md:col-span-4">
+            <div className="md:sticky md:top-32">
+              <p className="eyebrow mb-6">— Core Services</p>
+              <h3 className="font-serif text-5xl md:text-6xl leading-[1.02] tracking-display mb-8">
+                Six surfaces. <br/>
+                <span className="gold-grad-text">One system.</span>
+              </h3>
+              <p className="font-sans text-foreground/55 leading-relaxed mb-10 max-w-sm">
+                Each capability ships standalone or composed into a full content engine for your brand.
+              </p>
+              <Link to="/solutions" className="btn-ghost-bone group">
+                Explore Solutions
+                <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+            </div>
+          </div>
+
+          {/* List 60% */}
+          <div className="col-span-12 md:col-span-8">
+            <ul className="divide-y divide-border border-y border-border">
+              {services.map((s, i) => (
+                <motion.li
+                  key={s.num}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.6, delay: i * 0.05 }}
+                  className="group"
+                >
+                  <Link
+                    to="/solutions"
+                    className="grid grid-cols-12 gap-4 py-8 md:py-10 items-baseline transition-colors hover:bg-primary/[0.02]"
+                  >
+                    <span className="col-span-2 font-sans text-[10px] uppercase tracking-[0.3em] text-primary pt-3">
+                      {s.num}
+                    </span>
+                    <div className="col-span-9">
+                      <h4 className="font-serif text-3xl md:text-5xl text-foreground group-hover:text-primary transition-colors tracking-display">
+                        {s.name}
+                      </h4>
+                      <p className="font-sans text-foreground/50 mt-3 max-w-lg leading-relaxed">{s.line}</p>
+                    </div>
+                    <ArrowUpRight className="col-span-1 h-6 w-6 text-foreground/30 group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all justify-self-end mt-3" />
+                  </Link>
+                </motion.li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ CINEMATIC STAT BAND ============ */}
+      <section className="border-t border-border bg-noir-elev/30">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 py-24 grid grid-cols-12 gap-8">
+          {[
+            { v: "10×", l: "Faster creative cycles" },
+            { v: "99.9%", l: "Pipeline uptime" },
+            { v: "24/7", l: "Autonomous publishing" },
+          ].map((m, i) => (
+            <motion.div
+              key={m.l}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: i * 0.1 }}
+              className="col-span-12 md:col-span-4"
+            >
+              <div className="hairline-t pt-6">
+                <p className="eyebrow mb-4">0{i + 1}</p>
+                <p className="font-serif text-7xl md:text-8xl gold-grad-text leading-none tracking-display">{m.v}</p>
+                <p className="font-sans text-foreground/55 mt-4">{m.l}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ============ PRINCIPLES — minimal grid ============ */}
+      <section className="border-t border-border">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 py-24 md:py-32 grid grid-cols-12 gap-8">
+          <div className="col-span-12 md:col-span-5">
+            <p className="eyebrow mb-6">— How we work</p>
+            <h3 className="font-serif text-5xl md:text-6xl leading-[1.02] tracking-display">
+              A studio's <span className="gold-grad-text">discipline,</span> an engine's <span className="gold-grad-text">throughput.</span>
+            </h3>
+          </div>
+          <div className="col-span-12 md:col-span-7 md:pl-12 md:border-l border-border space-y-8 pt-2">
+            {principles.map((p, i) => (
               <motion.div
-                key={index}
+                key={p}
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ x: 8, transition: { duration: 0.2 } }}
-                className="glass-card !p-6 flex items-center gap-4 cursor-default"
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                className="flex items-baseline gap-6 hairline-b pb-6"
               >
-                <motion.span 
-                  className="w-3 h-3 rounded-full bg-gradient-to-r from-pastel-pink to-peach-coral flex-shrink-0"
-                  whileHover={{ scale: 1.5 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                />
-                <p className="text-foreground/80">{problem}</p>
+                <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-primary">0{i + 1}</span>
+                <p className="font-serif text-2xl md:text-3xl text-foreground/85">{p}</p>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
-      </Section>
+      </section>
 
-      {/* Solutions Section */}
-      <Section>
-        <motion.div {...fadeInUp}>
-          <SectionHeader
-            label="What We Build"
-            title="Production-grade AI systems for operational scale"
-            description="Four core system categories designed to replace manual work with reliable automation infrastructure."
-            centered
-          />
-        </motion.div>
-        <motion.div
-          {...staggerContainer}
-          className="grid md:grid-cols-2 gap-6"
-        >
-          {solutions.map((solution, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ scale: 1.02, y: -5 }}
-            >
-              <Link 
-                to={solution.href}
-                className="group interactive-card block h-full"
-              >
-                <motion.div 
-                  className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${solution.gradient} flex items-center justify-center mb-6 shadow-pastel`}
-                  whileHover={{ rotate: 5, scale: 1.1 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <solution.icon className="h-6 w-6 text-foreground/70" strokeWidth={1.5} />
-                </motion.div>
-                <h3 className="text-xl font-semibold mb-3 group-hover:text-accent-foreground transition-colors">
-                  {solution.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed mb-6">
-                  {solution.description}
-                </p>
-                <span className="inline-flex items-center text-sm font-medium text-foreground/60 group-hover:text-accent-foreground transition-colors">
-                  Learn more
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-2" />
-                </span>
-              </Link>
-            </motion.div>
-          ))}
-        </motion.div>
-      </Section>
-
-      {/* Process Section */}
-      <Section className="bg-gradient-to-br from-periwinkle/20 via-transparent to-pastel-pink/20">
-        <motion.div {...fadeInUp}>
-          <SectionHeader
-            label="How We Work"
-            title="From audit to autonomous operation"
-            description="A structured approach to building systems that actually work in production."
-            centered
-          />
-        </motion.div>
-        <motion.div
-          {...staggerContainer}
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
-          {processSteps.map((step, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.12 }}
-              whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className="glass-card text-center cursor-default"
-            >
-              <motion.span 
-                className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-sky-blue/40 to-periwinkle/40 text-foreground font-semibold text-lg mb-6 shadow-pastel"
-                whileHover={{ scale: 1.15, rotate: 10 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                {step.number}
-              </motion.span>
-              <h3 className="text-lg font-semibold mb-3">{step.title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                {step.description}
-              </p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </Section>
-
-      {/* Metrics Section */}
-      <Section>
-        <motion.div {...fadeInUp}>
-          <SectionHeader
-            label="Results"
-            title="Measured outcomes, not promises"
-            centered
-          />
-        </motion.div>
-        <motion.div
-          {...staggerContainer}
-          className="grid md:grid-cols-3 gap-8"
-        >
-          {metrics.map((metric, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: index * 0.15, type: "spring" }}
-              whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-              className="glass-card text-center cursor-default"
-            >
-              <motion.p 
-                className="text-5xl md:text-6xl font-semibold text-foreground mb-3 gradient-text-pastel"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 + index * 0.15 }}
-              >
-                {metric.value}
-              </motion.p>
-              <p className="text-muted-foreground">
-                {metric.label}
-              </p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </Section>
-
-      {/* Team Section */}
-      <Section className="bg-gradient-to-br from-warm-lavender/20 via-transparent to-sky-blue/20">
-        <motion.div {...fadeInUp}>
-          <SectionHeader
-            label="Our Team"
-            title="The people behind QETA"
-            description="Connect directly with our team to discuss your automation needs."
-            centered
-          />
-        </motion.div>
-        <motion.div
-          {...staggerContainer}
-          className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto"
-        >
-          {teamMembers.map((member, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 40, rotateY: -10 }}
-              whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              whileHover={{ y: -10, transition: { duration: 0.3 } }}
-              className="glass-card text-center"
-            >
-              <motion.div 
-                className="w-16 h-16 rounded-full bg-gradient-to-br from-sky-blue/50 to-periwinkle/50 flex items-center justify-center mx-auto mb-6 shadow-pastel"
-                whileHover={{ scale: 1.15, rotate: 5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <span className="text-2xl font-semibold text-foreground">{member.name[0]}</span>
-              </motion.div>
-              <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
-              <p className="text-muted-foreground text-sm mb-4">{member.role}</p>
-              <p className="text-sm text-foreground/70 mb-6 flex items-center justify-center gap-2">
-                <Phone className="h-4 w-4" />
-                {member.phone}
-              </p>
-              <a
-                href={member.whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button variant="hero" size="default" className="w-full group">
-                  Chat on WhatsApp
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </a>
-            </motion.div>
-          ))}
-        </motion.div>
-      </Section>
-
-      {/* Blog Section */}
-      <Section>
-        <motion.div {...fadeInUp}>
-          <SectionHeader
-            label="From Our Blog"
-            title="Insights, Updates & Learning"
-            description="Explore our thoughts on AI automation, system architecture, and operational efficiency."
-            centered
-          />
-        </motion.div>
-        <motion.div
-          {...staggerContainer}
-          className="grid md:grid-cols-3 gap-6"
-        >
-          {blogPreview.map((post, index) => (
-            <motion.div 
-              key={post.id} 
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -8, transition: { duration: 0.3 } }}
-            >
-              <Link to={`/blog`} className="block group h-full">
-                <div className="blog-card h-full p-6 md:p-8 flex flex-col">
-                  <motion.span 
-                    className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wide bg-gradient-to-r from-sky-blue/30 to-periwinkle/30 text-foreground/70 w-fit mb-4"
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    {post.category}
-                  </motion.span>
-                  <h3 className="text-lg font-semibold mb-3 group-hover:text-accent-foreground transition-colors line-clamp-2">
-                    {post.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
-                    {post.summary}
-                  </p>
-                  <div className="flex items-center justify-between text-xs text-muted-foreground pt-4 border-t border-border/30">
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-3.5 h-3.5" />
-                      {post.date}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5" />
-                      {post.readTime}
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="text-center mt-12"
-        >
-          <Link to="/blog">
-            <Button variant="heroOutline" size="lg" className="group">
-              View All Articles
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Button>
+      {/* ============ CTA — Cinematic closer ============ */}
+      <section className="relative border-t border-border overflow-hidden">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/8 blur-[160px]" />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-6 md:px-10 py-32 md:py-48 text-center">
+          <p className="eyebrow mb-8 justify-center">— The next system</p>
+          <h2 className="font-serif text-5xl sm:text-7xl md:text-8xl lg:text-9xl leading-[0.95] tracking-display mb-12 text-balance">
+            Let's build the <br />
+            <span className="gold-grad-text">machinery</span> behind your brand.
+          </h2>
+          <Link to="/contact" className="btn-gold group inline-flex">
+            Start a Project
+            <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
-        </motion.div>
-      </Section>
-
-      {/* CTA Section */}
-      <Section className="bg-gradient-to-br from-primary/40 via-periwinkle/40 to-accent/30 rounded-t-[3rem] backdrop-blur-sm">
-        <div className="text-center max-w-3xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <span className="inline-flex items-center px-5 py-2 rounded-full text-xs uppercase tracking-widest font-medium mb-8 bg-white/50 backdrop-blur-sm text-foreground/70 border border-white/30">
-              Get Started
-            </span>
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-6 text-foreground"
-          >
-            If manual work is slowing your growth, it's a systems problem.
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-foreground/60 text-lg mb-12"
-          >
-            Let's discuss how QETA can architect the automation infrastructure your operations need.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <Link to="/contact">
-              <Button variant="hero" size="xl">
-                Schedule a Strategy Call
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </motion.div>
         </div>
-      </Section>
+      </section>
     </PageLayout>
   );
 };
