@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Instagram, Mail, Facebook, Linkedin } from "lucide-react";
-import { motion } from "framer-motion";
 import logoSmall from "@/assets/qeta-logo-new.jpg";
 import { NewsletterForm } from "@/components/ui/NewsletterForm";
 
@@ -9,11 +8,13 @@ const footerLinks = {
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ],
-  solutions: [
-    { name: "AI Workflow Automation", href: "/solutions#workflow" },
-    { name: "AI Revenue Systems", href: "/solutions#revenue" },
-    { name: "Custom AI Agents", href: "/solutions#agents" },
-    { name: "System Integration", href: "/solutions#integration" },
+  services: [
+    { name: "AI Avatars", href: "/solutions#avatars" },
+    { name: "Voice Cloning", href: "/solutions#voice" },
+    { name: "AI Ads", href: "/solutions#ads" },
+    { name: "Video Editing", href: "/solutions#video" },
+    { name: "Social Branding", href: "/solutions#social" },
+    { name: "Automation Systems", href: "/solutions#automation" },
   ],
   resources: [
     { name: "Use Cases", href: "/use-cases" },
@@ -22,195 +23,93 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { 
-    name: "Instagram", 
-    icon: Instagram, 
-    href: "https://www.instagram.com/qeta.in?igsh=MXF1MWdsbXB5aWZlMw==" 
-  },
-  { 
-    name: "Email", 
-    icon: Mail, 
-    href: "mailto:inqeta@gmail.com" 
-  },
-  { 
-    name: "Facebook", 
-    icon: Facebook, 
-    href: "#" 
-  },
-  { 
-    name: "LinkedIn", 
-    icon: Linkedin, 
-    href: "https://www.linkedin.com/in/qeta-dotin-8a48a03a1?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" 
-  },
+  { name: "Instagram", icon: Instagram, href: "https://www.instagram.com/qeta.in?igsh=MXF1MWdsbXB5aWZlMw==" },
+  { name: "Email", icon: Mail, href: "mailto:inqeta@gmail.com" },
+  { name: "Facebook", icon: Facebook, href: "#" },
+  { name: "LinkedIn", icon: Linkedin, href: "https://www.linkedin.com/in/qeta-dotin-8a48a03a1" },
 ];
 
 export const Footer = () => {
   return (
-    <footer className="relative z-10 mt-[-2rem]">
-      {/* Gradient overlay top */}
-      <div className="h-24 bg-gradient-to-b from-transparent via-primary/5 to-primary/20 rounded-t-[3rem]" />
-      
-      {/* Main footer content */}
-      <div className="bg-gradient-to-br from-primary/30 via-periwinkle/30 to-accent/20 backdrop-blur-sm">
-        <div className="container-wide px-6 md:px-12 lg:px-20 py-20 md:py-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
-            {/* Brand */}
-            <motion.div 
-              className="lg:col-span-1"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <Link to="/" className="inline-flex items-center gap-3 mb-6 group">
-                <motion.img 
-                  src={logoSmall} 
-                  alt="QETADOTIN" 
-                  width={48}
-                  height={48}
-                  loading="lazy"
-                  className="h-12 w-12 object-cover rounded-full shadow-[0_0_15px_rgba(59,130,246,0.4)] group-hover:shadow-[0_0_25px_rgba(59,130,246,0.6)] transition-all duration-300"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                />
-                <span className="text-xl font-semibold tracking-tight text-foreground transition-colors duration-300 group-hover:text-primary">QETADOTIN</span>
-              </Link>
-              <p className="text-foreground/60 text-sm leading-relaxed max-w-xs mb-8">
-                Production-grade AI systems that eliminate manual work and scale operations.
-              </p>
-              {/* Social Icons */}
-              <div className="flex items-center gap-3">
-                {socialLinks.map((social, index) => (
-                  <motion.a
-                    key={social.name}
-                    href={social.href}
-                    target={social.href.startsWith("mailto") ? undefined : "_blank"}
-                    rel={social.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                    className="w-10 h-10 rounded-full bg-white/50 hover:bg-white/80 flex items-center justify-center text-foreground/50 hover:text-foreground transition-all duration-300 shadow-sm hover:shadow-pastel"
-                    aria-label={social.name}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1, duration: 0.3 }}
-                    whileHover={{ scale: 1.15, y: -3 }}
-                  >
-                    <social.icon className="h-4 w-4" />
-                  </motion.a>
-                ))}
-              </div>
-            </motion.div>
+    <footer className="relative z-10 bg-background border-t border-border">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-12 py-24">
+        {/* Massive brand mark */}
+        <div className="mb-20 pb-16 border-b border-border">
+          <p className="eyebrow mb-6">— Build the system</p>
+          <h2 className="font-serif text-[18vw] md:text-[14vw] lg:text-[180px] leading-[0.85] tracking-display text-foreground">
+            QETA<span className="text-primary">.</span>IN
+          </h2>
+        </div>
 
-            {/* Company Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <h4 className="text-xs font-semibold uppercase tracking-wider mb-6 text-foreground/50">
-                Company
-              </h4>
-              <ul className="space-y-4">
-                {footerLinks.company.map((link, index) => (
-                  <motion.li 
-                    key={link.name}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 + index * 0.05, duration: 0.3 }}
-                  >
-                    <Link
-                      to={link.href}
-                      className="text-foreground/70 hover:text-foreground transition-all duration-300 text-sm hover:translate-x-1 inline-block"
-                    >
-                      {link.name}
-                    </Link>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Solutions Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <h4 className="text-xs font-semibold uppercase tracking-wider mb-6 text-foreground/50">
-                Solutions
-              </h4>
-              <ul className="space-y-4">
-                {footerLinks.solutions.map((link, index) => (
-                  <motion.li 
-                    key={link.name}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 + index * 0.05, duration: 0.3 }}
-                  >
-                    <Link
-                      to={link.href}
-                      className="text-foreground/70 hover:text-foreground transition-all duration-300 text-sm hover:translate-x-1 inline-block"
-                    >
-                      {link.name}
-                    </Link>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Resources Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <h4 className="text-xs font-semibold uppercase tracking-wider mb-6 text-foreground/50">
-                Resources
-              </h4>
-              <ul className="space-y-4">
-                {footerLinks.resources.map((link, index) => (
-                  <motion.li 
-                    key={link.name}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.4 + index * 0.05, duration: 0.3 }}
-                  >
-                    <Link
-                      to={link.href}
-                      className="text-foreground/70 hover:text-foreground transition-all duration-300 text-sm hover:translate-x-1 inline-block"
-                    >
-                      {link.name}
-                    </Link>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Newsletter */}
-            <NewsletterForm />
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-10 lg:gap-12">
+          {/* Brand */}
+          <div className="col-span-2 md:col-span-4">
+            <Link to="/" className="inline-flex items-center gap-3 mb-8 group">
+              <img src={logoSmall} alt="QETADOTIN" width={44} height={44}
+                className="h-11 w-11 object-cover rounded-full border border-primary/50" />
+              <span className="font-sans text-xs uppercase tracking-[0.28em] text-foreground">QETADOTIN</span>
+            </Link>
+            <p className="text-foreground/55 text-sm leading-relaxed max-w-xs mb-8 font-light">
+              AI-powered content systems for modern brands. Avatars, voice, video and automation — engineered, not improvised.
+            </p>
+            <div className="flex items-center gap-3">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  target={social.href.startsWith("mailto") ? undefined : "_blank"}
+                  rel={social.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+                  className="w-10 h-10 border border-border text-foreground/60 hover:text-primary hover:border-primary/60 flex items-center justify-center transition-all"
+                  aria-label={social.name}
+                >
+                  <social.icon className="h-4 w-4" />
+                </a>
+              ))}
+            </div>
           </div>
 
-          {/* Bottom */}
-          <motion.div 
-            className="mt-20 pt-8 border-t border-foreground/10"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className="text-foreground/50 text-sm">
-                © {new Date().getFullYear()} QETADOTIN. All rights reserved.
-              </p>
-              <p className="text-foreground/50 text-sm">
-                Systems that run your business.
-              </p>
-            </div>
-          </motion.div>
+          {/* Services */}
+          <div className="col-span-1 md:col-span-3">
+            <h4 className="eyebrow mb-6">Services</h4>
+            <ul className="space-y-3">
+              {footerLinks.services.map((link) => (
+                <li key={link.name}>
+                  <Link to={link.href} className="font-sans text-sm text-foreground/70 hover:text-primary transition-colors">
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Studio */}
+          <div className="col-span-1 md:col-span-2">
+            <h4 className="eyebrow mb-6">Studio</h4>
+            <ul className="space-y-3">
+              {[...footerLinks.company, ...footerLinks.resources].map((link) => (
+                <li key={link.name}>
+                  <Link to={link.href} className="font-sans text-sm text-foreground/70 hover:text-primary transition-colors">
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Newsletter */}
+          <div className="col-span-2 md:col-span-3">
+            <h4 className="eyebrow mb-6">Signal</h4>
+            <NewsletterForm />
+          </div>
+        </div>
+
+        <div className="mt-20 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <p className="font-sans text-xs uppercase tracking-[0.25em] text-foreground/40">
+            © {new Date().getFullYear()} QETADOTIN — Hyderabad / Remote
+          </p>
+          <p className="font-sans text-xs uppercase tracking-[0.25em] text-foreground/40">
+            Systems that run your brand.
+          </p>
         </div>
       </div>
     </footer>
