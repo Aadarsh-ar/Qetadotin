@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Instagram, Mail, Facebook, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
-import logoSmall from "@/assets/qeta-logo-small.webp";
+import logoSmall from "@/assets/qeta-logo-new.jpg";
 import { NewsletterForm } from "@/components/ui/NewsletterForm";
 
 const footerLinks = {
@@ -65,7 +65,7 @@ export const Footer = () => {
               <Link to="/" className="inline-flex items-center gap-3 mb-6 group">
                 <motion.img 
                   src={logoSmall} 
-                  alt="QETA" 
+                  alt="QETADOTIN" 
                   width={48}
                   height={48}
                   loading="lazy"
@@ -73,7 +73,7 @@ export const Footer = () => {
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 />
-                <span className="text-xl font-semibold tracking-tight text-foreground transition-colors duration-300 group-hover:text-primary">QETA</span>
+                <span className="text-xl font-semibold tracking-tight text-foreground transition-colors duration-300 group-hover:text-primary">QETADOTIN</span>
               </Link>
               <p className="text-foreground/60 text-sm leading-relaxed max-w-xs mb-8">
                 Production-grade AI systems that eliminate manual work and scale operations.
@@ -204,7 +204,7 @@ export const Footer = () => {
           >
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="text-foreground/50 text-sm">
-                © {new Date().getFullYear()} QETA. All rights reserved.
+                © {new Date().getFullYear()} QETADOTIN. All rights reserved.
               </p>
               <p className="text-foreground/50 text-sm">
                 Systems that run your business.
