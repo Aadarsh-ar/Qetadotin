@@ -2,19 +2,18 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { PageLayout } from "@/components/layout/PageLayout";
-import { Section, SectionHeader } from "@/components/ui/Section";
-import { Button } from "@/components/ui/button";
+import { Section } from "@/components/ui/Section";
 
 const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
+  initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+  transition: { duration: 0.6 }
 };
 
 const staggerContainer = {
   animate: {
     transition: {
-      staggerChildren: 0.12
+      staggerChildren: 0.1
     }
   }
 };
@@ -46,7 +45,7 @@ const useCases = [
     category: "AI Agents",
     title: "Competitive Intelligence Agent",
     challenge: "Manual competitor monitoring was sporadic and incomplete. The team missed pricing changes, product launches, and market signals.",
-    solution: "Autonomous research agent monitoring competitor websites, job postings, press releases, and social signals. Daily briefings synthesized into actionable intelligence.",
+    solution: "Autonomous research agent monitoring competitor websites, job postings, social signals. Daily briefings synthesized into actionable intelligence.",
     outcomes: [
       "24/7 monitoring across 15 competitor sources",
       "Real-time alerts on significant changes",
@@ -92,34 +91,30 @@ const UseCases = () => {
   return (
     <PageLayout>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-24 overflow-hidden -mt-24">
-        {/* Gradient background - extends above to cover nav area */}
-        <div className="absolute -top-24 left-0 right-0 bottom-0 gradient-hero-bg opacity-100" />
-        
-        {/* Floating orbs */}
-        <div className="floating-orb w-[600px] h-[600px] bg-primary/30 -top-40 -left-40" />
-        <div className="floating-orb w-[400px] h-[400px] bg-accent/25 top-20 right-0" style={{ animationDelay: "-5s" }} />
-        <div className="floating-orb w-[300px] h-[300px] bg-secondary/30 bottom-0 left-1/3" style={{ animationDelay: "-10s" }} />
-        
-        <div className="container-wide px-6 md:px-12 lg:px-20 relative z-10">
+      <section className="relative min-h-[50vh] flex items-center justify-center bg-white pt-32 pb-16 overflow-hidden">
+        <div className="container-wide relative z-10 text-center">
           <motion.div
             initial="initial"
             animate="animate"
             variants={staggerContainer}
-            className="max-w-3xl mx-auto text-center"
+            className="max-w-3xl mx-auto space-y-6"
           >
-            <motion.span variants={fadeInUp} className="pill-accent mb-8 inline-flex">
-              Use Cases
-            </motion.span>
+            <motion.p
+              variants={fadeInUp}
+              className="font-sans text-[11px] uppercase tracking-[0.22em] text-[#ff7633] font-bold"
+            >
+              Use cases
+            </motion.p>
             <motion.h1 
               variants={fadeInUp}
-              className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-8"
+              className="text-5xl md:text-6xl font-serif leading-[1.05] tracking-tight text-black"
             >
-              Operational impact, not hypotheticals.
+              Operational impact, <br />
+              <span className="text-[#ff7633]">not hypotheticals.</span>
             </motion.h1>
             <motion.p 
               variants={fadeInUp}
-              className="text-lg md:text-xl text-muted-foreground leading-relaxed"
+              className="text-lg text-[#251B18]/75 leading-relaxed font-light font-sans max-w-2xl mx-auto"
             >
               Real examples of how production-grade AI systems transform operational capacity. Focus on the outcome, not the technology.
             </motion.p>
@@ -128,55 +123,56 @@ const UseCases = () => {
       </section>
 
       {/* Use Cases Grid */}
-      <Section>
+      <Section className="border-t border-black/5 py-20 bg-white">
         <motion.div
           initial="initial"
           whileInView="animate"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="grid md:grid-cols-2 gap-6"
+          className="grid md:grid-cols-2 gap-8"
         >
           {useCases.map((useCase, index) => (
             <motion.div
               key={index}
               variants={fadeInUp}
-              className="interactive-card group"
+              className="bg-[#f8f6f1] border border-black/5 p-8 rounded-[25px] hover:border-[#ff7633]/30 hover:shadow-sm transition-all duration-300 space-y-6"
+              whileHover={{ y: -2 }}
             >
-              <span className="pill-accent mb-4 inline-flex text-xs">
+              <span className="px-3 py-1 bg-[#ff7633]/10 border border-[#ff7633]/25 text-[#ff7633] text-[9px] uppercase tracking-wider font-semibold rounded-full block w-fit">
                 {useCase.category}
               </span>
-              <h2 className="text-xl font-semibold tracking-tight mb-6 group-hover:text-accent transition-colors">
+              <h2 className="text-2xl font-serif text-black font-bold">
                 {useCase.title}
               </h2>
               
               <div className="space-y-6">
-                <div>
-                  <h3 className="text-xs uppercase tracking-widest font-medium text-muted-foreground mb-2">
+                <div className="space-y-1">
+                  <h3 className="text-xs uppercase tracking-[0.25em] text-[#251B18]/45 font-bold font-sans">
                     Challenge
                   </h3>
-                  <p className="text-foreground/80 text-sm leading-relaxed">
+                  <p className="text-[#251B18]/80 text-sm font-sans font-light leading-relaxed">
                     {useCase.challenge}
                   </p>
                 </div>
                 
-                <div>
-                  <h3 className="text-xs uppercase tracking-widest font-medium text-muted-foreground mb-2">
+                <div className="space-y-1">
+                  <h3 className="text-xs uppercase tracking-[0.25em] text-[#251B18]/45 font-bold font-sans">
                     Solution
                   </h3>
-                  <p className="text-foreground/80 text-sm leading-relaxed">
+                  <p className="text-[#251B18]/80 text-sm font-sans font-light leading-relaxed">
                     {useCase.solution}
                   </p>
                 </div>
                 
-                <div className="pt-4 border-t border-border/50">
-                  <h3 className="text-xs uppercase tracking-widest font-medium text-accent mb-3">
+                <div className="pt-4 border-t border-black/5">
+                  <h3 className="text-xs uppercase tracking-[0.25em] text-[#ff7633] font-bold font-sans mb-3">
                     Outcomes
                   </h3>
-                  <ul className="space-y-2">
+                  <ul className="space-y-2.5">
                     {useCase.outcomes.map((outcome, i) => (
                       <li key={i} className="flex items-start gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0" />
-                        <span className="text-foreground text-sm font-medium">{outcome}</span>
+                        <div className="w-1.5 h-1.5 bg-[#ff7633] rounded-full mt-2 flex-shrink-0" />
+                        <span className="text-[#251B18] text-sm font-sans font-light">{outcome}</span>
                       </li>
                     ))}
                   </ul>
@@ -188,28 +184,25 @@ const UseCases = () => {
       </Section>
 
       {/* CTA */}
-      <Section dark className="rounded-t-[3rem]">
-        <div className="text-center max-w-3xl mx-auto">
+      <Section className="border-t border-black/5 relative overflow-hidden bg-white py-24">
+        <div className="text-center max-w-3xl mx-auto space-y-6">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6 }}
+            className="space-y-6"
           >
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6">
+
+            <h2 className="text-4xl md:text-5xl font-serif text-black leading-tight">
               Similar operational challenges?
             </h2>
-            <p className="text-primary-foreground/60 text-lg mb-12">
+            <p className="text-[#251B18]/70 text-lg max-w-xl mx-auto leading-relaxed font-light font-sans">
               Every system starts with understanding your specific workflows. Let's discuss what automation could look like for your operations.
             </p>
-            <Link to="/contact">
-              <Button 
-                size="xl" 
-                className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-full font-medium shadow-xl"
-              >
-                Discuss Your Workflow
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+            <Link to="/contact" className="btn-gold group inline-flex font-sans uppercase font-bold text-xs mt-4">
+              Discuss Your Workflow
+              <ArrowRight className="ml-2.5 h-4 w-4" />
             </Link>
           </motion.div>
         </div>

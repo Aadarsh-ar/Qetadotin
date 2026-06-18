@@ -56,12 +56,7 @@ export const SectionHeader = ({
       )}
     >
       {label && (
-        <span className={cn(
-          "inline-flex items-center px-4 py-1.5 rounded-full text-xs uppercase tracking-widest font-medium mb-6",
-          dark 
-            ? "bg-primary-foreground/10 text-primary-foreground/70" 
-            : "bg-accent/10 text-accent border border-accent/20"
-        )}>
+        <span className="pill-accent mb-6">
           {label}
         </span>
       )}

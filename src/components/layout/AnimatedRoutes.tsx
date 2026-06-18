@@ -8,6 +8,7 @@ import Index from "@/pages/Index";
 
 // Lazy load non-critical pages to reduce initial bundle size
 const Solutions = lazy(() => import("@/pages/Solutions"));
+const Work = lazy(() => import("@/pages/Work"));
 const UseCases = lazy(() => import("@/pages/UseCases"));
 const About = lazy(() => import("@/pages/About"));
 const Contact = lazy(() => import("@/pages/Contact"));
@@ -37,6 +38,11 @@ export const AnimatedRoutes = () => {
           <Route path="/solutions" element={
             <Suspense fallback={<PageLoader />}>
               <PageTransition><Solutions /></PageTransition>
+            </Suspense>
+          } />
+          <Route path="/work" element={
+            <Suspense fallback={<PageLoader />}>
+              <PageTransition><Work /></PageTransition>
             </Suspense>
           } />
           <Route path="/use-cases" element={

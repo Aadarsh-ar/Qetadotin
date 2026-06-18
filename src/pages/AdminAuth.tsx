@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Mail, Lock, LogIn, ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { PageLayout } from '@/components/layout/PageLayout';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
@@ -35,7 +32,6 @@ const AdminAuth = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Validate input
     const validation = authSchema.safeParse({ email, password });
     if (!validation.success) {
       toast({
@@ -52,7 +48,7 @@ const AdminAuth = () => {
       if (error) {
         toast({
           title: 'Login Failed',
-          description: error.message === 'Invalid login credentials' 
+          description: error.message === 'Invalid login credentials'
             ? 'Invalid email or password. Please try again.'
             : error.message,
           variant: 'destructive',
@@ -60,10 +56,10 @@ const AdminAuth = () => {
       } else {
         toast({
           title: 'Welcome back!',
-          description: 'You have successfully logged in.',
+          description: 'Redirecting to admin panel…',
         });
       }
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'An unexpected error occurred. Please try again.',
@@ -77,117 +73,123 @@ const AdminAuth = () => {
   return (
     <PageLayout>
       {/* Hero */}
-      <section className="bg-primary text-primary-foreground pt-32 pb-16 md:pt-40 md:pb-20 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="floating-orb w-[500px] h-[500px] bg-primary-foreground/10 -top-40 -right-40" />
-        </div>
-        <div className="container-wide px-6 md:px-12 lg:px-20 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
+      <section className="relative min-h-[40vh] flex items-center justify-center bg-white pt-36 pb-16">
+        <div className="container-wide text-center relative z-10 space-y-5">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const }}
-            className="max-w-3xl mx-auto text-center"
+            transition={{ duration: 0.5 }}
+            className="font-sans text-[11px] uppercase tracking-[0.22em] text-[#ff7633] font-bold"
           >
-            <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-medium tracking-wide bg-primary-foreground/10 text-primary-foreground mb-8">
-              Admin Access
-            </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-6 text-primary-foreground">
-              Sign In
-            </h1>
-            <p className="text-lg md:text-xl text-primary-foreground/70 leading-relaxed">
-              Access the blog admin panel to manage your content.
-            </p>
-          </motion.div>
+            Admin access
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-4xl md:text-5xl font-serif tracking-tight text-black"
+          >
+            Sign in to admin panel.
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-base text-[#251B18]/60 font-sans font-light"
+          >
+            Manage blog posts, contact submissions, and site content.
+          </motion.p>
         </div>
       </section>
 
-      {/* Auth Form */}
-      <section className="py-16 md:py-24 bg-background">
-        <div className="container-wide px-6 md:px-12 lg:px-20">
+      {/* Login Form */}
+      <section className="bg-white py-16 border-t border-black/5">
+        <div className="container-wide">
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
             className="max-w-md mx-auto"
           >
-            <Card className="border-2 border-border/50">
-              <CardHeader className="text-center">
-                <CardTitle className="text-2xl">Welcome Back</CardTitle>
-                <CardDescription>
-                  Enter your credentials to access the admin panel
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="admin@example.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="pl-10"
-                        required
-                      />
-                    </div>
+            <div className="bg-[#f8f6f1] border border-black/8 rounded-[28px] p-10 shadow-sm">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Email */}
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-xs uppercase tracking-widest font-semibold text-[#251B18]/60">
+                    Email address
+                  </Label>
+                  <div className="relative">
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#251B18]/30" />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="admin@qeta.in"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="pl-11 h-12 bg-white border-black/10 focus:border-[#ff7633] focus-visible:ring-1 focus-visible:ring-[#ff7633] rounded-[10px] text-sm text-black"
+                      required
+                      autoComplete="email"
+                    />
                   </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="password">Password</Label>
-                    <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                      <Input
-                        id="password"
-                        type="password"
-                        placeholder="••••••••"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="pl-10"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <Button
-                    type="submit"
-                    className="w-full rounded-full"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? (
-                      <span className="flex items-center gap-2">
-                        <motion.span
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                          className="h-4 w-4 border-2 border-current border-t-transparent rounded-full"
-                        />
-                        Signing in...
-                      </span>
-                    ) : (
-                      <span className="flex items-center gap-2">
-                        <LogIn className="h-4 w-4" />
-                        Sign In
-                      </span>
-                    )}
-                  </Button>
-                </form>
-
-                <div className="mt-6 text-center">
-                  <p className="text-sm text-muted-foreground">
-                    Admin access is invite-only. Contact an existing admin to get access.
-                  </p>
                 </div>
 
-                <div className="mt-6 pt-6 border-t border-border">
-                  <Link to="/" className="flex items-center justify-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    <ArrowLeft className="h-4 w-4" />
-                    Back to Home
-                  </Link>
+                {/* Password */}
+                <div className="space-y-2">
+                  <Label htmlFor="password" className="text-xs uppercase tracking-widest font-semibold text-[#251B18]/60">
+                    Password
+                  </Label>
+                  <div className="relative">
+                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#251B18]/30" />
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="pl-11 h-12 bg-white border-black/10 focus:border-[#ff7633] focus-visible:ring-1 focus-visible:ring-[#ff7633] rounded-[10px] text-sm text-black"
+                      required
+                      autoComplete="current-password"
+                    />
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
+
+                {/* Submit */}
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full btn-gold justify-center flex gap-2.5 items-center h-12 font-sans uppercase font-bold text-xs"
+                >
+                  {isLoading ? (
+                    <>
+                      <motion.span
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                        className="h-4 w-4 border-2 border-current border-t-transparent rounded-full inline-block"
+                      />
+                      Signing in…
+                    </>
+                  ) : (
+                    <>
+                      <LogIn className="h-4 w-4" />
+                      Sign In
+                    </>
+                  )}
+                </button>
+              </form>
+
+              <div className="mt-8 pt-6 border-t border-black/8 text-center space-y-3">
+                <p className="text-xs text-[#251B18]/45 font-sans">
+                  Admin access is invite-only. Contact the site owner to request access.
+                </p>
+                <Link
+                  to="/"
+                  className="inline-flex items-center gap-1.5 text-xs text-[#251B18]/50 hover:text-black transition-colors font-sans"
+                >
+                  <ArrowLeft className="h-3.5 w-3.5" />
+                  Back to site
+                </Link>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>

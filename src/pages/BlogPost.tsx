@@ -5,7 +5,6 @@ import { ArrowLeft, Calendar, Clock } from "lucide-react";
 import DOMPurify from "dompurify";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Section } from "@/components/ui/Section";
-import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 
 interface BlogPost {
@@ -61,12 +60,12 @@ const BlogPost = () => {
   if (isLoading) {
     return (
       <PageLayout>
-        <Section className="pt-32">
-          <div className="flex justify-center py-16">
+        <Section className="py-32 bg-white text-center">
+          <div className="flex justify-center">
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-              className="h-8 w-8 border-2 border-primary border-t-transparent rounded-full"
+              className="h-8 w-8 border-2 border-[#ff7633] border-t-transparent rounded-full"
             />
           </div>
         </Section>
@@ -77,20 +76,16 @@ const BlogPost = () => {
   if (!post) {
     return (
       <PageLayout>
-        <Section className="pt-32">
-          <div className="text-center py-16 max-w-md mx-auto">
-            <p className="text-sm uppercase tracking-widest font-medium text-muted-foreground mb-4">
-              404
-            </p>
-            <h1 className="text-3xl font-semibold mb-4">Post not found</h1>
-            <p className="text-muted-foreground mb-8">
+        <Section className="py-32 bg-white text-center">
+          <div className="max-w-md mx-auto space-y-6">
+            <span className="font-sans text-xs uppercase tracking-widest text-[#ff7633] font-bold">404 Error</span>
+            <h1 className="text-4xl font-serif text-black">Article not found</h1>
+            <p className="text-[#251B18]/70 text-sm font-sans font-light">
               This blog post doesn't exist or has been unpublished.
             </p>
-            <Link to="/blog">
-              <Button variant="hero">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Blog
-              </Button>
+            <Link to="/blog" className="btn-gold font-sans uppercase font-bold text-xs inline-flex">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Blog
             </Link>
           </div>
         </Section>
@@ -99,103 +94,78 @@ const BlogPost = () => {
   }
 
   return (
-    <PageLayout>
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-16 overflow-hidden">
-        <div className="absolute inset-0 gradient-hero-bg" />
-        <div className="floating-orb w-[600px] h-[600px] bg-primary/20 -top-40 -left-40" />
-        <div className="floating-orb w-[400px] h-[400px] bg-accent/20 -top-20 -right-20" style={{ animationDelay: "-7s" }} />
-        
-        <div className="container-wide px-6 md:px-12 lg:px-20 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-3xl mx-auto"
-          >
-            <Link 
-              to="/blog" 
-              className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Blog
-            </Link>
-            
-            {post.category && (
-              <span className="category-tag mb-4 inline-block">{post.category}</span>
-            )}
-            
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight leading-tight mb-6">
-              {post.title}
-            </h1>
-            
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <span className="flex items-center gap-1.5">
-                <Calendar className="w-4 h-4" />
-                {formatDate(post.created_at)}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Clock className="w-4 h-4" />
-                {estimateReadTime(post.content)}
-              </span>
+    <div className="bg-white text-black min-h-screen relative overflow-hidden font-sans">
+      <PageLayout>
+        {/* Header */}
+        <section className="relative min-h-[40vh] flex items-center justify-center bg-white pt-32 pb-16">
+          <div className="container-wide px-6 text-center z-10">
+            <div className="max-w-3xl mx-auto space-y-6">
+              <Link 
+                to="/blog" 
+                className="inline-flex items-center text-xs uppercase tracking-widest font-semibold text-[#ff7633] hover:underline font-sans"
+              >
+                <ArrowLeft className="mr-2 h-3.5 w-3.5" />
+                Back to Blog
+              </Link>
+              
+              {post.category && (
+                <div className="block">
+                  <span className="pill-accent">{post.category}</span>
+                </div>
+              )}
+              
+              <h1 className="text-4xl md:text-5xl font-serif text-black leading-tight tracking-tight font-medium">
+                {post.title}
+              </h1>
+              
+              <div className="flex items-center justify-center gap-4 text-xs text-[#251B18]/50 font-sans">
+                <span className="flex items-center gap-1.5">
+                  <Calendar className="w-4 h-4 text-[#ff7633]" />
+                  {formatDate(post.created_at)}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Clock className="w-4 h-4 text-[#ff7633]" />
+                  {estimateReadTime(post.content)}
+                </span>
+              </div>
             </div>
-          </motion.div>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      {/* Featured Image */}
-      {post.image_url && (
-        <Section className="pt-0 pb-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-4xl mx-auto"
-          >
-            <div className="aspect-[21/9] rounded-2xl overflow-hidden">
-              <img 
-                src={post.image_url} 
-                alt={post.title}
-                className="w-full h-full object-cover"
-              />
+        {/* Featured Image */}
+        {post.image_url && (
+          <Section className="py-0 bg-white">
+            <div className="max-w-4xl mx-auto">
+              <div className="aspect-[21/9] rounded-[20px] border border-black/5 overflow-hidden">
+                <img 
+                  src={post.image_url} 
+                  alt={post.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
-          </motion.div>
+          </Section>
+        )}
+
+        {/* Content */}
+        <Section className="py-16 bg-white font-sans">
+          <article className="max-w-3xl mx-auto prose prose-lg prose-headings:font-serif prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-black prose-p:text-[#251B18]/80 prose-p:leading-relaxed prose-p:font-light prose-p:text-base prose-a:text-[#ff7633] prose-a:no-underline hover:prose-a:underline">
+            <div 
+              className="whitespace-pre-wrap text-[#251B18]/80 leading-relaxed font-light text-base md:text-lg"
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
+            />
+          </article>
         </Section>
-      )}
 
-      {/* Content */}
-      <Section className="pt-8">
-        <motion.article
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-3xl mx-auto prose prose-lg dark:prose-invert prose-headings:font-semibold prose-headings:tracking-tight prose-p:text-muted-foreground prose-p:leading-relaxed prose-a:text-accent prose-a:no-underline hover:prose-a:underline"
-        >
-          <div 
-            className="whitespace-pre-wrap text-foreground/90 leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
-          />
-        </motion.article>
-      </Section>
-
-      {/* Back to Blog CTA */}
-      <Section>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center"
-        >
-          <Link to="/blog">
-            <Button variant="outline" size="lg">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to all articles
-            </Button>
+        {/* Back to Blog CTA */}
+        <Section className="bg-white border-t border-black/5 py-16 text-center">
+          <Link to="/blog" className="btn-ghost-bone inline-flex font-sans uppercase font-semibold text-xs">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to all articles
           </Link>
-        </motion.div>
-      </Section>
-    </PageLayout>
+        </Section>
+      </PageLayout>
+    </div>
   );
 };
 

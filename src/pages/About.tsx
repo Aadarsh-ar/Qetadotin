@@ -1,237 +1,112 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Eye, Shield, Award, Cpu } from "lucide-react";
 import { PageLayout } from "@/components/layout/PageLayout";
-import { Section, SectionHeader } from "@/components/ui/Section";
-import { Button } from "@/components/ui/button";
+import { Section } from "@/components/ui/Section";
 import newLogo from "@/assets/qeta-logo-new.jpg";
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 40 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" },
-  transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }
-};
-
-const principles = [
-  {
-    title: "Systems over tools",
-    description: "Tools are commodities. Systems are assets. We build infrastructure that compounds value over time, not point solutions that create dependencies."
-  },
-  {
-    title: "Reliability over speed",
-    description: "Fast deployment means nothing if systems break in production. We optimize for stability, predictability, and long-term operational value."
-  },
-  {
-    title: "Ownership over dependency",
-    description: "You own everything we build. Full source code, complete documentation, trained team. Our goal is to make ourselves unnecessary."
-  },
-  {
-    title: "Outcomes over activity",
-    description: "We measure success by operational impact—time saved, capacity created, friction eliminated. Not by features shipped or hours logged."
-  }
-];
 
 const About = () => {
   return (
     <PageLayout>
-      {/* Hero - Pastel Gradient */}
-      <section className="min-h-[60vh] flex items-center relative overflow-hidden gradient-hero-bg -mt-24 pt-24">
-        {/* Floating pastel orbs */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="floating-orb w-[600px] h-[600px] bg-warm-lavender/40 -top-40 -left-40 opacity-60" />
-          <div className="floating-orb w-[400px] h-[400px] bg-sky-blue/30 bottom-20 -right-40 opacity-50" style={{ animationDelay: "-10s" }} />
-          <div className="floating-orb w-[300px] h-[300px] bg-peach-coral/35 top-1/3 right-1/4 opacity-40" style={{ animationDelay: "-5s" }} />
-        </div>
-        
-        <div className="container-wide px-6 md:px-12 lg:px-20 relative z-10 py-20">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-3xl mx-auto text-center"
-          >
-            <motion.span 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="inline-flex items-center px-5 py-2 rounded-full text-sm font-medium bg-white/60 backdrop-blur-xl text-foreground border border-white/40 shadow-pastel mb-8"
+      {/* Hero */}
+      <section className="relative min-h-[50vh] flex items-center justify-center bg-white pt-32 pb-16 overflow-hidden">
+        <div className="container-wide relative z-10 text-center">
+          <div className="max-w-3xl mx-auto space-y-6">
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="font-sans text-[11px] uppercase tracking-[0.22em] text-[#ff7633] font-bold"
             >
-              <Sparkles className="w-4 h-4 mr-2 text-accent-foreground animate-pulse" />
-              About QETA
-            </motion.span>
+              About us
+            </motion.p>
             <motion.h1 
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-8 text-foreground text-shadow-soft"
+              className="text-5xl md:text-6xl font-serif leading-[1.05] tracking-tight text-black"
             >
-              Built to solve operational problems, not chase trends.
+              Systems that scale your brand, <br />
+              <span className="text-[#ff7633]">not manual loops.</span>
             </motion.h1>
-          </motion.div>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-lg text-[#251B18]/75 leading-relaxed font-light font-sans max-w-2xl mx-auto"
+            >
+              We are a team of automation architects engineering next-generation B2B media and publishing workflows.
+            </motion.p>
+          </div>
         </div>
       </section>
 
-      {/* Philosophy */}
-      <Section className="bg-gradient-to-br from-periwinkle/15 via-transparent to-pastel-pink/15">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
-          >
-            <SectionHeader
-              label="Philosophy"
-              title="Why QETA exists"
-              className="mb-8"
-            />
-            <div className="space-y-6 text-muted-foreground leading-relaxed">
-              <p>
-                QETA was founded on a simple observation: most businesses don't need more AI tools. They need systems that actually work in production.
-              </p>
-              <p>
-                The AI industry is full of demos, prototypes, and proofs of concept. What's missing is reliable infrastructure—systems that run without constant maintenance, scale with the business, and create measurable operational value.
-              </p>
-              <p>
-                We focus exclusively on production-grade automation infrastructure. No experiments, no pilots, no flashy demos. Just systems that eliminate manual work and scale operations.
-              </p>
+      {/* Organization Block */}
+      <Section className="border-t border-black/5 py-20 bg-white">
+        <div className="grid lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-5 space-y-6">
+            <p className="font-sans text-[11px] uppercase tracking-[0.22em] text-[#ff7633] font-bold">
+              Our agency
+            </p>
+            <h2 className="text-3xl md:text-4xl font-serif text-black leading-tight font-medium">
+              We design and construct permanent content engines.
+            </h2>
+            <p className="text-[#251B18]/80 text-sm md:text-base leading-relaxed font-light font-sans">
+              QETADOTIN builds deep automation. By pairing avatar generation with real-time cloned voices, catalog scripts, and schedule publishing nodes, we replace weeks of manual camera work with continuous edge distribution.
+            </p>
+          </div>
+          <div className="lg:col-span-7 flex justify-center">
+            <div className="p-8 bg-[#f8f6f1] border border-black/5 rounded-[30px] flex flex-col items-center max-w-sm space-y-4">
+              <img src={newLogo} alt="Logo" className="w-24 h-24 rounded-full border border-black/10 object-cover" />
+              <span className="font-serif text-lg text-black font-bold">QETADOTIN</span>
+              <span className="text-xs uppercase tracking-widest text-[#ff7633] font-bold font-sans">Est. 2024</span>
             </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] as const }}
-            className="space-y-4"
-          >
-            {principles.map((principle, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ x: 8, scale: 1.01, transition: { duration: 0.2 } }}
-                className="glass-card !p-6 cursor-default"
-              >
-                <h3 className="font-semibold mb-2">{principle.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {principle.description}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
+          </div>
         </div>
       </Section>
 
-      {/* Approach */}
-      <Section className="bg-white/30 backdrop-blur-sm">
-        <div className="max-w-3xl mx-auto text-center">
-          <motion.div {...fadeInUp}>
-            <SectionHeader
-              label="Our Approach"
-              title="Automation is only meaningful when it's reliable"
-              centered
-            />
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] as const }}
-            className="space-y-6 text-muted-foreground leading-relaxed text-lg"
-          >
-            <p>
-              Every system we build follows the same standard: it must work in production without constant intervention. This isn't a high bar—it's the minimum requirement for operational infrastructure.
-            </p>
-            <p>
-              We don't chase the newest AI models or the latest tooling trends. We use proven, reliable technology that delivers consistent results. The goal is operational value, not technical novelty.
-            </p>
-            <p>
-              Our engagements are structured for clarity. Fixed phases, clear deliverables, transparent timelines. You know exactly what you're getting and when you're getting it.
-            </p>
-          </motion.div>
-        </div>
-      </Section>
-
-      {/* The Name */}
-      <Section className="bg-gradient-to-br from-warm-lavender/15 via-transparent to-sky-blue/15">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
-          >
-            <SectionHeader
-              label="The Name"
-              title="QETA"
-              className="mb-8"
-            />
-            <div className="space-y-6 text-muted-foreground leading-relaxed">
-              <p>
-                The interconnected globe represents global connectivity, intelligent networks, and seamless integration across systems.
-              </p>
-              <p>
-                It embodies what we build: intelligent infrastructure that connects and scales globally. Not isolated tools, but foundational systems that power operations.
-              </p>
-            </div>
-          </motion.div>
-          <div className="flex justify-center lg:justify-end">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
-              whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
-              whileHover={{ scale: 1.05, rotate: 2, transition: { duration: 0.3 } }}
-              className="w-56 h-56 md:w-72 md:h-72 glass-card flex items-center justify-center shadow-pastel-lg"
-            >
-              <img 
-                src={newLogo} 
-                alt="QETA Logo" 
-                width={208}
-                height={208}
-                loading="lazy"
-                className="w-40 h-40 md:w-52 md:h-52 object-cover rounded-lg drop-shadow-[0_0_20px_rgba(59,130,246,0.5)]"
-              />
-            </motion.div>
+      {/* Values Grid */}
+      <Section className="border-t border-black/5 py-20 bg-[#f8f6f1]/30">
+        <div className="space-y-16">
+          <div className="text-center max-w-xl mx-auto space-y-4">
+            <span className="font-sans text-xs uppercase tracking-widest text-[#ff7633] font-bold">Our Philosophy</span>
+            <h2 className="text-3xl md:text-4xl font-serif text-black font-medium">Built around operational speed.</h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { icon: Eye, title: "Pure Transparency", desc: "Full tracking statistics and node indicators are integrated into every custom layout block." },
+              { icon: Shield, title: "Identity Lock", desc: "We host speaker characteristics and media credentials securely inside closed API clusters." },
+              { icon: Award, title: "Absolute Quality", desc: "Every output compiles through pre-configured template wrappers for consistent alignment." }
+            ].map((val, i) => {
+              const Icon = val.icon;
+              return (
+                <div key={i} className="bg-white p-8 rounded-[25px] border border-black/5 space-y-4 hover:shadow-sm transition-all duration-300">
+                  <div className="w-10 h-10 bg-[#ff7633]/10 text-[#ff7633] rounded-full flex items-center justify-center">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h4 className="text-lg font-serif text-black font-bold">{val.title}</h4>
+                  <p className="text-xs text-[#251B18]/70 leading-relaxed font-sans">{val.desc}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </Section>
 
       {/* CTA */}
-      <Section className="bg-gradient-to-br from-primary/40 via-periwinkle/40 to-accent/30 rounded-t-[3rem] backdrop-blur-sm">
-        <div className="text-center max-w-3xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const }}
-          >
-            <motion.span 
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="inline-flex items-center px-5 py-2 rounded-full text-xs uppercase tracking-widest font-medium mb-8 bg-white/50 backdrop-blur-sm text-foreground/70 border border-white/30"
-            >
-              Get Started
-            </motion.span>
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6 text-foreground">
-              Ready to discuss your operations?
-            </h2>
-            <p className="text-foreground/60 text-lg mb-12">
-              No sales pitch. Just a conversation about your workflows and whether automation infrastructure makes sense.
-            </p>
-            <Link to="/contact">
-              <Button variant="hero" size="xl" className="group">
-                Book a Strategy Call
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Button>
-            </Link>
-          </motion.div>
+      <Section className="border-t border-black/5 relative overflow-hidden bg-white py-24">
+        <div className="text-center max-w-3xl mx-auto space-y-6">
+
+          <h2 className="text-4xl md:text-5xl font-serif text-black leading-tight">
+            Construct your brand machinery today.
+          </h2>
+          <p className="text-[#251B18]/70 text-lg max-w-xl mx-auto leading-relaxed font-light font-sans">
+            Let's design a permanent media generation and publishing loop for your operations.
+          </p>
+          <Link to="/contact" className="btn-gold group inline-flex font-sans uppercase font-bold text-xs mt-4">
+            Book a Strategy Call
+            <ArrowRight className="ml-2.5 h-4 w-4" />
+          </Link>
         </div>
       </Section>
     </PageLayout>

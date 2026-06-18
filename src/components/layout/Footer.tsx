@@ -17,6 +17,7 @@ const footerLinks = {
     { name: "Automation Systems", href: "/solutions#automation" },
   ],
   resources: [
+    { name: "Our Work", href: "/work" },
     { name: "Use Cases", href: "/use-cases" },
     { name: "Blog", href: "/blog" },
   ],
@@ -31,25 +32,20 @@ const socialLinks = [
 
 export const Footer = () => {
   return (
-    <footer className="relative z-10 bg-background border-t border-border">
-      <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-12 py-24">
-        {/* Massive brand mark */}
-        <div className="mb-20 pb-16 border-b border-border">
-          <p className="eyebrow mb-6">— Build the system</p>
-          <h2 className="font-serif text-[18vw] md:text-[14vw] lg:text-[180px] leading-[0.85] tracking-display text-foreground">
-            QETA<span className="text-primary">.</span>IN
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-10 lg:gap-12">
-          {/* Brand */}
-          <div className="col-span-2 md:col-span-4">
-            <Link to="/" className="inline-flex items-center gap-3 mb-8 group">
+    <footer className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 mb-16">
+      <div className="bg-[#f8f6f1] border border-black/10 rounded-[30px] px-8 md:px-16 py-20 relative overflow-hidden shadow-sm">
+        {/* Subtle decorative grid/stripes on footer background */}
+        <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[linear-gradient(rgba(0,0,0,1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,1)_1px,transparent_1px)] bg-[size:30px_30px]" />
+        
+        <div className="relative z-10 grid grid-cols-2 md:grid-cols-12 gap-10 lg:gap-12">
+          {/* Brand Column */}
+          <div className="col-span-2 md:col-span-4 space-y-6">
+            <Link to="/" className="inline-flex items-center gap-3 group">
               <img src={logoSmall} alt="QETADOTIN" width={44} height={44}
-                className="h-11 w-11 object-cover rounded-full border border-primary/50" />
-              <span className="font-sans text-xs uppercase tracking-[0.28em] text-foreground">QETADOTIN</span>
+                className="h-11 w-11 object-cover rounded-full border border-black/10" />
+              <span className="font-sans text-sm uppercase tracking-[0.28em] text-black font-bold">QETADOTIN</span>
             </Link>
-            <p className="text-foreground/55 text-sm leading-relaxed max-w-xs mb-8 font-light">
+            <p className="text-[#251B18]/70 text-sm leading-relaxed max-w-xs font-light font-sans">
               AI-powered content systems for modern brands. Avatars, voice, video and automation — engineered, not improvised.
             </p>
             <div className="flex items-center gap-3">
@@ -59,7 +55,7 @@ export const Footer = () => {
                   href={social.href}
                   target={social.href.startsWith("mailto") ? undefined : "_blank"}
                   rel={social.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                  className="w-10 h-10 border border-border text-foreground/60 hover:text-primary hover:border-primary/60 flex items-center justify-center transition-all"
+                  className="w-10 h-10 border border-black/15 text-[#251B18]/60 hover:text-[#ff7633] hover:border-[#ff7633] rounded-full flex items-center justify-center transition-all bg-white"
                   aria-label={social.name}
                 >
                   <social.icon className="h-4 w-4" />
@@ -68,13 +64,13 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Services */}
+          {/* Services Column */}
           <div className="col-span-1 md:col-span-3">
-            <h4 className="eyebrow mb-6">Services</h4>
+            <h4 className="font-sans text-xs uppercase tracking-widest text-[#251B18] font-bold mb-6">Services</h4>
             <ul className="space-y-3">
               {footerLinks.services.map((link) => (
                 <li key={link.name}>
-                  <Link to={link.href} className="font-sans text-sm text-foreground/70 hover:text-primary transition-colors">
+                  <Link to={link.href} className="font-sans text-sm text-[#251B18]/75 hover:text-[#ff7633] transition-colors">
                     {link.name}
                   </Link>
                 </li>
@@ -82,13 +78,13 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Studio */}
+          {/* Studio Column */}
           <div className="col-span-1 md:col-span-2">
-            <h4 className="eyebrow mb-6">Studio</h4>
+            <h4 className="font-sans text-xs uppercase tracking-widest text-[#251B18] font-bold mb-6">Studio</h4>
             <ul className="space-y-3">
               {[...footerLinks.company, ...footerLinks.resources].map((link) => (
                 <li key={link.name}>
-                  <Link to={link.href} className="font-sans text-sm text-foreground/70 hover:text-primary transition-colors">
+                  <Link to={link.href} className="font-sans text-sm text-[#251B18]/75 hover:text-[#ff7633] transition-colors">
                     {link.name}
                   </Link>
                 </li>
@@ -96,18 +92,19 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Newsletter */}
+          {/* Newsletter Column */}
           <div className="col-span-2 md:col-span-3">
-            <h4 className="eyebrow mb-6">Signal</h4>
+            <h4 className="font-sans text-xs uppercase tracking-widest text-[#251B18] font-bold mb-6">Signal</h4>
             <NewsletterForm />
           </div>
         </div>
 
-        <div className="mt-20 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <p className="font-sans text-xs uppercase tracking-[0.25em] text-foreground/40">
-            © {new Date().getFullYear()} QETADOTIN — Hyderabad / Remote
+        {/* Bottom copyright details */}
+        <div className="mt-20 pt-8 border-t border-black/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-[#251B18]/50">
+          <p className="font-sans text-xs uppercase tracking-[0.25em]">
+            © {new Date().getFullYear()} QETADOTIN
           </p>
-          <p className="font-sans text-xs uppercase tracking-[0.25em] text-foreground/40">
+          <p className="font-sans text-xs uppercase tracking-[0.25em]">
             Systems that run your brand.
           </p>
         </div>

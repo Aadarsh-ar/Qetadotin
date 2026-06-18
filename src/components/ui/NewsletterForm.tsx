@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Send, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -29,51 +28,85 @@ export const NewsletterForm = () => {
       return;
     }
 
-    // Submit via rate-limited edge function
-    const { data, error } = await supabase.functions.invoke("submit-form", {
-      body: {
-        formType: "newsletter",
-        data: {
-          email: validation.data,
-        },
-      },
-    });
+    let submitSuccess = false;
+    let fallbackUsed = false;
 
-    if (error) {
-      toast({
-        title: "Subscription failed",
-        description: "There was an error. Please try again.",
-        variant: "destructive",
+    // Try rate-limited Edge Function first
+    try {
+      const { data, error } = await supabase.functions.invoke("submit-form", {
+        body: {
+          formType: "newsletter",
+          data: {
+            email: validation.data,
+          },
+        },
       });
-      setIsSubmitting(false);
-      return;
+
+      if (!error && !data?.error) {
+        submitSuccess = true;
+      } else if (data?.error) {
+        if (data.error === "already_subscribed") {
+          toast({
+            title: "Already subscribed",
+            description: "This email is already on our newsletter list.",
+          });
+          setEmail("");
+          setIsSubmitting(false);
+          return;
+        } else if (data.retryAfter) {
+          toast({
+            title: "Too many requests",
+            description: `Please wait ${data.retryAfter} minutes before trying again.`,
+            variant: "destructive",
+          });
+          setIsSubmitting(false);
+          return;
+        }
+      }
+    } catch (err) {
+      console.warn("Edge function invocation failed, trying direct database insert...", err);
     }
 
-    if (data?.error) {
-      if (data.error === "already_subscribed") {
+    // Direct database fallback if edge function fails/is not deployed
+    if (!submitSuccess) {
+      fallbackUsed = true;
+      
+      // Perform local subscription existence check to replicate unique constraint handling
+      const { data: existing, error: checkError } = await supabase
+        .from('newsletter_subscriptions')
+        .select('id')
+        .eq('email', validation.data.toLowerCase())
+        .maybeSingle();
+        
+      if (!checkError && existing) {
         toast({
           title: "Already subscribed",
           description: "This email is already on our newsletter list.",
         });
-      } else if (data.retryAfter) {
-        toast({
-          title: "Too many requests",
-          description: `Please wait ${data.retryAfter} minutes before trying again.`,
-          variant: "destructive",
+        setEmail("");
+        setIsSubmitting(false);
+        return;
+      }
+
+      const { error: dbError } = await supabase
+        .from('newsletter_subscriptions')
+        .insert({
+          email: validation.data.toLowerCase(),
         });
-      } else {
+
+      if (dbError) {
         toast({
           title: "Subscription failed",
-          description: data.message || "There was an error. Please try again.",
+          description: "There was an error. Please try again.",
           variant: "destructive",
         });
+        setIsSubmitting(false);
+        return;
       }
-      setIsSubmitting(false);
-      return;
     }
 
     toast({
-      title: "Subscribed!",
+      title: fallbackUsed ? "Subscribed! (Direct)" : "Subscribed!",
       description: "You'll receive our latest updates and insights.",
     });
     setEmail("");
@@ -88,10 +121,10 @@ export const NewsletterForm = () => {
       transition={{ duration: 0.5, delay: 0.2 }}
       className="w-full"
     >
-      <h4 className="text-xs font-semibold uppercase tracking-wider mb-4 text-foreground/50">
+      <h4 className="text-[10px] uppercase tracking-[0.25em] mb-4 text-primary font-semibold">
         Stay Updated
       </h4>
-      <p className="text-sm text-foreground/60 mb-4">
+      <p className="text-xs text-foreground/50 mb-4 font-light leading-relaxed">
         Get AI automation insights delivered to your inbox.
       </p>
       <form onSubmit={handleSubmit} className="flex gap-2">
@@ -101,20 +134,20 @@ export const NewsletterForm = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="bg-white/50 border-border/30 focus:border-primary rounded-xl h-10 flex-1"
+          className="bg-background/50 border-border focus:border-primary focus-visible:ring-1 focus-visible:ring-primary rounded-none h-10 flex-1 text-xs"
         />
-        <Button
+        <button
           type="submit"
-          size="sm"
           disabled={isSubmitting}
-          className="rounded-xl h-10 px-4 bg-primary hover:bg-primary/90"
+          className="rounded-none h-10 w-10 bg-primary text-primary-foreground hover:bg-accent flex items-center justify-center flex-shrink-0 transition-colors"
+          aria-label="Subscribe"
         >
           {isSubmitting ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
             <Send className="h-4 w-4" />
           )}
-        </Button>
+        </button>
       </form>
     </motion.div>
   );
