@@ -124,25 +124,25 @@ const Index = () => {
 
       {/* ── 2. PORTFOLIO GALLERY ────────────────────────────────────── */}
       <section className="bg-white pb-24 px-6">
-        <div className="max-w-7xl mx-auto space-y-8">
-          <div className="grid md:grid-cols-2 gap-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8">
             {/* Card 1 */}
             <motion.div
               initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.65 }}
-              className="group relative rounded-[28px] overflow-hidden border border-black/5 bg-[#f8f6f1]"
+              className="group relative rounded-[28px] overflow-hidden border border-black/5 bg-[#f8f6f1] shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="aspect-[4/3] relative overflow-hidden">
                 <img
-                  src="/work_1.jpg"
+                  src="/avatar_portal.png"
                   alt="AI Content Operations"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
-                  <span className="inline-block text-white/60 text-[10px] uppercase tracking-widest font-semibold mb-1">Operational Interface</span>
+                  <span className="inline-block text-white/70 text-[10px] uppercase tracking-widest font-semibold mb-1 font-mono">Operational Interface</span>
                   <h3 className="text-white text-xl font-serif font-bold leading-tight">Interactive Avatar Portal</h3>
                 </div>
               </div>
@@ -154,64 +154,40 @@ const Index = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.65, delay: 0.12 }}
-              className="group relative rounded-[28px] overflow-hidden border border-black/5 bg-[#f8f6f1]"
+              className="group relative rounded-[28px] overflow-hidden border border-black/5 bg-[#f8f6f1] shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="aspect-[4/3] relative overflow-hidden">
                 <img
-                  src="/work_2.jpg"
+                  src="/vocal_twin.png"
                   alt="Analytics Dashboard"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
-                  <span className="inline-block text-white/60 text-[10px] uppercase tracking-widest font-semibold mb-1">Asset Integration</span>
+                  <span className="inline-block text-white/70 text-[10px] uppercase tracking-widest font-semibold mb-1 font-mono">Analytics Dashboard & Asset Integration</span>
                   <h3 className="text-white text-xl font-serif font-bold leading-tight">Vocal Twin Synthesizer</h3>
                 </div>
               </div>
             </motion.div>
-          </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
             {/* Card 3 */}
             <motion.div
               initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.65, delay: 0.08 }}
-              className="group relative rounded-[28px] overflow-hidden border border-black/5 bg-[#f8f6f1]"
+              transition={{ duration: 0.65, delay: 0.2 }}
+              className="group relative rounded-[28px] overflow-hidden border border-black/5 bg-[#f8f6f1] shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="aspect-[4/3] relative overflow-hidden">
                 <img
-                  src="/work_5.jpg"
+                  src="/developer_workspace.png"
                   alt="Developer Workspace"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
-                  <span className="inline-block text-white/60 text-[10px] uppercase tracking-widest font-semibold mb-1">Automation Systems</span>
+                  <span className="inline-block text-white/70 text-[10px] uppercase tracking-widest font-semibold mb-1 font-mono">Developer Workspace</span>
                   <h3 className="text-white text-xl font-serif font-bold leading-tight">Publishing Automation Engine</h3>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Card 4 */}
-            <motion.div
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.65, delay: 0.2 }}
-              className="group relative rounded-[28px] overflow-hidden border border-black/5 bg-[#f8f6f1]"
-            >
-              <div className="aspect-[4/3] relative overflow-hidden">
-                <img
-                  src="/work_6.jpg"
-                  alt="Data Visualization"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <span className="inline-block text-white/60 text-[10px] uppercase tracking-widest font-semibold mb-1">Content Infrastructure</span>
-                  <h3 className="text-white text-xl font-serif font-bold leading-tight">B2B Content Pipeline</h3>
                 </div>
               </div>
             </motion.div>
@@ -219,18 +195,75 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── 3. LOGO TRUST STRIP ─────────────────────────────────────── */}
-      <section className="bg-white py-14 border-y border-black/5">
-        <div className="container-wide">
-          <p className="text-center font-sans text-[11px] uppercase tracking-[0.22em] text-[#251B18]/35 mb-10 font-semibold">
-            Trusted by operations leaders worldwide
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-12 md:gap-20 opacity-35">
-            {["STRIPE", "LINEAR", "OPENAI", "ANTHROPIC", "VERCEL", "FIGMA"].map((brand) => (
-              <span key={brand} className="font-serif text-xl sm:text-2xl tracking-[0.18em] font-extrabold text-black">
-                {brand}
-              </span>
-            ))}
+      {/* ── 3. VISUAL AUTOMATION ENGINES (replaces LOGO TRUST STRIP) ── */}
+      <section className="bg-[#f8f6f1]/40 py-24 border-y border-black/5">
+        <div className="container-wide space-y-16">
+          <div className="text-center space-y-4 max-w-3xl mx-auto">
+            <p className="font-sans text-[11px] uppercase tracking-[0.22em] text-[#ff7633] font-bold">
+              Autonomous Systems
+            </p>
+            <h2 className="text-3xl md:text-5xl font-serif text-black leading-tight tracking-tight font-medium animate-fade-in">
+              Visualizing the infrastructure.
+            </h2>
+            <p className="font-sans text-sm text-[#251B18]/65 max-w-xl mx-auto font-light leading-relaxed">
+              We replace opaque text processes with clear, transparent visual pipelines. Here is how our automated content engines operate in real-time.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Card 1: n8n workflow */}
+            <div className="group bg-white rounded-[24px] overflow-hidden border border-black/5 shadow-sm transition-all duration-300 hover:shadow-md">
+              <div className="aspect-[16/10] relative overflow-hidden border-b border-black/5 bg-[#121212]">
+                <img
+                  src="/n8n_workflows.png"
+                  alt="Automations in n8n Workflows"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-6 space-y-2">
+                <span className="inline-block text-[#ff7633] text-[9px] uppercase tracking-widest font-mono font-bold">Workflow Graph</span>
+                <h4 className="text-lg font-serif text-black font-bold">Automations in n8n Workflows</h4>
+                <p className="text-xs text-[#251B18]/65 leading-relaxed font-sans">
+                  Visual node logic triggering on webhook responses, routing prompt sequences to active rendering clusters.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2: Top 5 Automations */}
+            <div className="group bg-white rounded-[24px] overflow-hidden border border-black/5 shadow-sm transition-all duration-300 hover:shadow-md">
+              <div className="aspect-[16/10] relative overflow-hidden border-b border-black/5 bg-[#121212]">
+                <img
+                  src="/top_5_automations.png"
+                  alt="Top 5 Automations"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-6 space-y-2">
+                <span className="inline-block text-[#ff7633] text-[9px] uppercase tracking-widest font-mono font-bold">Performance Matrix</span>
+                <h4 className="text-lg font-serif text-black font-bold">Top 5 Business Automations</h4>
+                <p className="text-xs text-[#251B18]/65 leading-relaxed font-sans">
+                  The primary operations running 24/7, including lead qualification, dubbing queue, and CRM syndication.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 3: AI Creative Ads */}
+            <div className="group bg-white rounded-[24px] overflow-hidden border border-black/5 shadow-sm transition-all duration-300 hover:shadow-md">
+              <div className="aspect-[16/10] relative overflow-hidden border-b border-black/5 bg-[#121212]">
+                <img
+                  src="/ai_creative_ads.png"
+                  alt="AI Creative Ads"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-6 space-y-2">
+                <span className="inline-block text-[#ff7633] text-[9px] uppercase tracking-widest font-mono font-bold">Creative Testing</span>
+                <h4 className="text-lg font-serif text-black font-bold">AI Creatives & Ads compositor</h4>
+                <p className="text-xs text-[#251B18]/65 leading-relaxed font-sans">
+                  Generative video iterations compiled into different dimensions with telemetry tags dynamically embedded.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
