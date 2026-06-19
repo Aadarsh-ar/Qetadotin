@@ -100,11 +100,16 @@ export const Footer = () => {
         </div>
 
         {/* Bottom copyright details */}
-        <div className="mt-20 pt-8 border-t border-black/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-[#251B18]/50">
-          <p className="font-sans text-xs uppercase tracking-[0.25em]">
+        <div className="mt-20 pt-8 border-t border-black/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-[#251B18]/50 font-sans text-xs uppercase tracking-[0.25em]">
+          <p>
             © {new Date().getFullYear()} QETADOTIN
           </p>
-          <p className="font-sans text-xs uppercase tracking-[0.25em]">
+          <div className="flex flex-wrap gap-4 items-center text-[10px]">
+            <Link to="/privacy" className="hover:text-[#ff7633] transition-colors">Privacy Policy</Link>
+            <span>•</span>
+            <Link to="/terms" className="hover:text-[#ff7633] transition-colors">Terms & Conditions</Link>
+          </div>
+          <p>
             Systems that run your brand.
           </p>
         </div>

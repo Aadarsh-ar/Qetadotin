@@ -17,6 +17,8 @@ const BlogPost = lazy(() => import("@/pages/BlogPost"));
 const BlogAdmin = lazy(() => import("@/pages/BlogAdmin"));
 const AdminAuth = lazy(() => import("@/pages/AdminAuth"));
 const CustomerData = lazy(() => import("@/pages/CustomerData"));
+const Privacy = lazy(() => import("@/pages/Privacy"));
+const Terms = lazy(() => import("@/pages/Terms"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
 // Simple loading fallback
@@ -87,6 +89,16 @@ export const AnimatedRoutes = () => {
           <Route path="/admin-auth" element={
             <Suspense fallback={<PageLoader />}>
               <PageTransition><AdminAuth /></PageTransition>
+            </Suspense>
+          } />
+          <Route path="/privacy" element={
+            <Suspense fallback={<PageLoader />}>
+              <PageTransition><Privacy /></PageTransition>
+            </Suspense>
+          } />
+          <Route path="/terms" element={
+            <Suspense fallback={<PageLoader />}>
+              <PageTransition><Terms /></PageTransition>
             </Suspense>
           } />
           <Route path="*" element={
