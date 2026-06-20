@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Navigation } from "./Navigation";
 import { Footer } from "./Footer";
+import { CookieConsent } from "../ui/CookieConsent";
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -14,6 +15,7 @@ export const PageLayout = ({ children }: PageLayoutProps) => {
         {children}
       </main>
       <Footer />
+      <CookieConsent />
     </div>
   );
 };
