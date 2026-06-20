@@ -134,12 +134,115 @@ serve(async (req) => {
         );
       }
 
+      // Format message with service interest and phone number if present
+      const phoneStr = data.phone ? `[Phone: ${data.phone}] ` : '';
+      const serviceStr = data.service ? `[Service Interest: ${data.service}] ` : '';
+      const fullMessage = `${phoneStr}${serviceStr}${data.message}`;
+
       result = await supabase.from('contact_submissions').insert({
         name: data.name.trim(),
         email: data.email.trim().toLowerCase(),
-        company: data.company?.trim() || null,
-        message: data.message.trim(),
+        company: data.service || null,
+        message: fullMessage.trim(),
       });
+
+      if (!result.error) {
+        const resendApiKey = Deno.env.get('RESEND_API_KEY');
+        if (resendApiKey) {
+          console.log('RESEND_API_KEY found, triggering emails...');
+          
+          // 1. Send immediate email to admin (inqeta@gmail.com)
+          try {
+            const adminEmailBody = {
+              from: 'QETADOTIN Inquiry <onboarding@resend.dev>',
+              to: 'inqeta@gmail.com',
+              subject: `New Lead Inquiry: ${data.name.trim()}`,
+              html: `
+                <div style="font-family: sans-serif; max-width: 600px; color: #222; line-height: 1.6; border: 1px solid #eee; padding: 20px; border-radius: 12px;">
+                  <h2 style="color: #ff7633; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0;">New Inquiry</h2>
+                  <p><strong>Name:</strong> ${data.name.trim()}</p>
+                  <p><strong>Email:</strong> ${data.email.trim()}</p>
+                  <p><strong>Phone:</strong> ${data.phone ? data.phone.trim() : 'N/A'}</p>
+                  <p><strong>Service Interest:</strong> ${data.service ? data.service.trim() : 'N/A'}</p>
+                  <p><strong>Message / Workflow Bottlenecks:</strong></p>
+                  <blockquote style="border-left: 3px solid #ff7633; padding-left: 12px; margin-left: 0; color: #555;">
+                    ${data.message.trim().replace(/\n/g, '<br />')}
+                  </blockquote>
+                  <p style="font-size: 11px; color: #999; border-top: 1px solid #eee; padding-top: 10px; margin-top: 20px;">
+                    Sent from QETADOTIN Lead Pipeline System
+                  </p>
+                </div>
+              `
+            };
+
+            const adminRes = await fetch('https://api.resend.com/emails', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${resendApiKey}`,
+              },
+              body: JSON.stringify(adminEmailBody),
+            });
+            
+            console.log('Admin email dispatch status:', adminRes.status);
+          } catch (e) {
+            console.error('Failed to dispatch admin email:', e);
+          }
+
+          // 2. Schedule thank you email to visitor (5 minutes delay)
+          try {
+            const scheduledTime = new Date(Date.now() + 5 * 60 * 1000).toISOString();
+            
+            const visitorEmailBody = {
+              from: 'QETADOTIN Operations <onboarding@resend.dev>',
+              to: data.email.trim().toLowerCase(),
+              subject: 'Thank you for reaching out to QETADOTIN',
+              scheduled_at: scheduledTime,
+              html: `
+                <div style="font-family: sans-serif; max-width: 600px; color: #222; line-height: 1.6; border: 1px solid #eee; padding: 25px; border-radius: 12px; border-top: 4px solid #ff7633;">
+                  <h2 style="color: #111; margin: 0; font-family: serif;">QETADOTIN</h2>
+                  <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #ff7633; font-weight: bold;">Systems that scale your brand</span>
+                  
+                  <p style="margin-top: 20px;">Hi ${data.name.split(' ')[0]},</p>
+                  
+                  <p>Thank you for submitting your workflow parameters and connecting with us. We have successfully registered your inquiry regarding <strong>${data.service || 'our content systems'}</strong>.</p>
+                  
+                  <p>Our team is reviewing the manual bottlenecks you highlighted to prepare a custom diagnostics audit. We want to ensure our session delivers immediately actionable strategies for your pipelines.</p>
+                  
+                  <p>If you haven't booked a specific time slot yet, we invite you to synchronize directly on our interactive calendar:</p>
+                  
+                  <p style="margin: 25px 0;">
+                    <a href="https://calendly.com/qetadotin/strategy-call" target="_blank" style="background-color: #ff7633; color: white; padding: 12px 24px; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; display: inline-block;">Schedule Strategy Call</a>
+                  </p>
+                  
+                  <p>We look forward to speaking soon and engineering the engines behind your brand.</p>
+                  
+                  <p style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 15px; font-size: 12px; color: #777;">
+                    Best regards,<br />
+                    <strong>The QETADOTIN Team</strong><br />
+                    <a href="mailto:inqeta@gmail.com" style="color: #ff7633; text-decoration: none;">inqeta@gmail.com</a>
+                  </p>
+                </div>
+              `
+            };
+
+            const visitorRes = await fetch('https://api.resend.com/emails', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${resendApiKey}`,
+              },
+              body: JSON.stringify(visitorEmailBody),
+            });
+
+            console.log('Visitor thank you email scheduled status:', visitorRes.status);
+          } catch (e) {
+            console.error('Failed to schedule visitor thank-you email:', e);
+          }
+        } else {
+          console.warn('RESEND_API_KEY is not defined. Email skip diagnostics triggered.');
+        }
+      }
       
     } else if (formType === 'newsletter') {
       // Validate newsletter data

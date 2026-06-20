@@ -54,19 +54,22 @@ const Contact = () => {
     }
 
     try {
-      // Compose company and formatted message to map clean database schema structures securely
-      const formattedMessage = `[Phone: ${formData.phone}] [Service Interest: ${formData.service}] ${formData.message}`;
-      
-      const { error } = await supabase
-        .from('contact_submissions')
-        .insert({
-          name: formData.name.trim(),
-          email: formData.email.trim().toLowerCase(),
-          company: formData.service, // Use service selection for the company slot or track interest
-          message: formattedMessage.trim(),
-        });
+      const { data, error } = await supabase.functions.invoke("submit-form", {
+        body: {
+          formType: "contact",
+          data: {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            service: formData.service,
+            message: formData.message,
+          },
+        },
+      });
 
       if (error) {
+        // Extract error message from function error context if possible
+        console.error("Function invocation error details:", error);
         throw error;
       }
 
@@ -82,11 +85,11 @@ const Contact = () => {
         service: "avatars",
         message: ""
       });
-    } catch (err) {
-      console.error("Database insert failed:", err);
+    } catch (err: any) {
+      console.error("Submission failed:", err);
       toast({
         title: "Submission error",
-        description: "There was a problem submitting your inquiry. Please try booking directly.",
+        description: err.message || "There was a problem submitting your inquiry. Please try booking directly.",
         variant: "destructive",
       });
     } finally {
