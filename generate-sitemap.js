@@ -111,3 +111,6 @@ async function generateSitemap() {
 }
 
 generateSitemap();
+
+// Trigger Vercel rebuild to generate sitemap
+
